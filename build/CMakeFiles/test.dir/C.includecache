@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/fastF/src/fastq_filter.c
+fastq_filter.h
+/home/fastF/src/fastq_filter.h
+
+/home/fastF/src/fastq_filter.h
+stdio.h
+-
+pthread.h
+-
+stdlib.h
+-
+string.h
+-
+zlib.h
+-
+string.h
+-
+stdbool.h
+-
+pthread.h
+-
+
