@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/fastF/src/v1.0.9/argparse.h
+stdint.h
+-
+
+/home/fastF/src/v1.0.9/fastq_parse.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+argparse.h
+/home/fastF/src/v1.0.9/argparse.h
+

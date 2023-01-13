@@ -8,23 +8,11 @@ It is designed to be run with multiple threads.
 */
 
 #include "fastq_filter.h"
+#include "argparse.h"
+#include <time.h>
 
 #define NUM_CONSUMERS 4
 #define NUM_PRODUCERS 1
-
-// shared data by the reader and processors
-//------------------------------------------------
-queue *reader_buffer;
-gzFile file_in[3];
-//------------------------------------------------
-
-// shared data by the processors and writer
-//------------------------------------------------
-pthread_mutex_t write_mutex = PTHREAD_MUTEX_INITIALIZER;
-gzFile file_out[3];
-node *tree_whitelist;
-double rate_threshold;
-//------------------------------------------------
 
 // Function reader
 void *producer(void *id)
@@ -106,16 +94,18 @@ void *consumer(void *id)
 
 int main()
 {
+    double startTime = clock();
+
     unsigned int seed = 926;
     srand(seed);
-    
-    file_in[0] = gzopen("../data/I1.fastq.gz", "rb");
-    file_in[1] = gzopen("../data/R1.fastq.gz", "rb");
-    file_in[2] = gzopen("../data/R2.fastq.gz", "rb");
 
-    file_out[0] = gzopen("../data/filtered_I1.fastq.gz", "wb");
-    file_out[1] = gzopen("../data/filtered_R1.fastq.gz", "wb");
-    file_out[2] = gzopen("../data/filtered_R2.fastq.gz", "wb");
+    file_in[0] = gzopen("/home/rstudio/Frag/data/AI_S1_L001_I1_001.fastq.gz", "rb");
+    file_in[1] = gzopen("/home/rstudio/Frag/data/AI_S1_L001_R1_001.fastq.gz", "rb");
+    file_in[2] = gzopen("/home/rstudio/Frag/data/AI_S1_L001_R1_001.fastq.gz", "rb");
+
+    file_out[0] = gzopen("/home/rstudio/Frag/data/I1_thread.fastq.gz", "wb");
+    file_out[1] = gzopen("/home/rstudio/Frag/data/R1_thread.fastq.gz", "wb");
+    file_out[2] = gzopen("/home/rstudio/Frag/data/R2_thread.fastq.gz", "wb");
 
     reader_buffer = init_queue();
 
@@ -141,7 +131,7 @@ int main()
     printf("t1 = %d\n", t1);
 
     // print_tree(tree_whitelist);
-    int *prod_id = malloc(sizeof(int));
+    int *prod_id = malloc(NUM_PRODUCERS * sizeof(int));
     int *cons_id = malloc(NUM_CONSUMERS * sizeof(int));
 
     pthread_t producer_thread[NUM_PRODUCERS];
@@ -152,6 +142,8 @@ int main()
         prod_id[i] = i;
         pthread_create(&producer_thread[i], NULL, producer, &prod_id[i]);
     }
+
+    sleep(1);
 
     for (int i = 0; i < NUM_CONSUMERS; i++)
     {
@@ -183,5 +175,12 @@ int main()
         gzclose(file_out[i]);
     }
 
+    double stopTime = clock();
+
+    double secsElapsed = (stopTime - startTime) / CLOCKS_PER_SEC;
+
+    printf("Elapsed: %f seconds\n", secsElapsed);
     return 0;
 }
+
+// Elapsed: 403.236648 seconds

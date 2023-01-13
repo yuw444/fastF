@@ -6,9 +6,17 @@
 
 #IncludeRegexTransform: 
 
+/home/fastF/src/v1.0.9/argparse.h
+stdint.h
+-
+
 /home/fastF/src/v1.0.9/fastq_filter.c
 fastq_filter.h
 /home/fastF/src/v1.0.9/fastq_filter.h
+argparse.h
+/home/fastF/src/v1.0.9/argparse.h
+time.h
+-
 
 /home/fastF/src/v1.0.9/fastq_filter.h
 stdio.h

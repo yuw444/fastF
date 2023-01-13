@@ -17,19 +17,28 @@ It is designed to be run with multiple threads.
 #include <stdbool.h>
 #include <pthread.h>
 
-#define MAX_QUEUE_SIZE 100
-#define MAX_LINE_LENGTH 256
+#define MAX_QUEUE_SIZE 10000
+#define MAX_LINE_LENGTH 128
 #define LEN_CELLBARCODE 16
 #define LEN_WHITELIST 2 ^ 15
 
-
+long int num_waits = 0;
 int flag = 0; // flag to indicate the end of the program
 
 pthread_mutex_t queue_lock = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t check_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t write_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 pthread_cond_t not_empty = PTHREAD_COND_INITIALIZER;
 pthread_cond_t not_full = PTHREAD_COND_INITIALIZER;
+
+// struct node of binary searching tree
+typedef struct node
+{
+    char *data;
+    struct node *left;
+    struct node *right;
+} node;
 
 typedef struct fastq
 {
@@ -90,6 +99,7 @@ bool is_full(struct queue *q)
     return q->size == MAX_QUEUE_SIZE;
 }
 
+
 void enqueue(struct queue *q, comb_fastq *value)
 {
     pthread_mutex_lock(&queue_lock);
@@ -111,7 +121,7 @@ comb_fastq *dequeue(struct queue *q)
     pthread_mutex_lock(&queue_lock);
     while (is_empty(q))
     {
-        printf("queue is empty, waiting enque!\n");
+        printf("queue is empty, waiting enque! %ld \n", num_waits++);
         pthread_cond_wait(&not_empty, &queue_lock);
     }
     comb_fastq *value = q->data[q->head];
@@ -162,13 +172,28 @@ comb_fastq *get_comb_fastq(gzFile fastq[3])
     return out;
 }
 
-// struct node of binary searching tree
-typedef struct node
-{
-    char *data;
-    struct node *left;
-    struct node *right;
-} node;
+// read comb_fastq from file to buffer struct
+void *producer(void *id);
+
+// filter buffer accordding to whitelist and write to file
+void *consumer(void *id);
+
+
+
+// shared data by the reader and processors
+//------------------------------------------------
+queue *reader_buffer;
+gzFile file_in[3];
+//------------------------------------------------
+
+// shared data by the processors and writer
+//------------------------------------------------
+gzFile file_out[3];
+node *tree_whitelist;
+double rate_threshold;
+//------------------------------------------------
+
+
 
 // sorting function for whitelist
 
@@ -243,6 +268,7 @@ int get_row(char *file_name)
     return i;
 }
 
+
 // read whitelist from file
 
 char **read_txt(char *file_name, size_t nrows)
@@ -314,8 +340,8 @@ char *substring(char *string, int position, int length)
 
 char *combine_string(fastq *block)
 {
-    char *buf = (char *)malloc(MAX_LINE_LENGTH * sizeof(char));
-    snprintf(buf, 512, "%s%s+\n%s", block->id, block->seq, block->qual);
+    char *buf = (char *)malloc(MAX_LINE_LENGTH * 3 * sizeof(char));
+    snprintf(buf, MAX_LINE_LENGTH * 3, "%s%s+\n%s", block->id, block->seq, block->qual);
     return buf;
 }
 
