@@ -321,7 +321,7 @@ bool in(node *root, char *element)
 
 char *substring(char *string, int position, int length)
 {
-    char *pointer = malloc(length + 1);
+    char *pointer =(char *) malloc(length + 1);
 
     if (pointer == NULL)
     {
