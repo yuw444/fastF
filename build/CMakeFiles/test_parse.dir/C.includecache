@@ -17,6 +17,8 @@ stdlib.h
 -
 string.h
 -
+dirent.h
+-
 argparse.h
 /home/fastF/src/v1.0.9/argparse.h
 
