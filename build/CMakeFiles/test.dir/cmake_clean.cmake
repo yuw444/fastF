@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/test.dir/src/fastq_filter.c.o"
+  "CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o"
   "test"
   "test.pdb"
 )

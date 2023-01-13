@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/fastF/src/fastq_filter.c
+/home/fastF/src/v1.0.9/fastq_filter.c
 fastq_filter.h
-/home/fastF/src/fastq_filter.h
+/home/fastF/src/v1.0.9/fastq_filter.h
 
-/home/fastF/src/fastq_filter.h
+/home/fastF/src/v1.0.9/fastq_filter.h
 stdio.h
 -
 pthread.h

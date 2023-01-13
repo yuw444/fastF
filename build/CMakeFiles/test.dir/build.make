@@ -57,27 +57,27 @@ include CMakeFiles/test.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/test.dir/flags.make
 
-CMakeFiles/test.dir/src/fastq_filter.c.o: CMakeFiles/test.dir/flags.make
-CMakeFiles/test.dir/src/fastq_filter.c.o: ../src/fastq_filter.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test.dir/src/fastq_filter.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test.dir/src/fastq_filter.c.o   -c /home/fastF/src/fastq_filter.c
+CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o: CMakeFiles/test.dir/flags.make
+CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o: ../src/v1.0.9/fastq_filter.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o   -c /home/fastF/src/v1.0.9/fastq_filter.c
 
-CMakeFiles/test.dir/src/fastq_filter.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test.dir/src/fastq_filter.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/fastq_filter.c > CMakeFiles/test.dir/src/fastq_filter.c.i
+CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.0.9/fastq_filter.c > CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.i
 
-CMakeFiles/test.dir/src/fastq_filter.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test.dir/src/fastq_filter.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/fastq_filter.c -o CMakeFiles/test.dir/src/fastq_filter.c.s
+CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.0.9/fastq_filter.c -o CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.s
 
 # Object files for target test
 test_OBJECTS = \
-"CMakeFiles/test.dir/src/fastq_filter.c.o"
+"CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o"
 
 # External object files for target test
 test_EXTERNAL_OBJECTS =
 
-test: CMakeFiles/test.dir/src/fastq_filter.c.o
+test: CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o
 test: CMakeFiles/test.dir/build.make
 test: CMakeFiles/test.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking C executable test"

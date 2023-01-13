@@ -10,7 +10,7 @@ include_directories(/usr/local/lib/R/site-library/Rcpp/include)
 include_directories(/usr/local/lib/R/include)
 # find_package(OpenMP REQUIRED)
 
-add_executable(test ./src/fastq_filter.c)
+add_executable(test ./src/v1.0.9/fastq_filter.c)
 
 target_link_libraries(test z pthread)
 

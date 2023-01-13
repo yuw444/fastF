@@ -123,32 +123,32 @@ test/fast:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
 .PHONY : test/fast
 
-src/fastq_filter.o: src/fastq_filter.c.o
+src/v1.0.9/fastq_filter.o: src/v1.0.9/fastq_filter.c.o
 
-.PHONY : src/fastq_filter.o
+.PHONY : src/v1.0.9/fastq_filter.o
 
 # target to build an object file
-src/fastq_filter.c.o:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/fastq_filter.c.o
-.PHONY : src/fastq_filter.c.o
+src/v1.0.9/fastq_filter.c.o:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o
+.PHONY : src/v1.0.9/fastq_filter.c.o
 
-src/fastq_filter.i: src/fastq_filter.c.i
+src/v1.0.9/fastq_filter.i: src/v1.0.9/fastq_filter.c.i
 
-.PHONY : src/fastq_filter.i
+.PHONY : src/v1.0.9/fastq_filter.i
 
 # target to preprocess a source file
-src/fastq_filter.c.i:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/fastq_filter.c.i
-.PHONY : src/fastq_filter.c.i
+src/v1.0.9/fastq_filter.c.i:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.i
+.PHONY : src/v1.0.9/fastq_filter.c.i
 
-src/fastq_filter.s: src/fastq_filter.c.s
+src/v1.0.9/fastq_filter.s: src/v1.0.9/fastq_filter.c.s
 
-.PHONY : src/fastq_filter.s
+.PHONY : src/v1.0.9/fastq_filter.s
 
 # target to generate assembly for a file
-src/fastq_filter.c.s:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/fastq_filter.c.s
-.PHONY : src/fastq_filter.c.s
+src/v1.0.9/fastq_filter.c.s:
+	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.s
+.PHONY : src/v1.0.9/fastq_filter.c.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
-	@echo "... src/fastq_filter.o"
-	@echo "... src/fastq_filter.i"
-	@echo "... src/fastq_filter.s"
+	@echo "... src/v1.0.9/fastq_filter.o"
+	@echo "... src/v1.0.9/fastq_filter.i"
+	@echo "... src/v1.0.9/fastq_filter.s"
 .PHONY : help
 
 
