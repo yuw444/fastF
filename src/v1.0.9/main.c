@@ -189,6 +189,7 @@ int main(int argc, const char **argv)
     unsigned int seed = 926;
     srand(seed);
     reader_buffer = init_queue();
+    writer_buffer = init_queue();
 
     rate_threshold = rate_arg;
 
@@ -268,5 +269,6 @@ int main(int argc, const char **argv)
 }
 
 //Elapsed: 397.7s multi-threading with 4 threads
-//Elapsed: 378.906889 seconds used `gzbuffer` to speed up with 4 consumer and 128k buffer
 //Elapsed: 307.436405 seconds used `gzbuffer` to speed up with 1 consumer and 128k buffer
+//Elapsed: 336.436405 seconds used `gzbuffer` to speed up with 2 consumer and 128k buffer
+//Elapsed: 378.906889 seconds used `gzbuffer` to speed up with 4 consumer and 128k buffer

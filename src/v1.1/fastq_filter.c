@@ -12,12 +12,15 @@ It is designed to be run with multiple threads.
 long int num_waits = 0;
 int flag = 0; // flag to indicate the end of the program
 
-pthread_mutex_t queue_lock = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t check_lock = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t queue_lock_i = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t queue_lock_o = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t write_mutex = PTHREAD_MUTEX_INITIALIZER;
 
-pthread_cond_t not_empty = PTHREAD_COND_INITIALIZER;
-pthread_cond_t not_full = PTHREAD_COND_INITIALIZER;
+pthread_cond_t not_empty_i = PTHREAD_COND_INITIALIZER;
+pthread_cond_t not_full_i = PTHREAD_COND_INITIALIZER;
+
+pthread_cond_t not_empty_o = PTHREAD_COND_INITIALIZER;
+pthread_cond_t not_full_o = PTHREAD_COND_INITIALIZER;
 
 queue *init_queue()
 {
@@ -54,7 +57,11 @@ void free_comb_fastq(comb_fastq *comb)
     free(comb);
 }
 
-void enqueue(struct queue *q, comb_fastq *value)
+void enqueue(struct queue *q,
+             comb_fastq *value,
+             pthread_mutex_t *queue_lock,
+             pthread_cond_t *not_full,
+             pthread_cond_t *not_empty)
 {
     pthread_mutex_lock(&queue_lock);
     while (is_full(q))
@@ -70,19 +77,22 @@ void enqueue(struct queue *q, comb_fastq *value)
     pthread_mutex_unlock(&queue_lock);
 }
 
-comb_fastq *dequeue(struct queue *q)
+comb_fastq *dequeue(struct queue *q,
+                    pthread_mutex_t *queue_lock,
+                    pthread_cond_t *not_full,
+                    pthread_cond_t *not_empty)
 {
-    pthread_mutex_lock(&queue_lock);
+    pthread_mutex_lock(queue_lock);
     while (is_empty(q))
     {
         printf("queue is empty, waiting enque! %ld \n", num_waits++);
-        pthread_cond_wait(&not_empty, &queue_lock);
+        pthread_cond_wait(not_empty, queue_lock);
     }
     comb_fastq *value = q->data[q->head];
     q->head = (q->head + 1) % MAX_QUEUE_SIZE;
     q->size--;
-    pthread_cond_signal(&not_full);
-    pthread_mutex_unlock(&queue_lock);
+    pthread_cond_signal(not_full);
+    pthread_mutex_unlock(queue_lock);
 
     return value;
 }
@@ -125,7 +135,6 @@ comb_fastq *get_comb_fastq(gzFile fastq[3])
     }
     return out;
 }
-
 
 // sorting function for whitelist
 
@@ -200,7 +209,6 @@ int get_row(char *file_name)
     return i;
 }
 
-
 // read whitelist from file
 
 char **read_txt(char *file_name, size_t nrows)
@@ -253,7 +261,7 @@ bool in(node *root, char *element)
 
 char *substring(char *string, int position, int length)
 {
-    char *pointer =(char *) malloc(length + 1);
+    char *pointer = (char *)malloc(length + 1);
 
     if (pointer == NULL)
     {
@@ -285,26 +293,23 @@ void *producer(void *id)
 
     while (1)
     {
-        while (!is_full(reader_buffer))
+        fastq *I1 = get_fastq(file_in[0]);
+        if (flag == 1)
         {
-            fastq *I1 = get_fastq(file_in[0]);
-            if (flag == 1)
-            {
-                printf("Producer thread %d is exiting!\n", producer_id);
-                pthread_exit(NULL);
-            }
-            fastq *R1 = get_fastq(file_in[1]);
-            fastq *R2 = get_fastq(file_in[2]);
-
-            // printf("Producer:\n %s%s%s", R1->id, R1->seq, R1->qual);
-
-            comb_fastq *comb = malloc(sizeof(comb_fastq));
-            comb->I1 = I1;
-            comb->R1 = R1;
-            comb->R2 = R2;
-
-            enqueue(reader_buffer, comb);
+            printf("Producer thread %d is exiting!\n", producer_id);
+            pthread_exit(NULL);
         }
+        fastq *R1 = get_fastq(file_in[1]);
+        fastq *R2 = get_fastq(file_in[2]);
+
+        // printf("Producer:\n %s%s%s", R1->id, R1->seq, R1->qual);
+
+        comb_fastq *comb = malloc(sizeof(comb_fastq));
+        comb->I1 = I1;
+        comb->R1 = R1;
+        comb->R2 = R2;
+
+        enqueue(reader_buffer, comb, &queue_lock_i, &not_full_i, &not_empty_i);
     }
 }
 
@@ -314,45 +319,56 @@ void *consumer(void *id)
     printf("Consumer thread %d is running!\n", consumer_id);
     while (1)
     {
-        while (!is_empty(reader_buffer))
-        {
-            comb_fastq *comb = dequeue(reader_buffer);
 
-            fastq *I1 = comb->I1;
-            fastq *R1 = comb->R1;
-            fastq *R2 = comb->R2;
-
-            // printf("Consumer:\n%s%s%s", comb->R1->id, comb->R1->seq, comb->R1->qual);
-
-            char *cell_barcode = substring(R1->seq, 0, 16);
-
-            // printf("random number: %f \n", comb->random_number);
-
-            if (comb->random_number <= rate_threshold && in(tree_whitelist, cell_barcode))
-            {
-                pthread_mutex_lock(&write_mutex);
-                char *comb_I1 = combine_string(I1);
-                char *comb_R1 = combine_string(R1);
-                char *comb_R2 = combine_string(R2);
-                gzputs(file_out[0], comb_I1);
-                gzputs(file_out[1], comb_R1);
-                gzputs(file_out[2], comb_R2);
-                free(comb_I1);
-                free(comb_R1);
-                free(comb_R2);
-                pthread_mutex_unlock(&write_mutex);
-            }
-            free(cell_barcode);
-            free_comb_fastq(comb);
-        }
         if (flag == 1 && is_empty(reader_buffer))
         {
             printf("Consumer thread %d is exiting!\n", consumer_id);
             pthread_exit(NULL);
         }
+
+        comb_fastq *comb = dequeue(reader_buffer, &queue_lock_i, &not_full_i, &not_empty_i);
+
+        // printf("Consumer:\n%s%s%s", comb->R1->id, comb->R1->seq, comb->R1->qual);
+
+        char *cell_barcode = substring(comb->R1->seq, 0, 16);
+
+        // printf("random number: %f \n", comb->random_number);
+
+        if (comb->random_number <= rate_threshold && in(tree_whitelist, cell_barcode))
+        {
+            enqueue(writer_buffer, comb, &queue_lock_o, &not_full_o, &not_empty_o);
+        }
+        free(cell_barcode);
     }
 
     // printf("processor is working!\n");
+}
+
+void *writer()
+{
+    printf("Writer thread is running!\n");
+    while (1)
+    {
+        if (flag == 1 && is_empty(writer_buffer))
+        {
+            printf("Writer thread is exiting!\n");
+            pthread_exit(NULL);
+        }
+        comb_fastq *comb = dequeue(writer_buffer, &queue_lock_o, &not_full_o, &not_empty_o);
+
+        char *I1 = combine_string(comb->I1);
+        char *R1 = combine_string(comb->R1);
+        char *R2 = combine_string(comb->R2);
+
+        gzputs(file_out[0], I1);
+        gzputs(file_out[1], R1);
+        gzputs(file_out[2], R2);
+
+        free(I1);
+        free(R1);
+        free(R2);
+        free_comb_fastq(comb);
+    }
 }
 
 // int main()

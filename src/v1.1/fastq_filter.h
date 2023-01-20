@@ -70,6 +70,7 @@ gzFile file_in[3];
 
 // shared data by the processors and writer
 //------------------------------------------------
+queue *writer_buffer;
 gzFile file_out[3];
 node *tree_whitelist;
 double rate_threshold;
@@ -83,9 +84,16 @@ bool is_empty(struct queue *q);
 bool is_full(struct queue *q);
 
 
-void enqueue(struct queue *q, comb_fastq *value);
+void enqueue(struct queue *q,
+             comb_fastq *value,
+             pthread_mutex_t *queue_lock,
+             pthread_cond_t *not_full,
+             pthread_cond_t *not_empty);
 
-comb_fastq *dequeue(struct queue *q);
+comb_fastq *dequeue(struct queue *q,
+                    pthread_mutex_t *queue_lock,
+                    pthread_cond_t *not_full,
+                    pthread_cond_t *not_empty);
 
 fastq *get_fastq(gzFile file);
 

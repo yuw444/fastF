@@ -24,7 +24,7 @@ It is designed to be run with multiple threads.
 #define MAX_LINE_LENGTH 128
 #define LEN_CELLBARCODE 16
 #define LEN_WHITELIST 2 ^ 15
-#define NUM_CONSUMERS 1
+#define NUM_CONSUMERS 2
 #define NUM_PRODUCERS 1
 
 // struct node of binary searching tree
@@ -70,6 +70,7 @@ gzFile file_in[3];
 
 // shared data by the processors and writer
 //------------------------------------------------
+queue *writer_buffer;
 gzFile file_out[3];
 node *tree_whitelist;
 double rate_threshold;
