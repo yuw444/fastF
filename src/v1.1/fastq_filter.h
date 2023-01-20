@@ -24,7 +24,7 @@ It is designed to be run with multiple threads.
 #define MAX_LINE_LENGTH 128
 #define LEN_CELLBARCODE 16
 #define LEN_WHITELIST 2 ^ 15
-#define NUM_CONSUMERS 1
+#define NUM_CONSUMERS 4
 #define NUM_PRODUCERS 1
 
 // struct node of binary searching tree

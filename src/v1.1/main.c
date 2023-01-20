@@ -267,6 +267,4 @@ int main(int argc, const char **argv)
     return 0;
 }
 
-//Elapsed: 397.7s multi-threading with 4 threads
-//Elapsed: 378.906889 seconds used `gzbuffer` to speed up with 4 consumer and 128k buffer
-//Elapsed: 307.436405 seconds used `gzbuffer` to speed up with 1 consumer and 128k buffer
+// 397.7s
