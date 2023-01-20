@@ -6,6 +6,20 @@
 
 #IncludeRegexTransform: 
 
+/home/fastF/src/v1.0.9/argparse.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+assert.h
+-
+errno.h
+-
+argparse.h
+/home/fastF/src/v1.0.9/argparse.h
+
 /home/fastF/src/v1.0.9/argparse.h
 stdint.h
 -
@@ -13,10 +27,6 @@ stdint.h
 /home/fastF/src/v1.0.9/fastq_filter.c
 fastq_filter.h
 /home/fastF/src/v1.0.9/fastq_filter.h
-argparse.h
-/home/fastF/src/v1.0.9/argparse.h
-time.h
--
 
 /home/fastF/src/v1.0.9/fastq_filter.h
 stdio.h
@@ -35,4 +45,14 @@ stdbool.h
 -
 pthread.h
 -
+time.h
+-
+
+/home/fastF/src/v1.0.9/main.c
+dirent.h
+-
+argparse.h
+/home/fastF/src/v1.0.9/argparse.h
+fastq_filter.h
+/home/fastF/src/v1.0.9/fastq_filter.h
 

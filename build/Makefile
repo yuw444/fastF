@@ -111,30 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_parse
+# Target rules for targets named test_main
 
 # Build rule for target.
-test_parse: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_parse
-.PHONY : test_parse
+test_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_main
+.PHONY : test_main
 
 # fast build rule for target.
-test_parse/fast:
-	$(MAKE) -f CMakeFiles/test_parse.dir/build.make CMakeFiles/test_parse.dir/build
-.PHONY : test_parse/fast
-
-#=============================================================================
-# Target rules for targets named test
-
-# Build rule for target.
-test: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test
-.PHONY : test
-
-# fast build rule for target.
-test/fast:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/build
-.PHONY : test/fast
+test_main/fast:
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/build
+.PHONY : test_main/fast
 
 src/v1.0.9/argparse.o: src/v1.0.9/argparse.c.o
 
@@ -142,7 +129,7 @@ src/v1.0.9/argparse.o: src/v1.0.9/argparse.c.o
 
 # target to build an object file
 src/v1.0.9/argparse.c.o:
-	$(MAKE) -f CMakeFiles/test_parse.dir/build.make CMakeFiles/test_parse.dir/src/v1.0.9/argparse.c.o
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.o
 .PHONY : src/v1.0.9/argparse.c.o
 
 src/v1.0.9/argparse.i: src/v1.0.9/argparse.c.i
@@ -151,7 +138,7 @@ src/v1.0.9/argparse.i: src/v1.0.9/argparse.c.i
 
 # target to preprocess a source file
 src/v1.0.9/argparse.c.i:
-	$(MAKE) -f CMakeFiles/test_parse.dir/build.make CMakeFiles/test_parse.dir/src/v1.0.9/argparse.c.i
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.i
 .PHONY : src/v1.0.9/argparse.c.i
 
 src/v1.0.9/argparse.s: src/v1.0.9/argparse.c.s
@@ -160,7 +147,7 @@ src/v1.0.9/argparse.s: src/v1.0.9/argparse.c.s
 
 # target to generate assembly for a file
 src/v1.0.9/argparse.c.s:
-	$(MAKE) -f CMakeFiles/test_parse.dir/build.make CMakeFiles/test_parse.dir/src/v1.0.9/argparse.c.s
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.s
 .PHONY : src/v1.0.9/argparse.c.s
 
 src/v1.0.9/fastq_filter.o: src/v1.0.9/fastq_filter.c.o
@@ -169,7 +156,7 @@ src/v1.0.9/fastq_filter.o: src/v1.0.9/fastq_filter.c.o
 
 # target to build an object file
 src/v1.0.9/fastq_filter.c.o:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.o
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.o
 .PHONY : src/v1.0.9/fastq_filter.c.o
 
 src/v1.0.9/fastq_filter.i: src/v1.0.9/fastq_filter.c.i
@@ -178,7 +165,7 @@ src/v1.0.9/fastq_filter.i: src/v1.0.9/fastq_filter.c.i
 
 # target to preprocess a source file
 src/v1.0.9/fastq_filter.c.i:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.i
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.i
 .PHONY : src/v1.0.9/fastq_filter.c.i
 
 src/v1.0.9/fastq_filter.s: src/v1.0.9/fastq_filter.c.s
@@ -187,35 +174,35 @@ src/v1.0.9/fastq_filter.s: src/v1.0.9/fastq_filter.c.s
 
 # target to generate assembly for a file
 src/v1.0.9/fastq_filter.c.s:
-	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/src/v1.0.9/fastq_filter.c.s
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.s
 .PHONY : src/v1.0.9/fastq_filter.c.s
 
-src/v1.0.9/fastq_parse.o: src/v1.0.9/fastq_parse.c.o
+src/v1.0.9/main.o: src/v1.0.9/main.c.o
 
-.PHONY : src/v1.0.9/fastq_parse.o
+.PHONY : src/v1.0.9/main.o
 
 # target to build an object file
-src/v1.0.9/fastq_parse.c.o:
-	$(MAKE) -f CMakeFiles/test_parse.dir/build.make CMakeFiles/test_parse.dir/src/v1.0.9/fastq_parse.c.o
-.PHONY : src/v1.0.9/fastq_parse.c.o
+src/v1.0.9/main.c.o:
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/main.c.o
+.PHONY : src/v1.0.9/main.c.o
 
-src/v1.0.9/fastq_parse.i: src/v1.0.9/fastq_parse.c.i
+src/v1.0.9/main.i: src/v1.0.9/main.c.i
 
-.PHONY : src/v1.0.9/fastq_parse.i
+.PHONY : src/v1.0.9/main.i
 
 # target to preprocess a source file
-src/v1.0.9/fastq_parse.c.i:
-	$(MAKE) -f CMakeFiles/test_parse.dir/build.make CMakeFiles/test_parse.dir/src/v1.0.9/fastq_parse.c.i
-.PHONY : src/v1.0.9/fastq_parse.c.i
+src/v1.0.9/main.c.i:
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/main.c.i
+.PHONY : src/v1.0.9/main.c.i
 
-src/v1.0.9/fastq_parse.s: src/v1.0.9/fastq_parse.c.s
+src/v1.0.9/main.s: src/v1.0.9/main.c.s
 
-.PHONY : src/v1.0.9/fastq_parse.s
+.PHONY : src/v1.0.9/main.s
 
 # target to generate assembly for a file
-src/v1.0.9/fastq_parse.c.s:
-	$(MAKE) -f CMakeFiles/test_parse.dir/build.make CMakeFiles/test_parse.dir/src/v1.0.9/fastq_parse.c.s
-.PHONY : src/v1.0.9/fastq_parse.c.s
+src/v1.0.9/main.c.s:
+	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.0.9/main.c.s
+.PHONY : src/v1.0.9/main.c.s
 
 # Help Target
 help:
@@ -224,18 +211,17 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... test_parse"
 	@echo "... edit_cache"
-	@echo "... test"
+	@echo "... test_main"
 	@echo "... src/v1.0.9/argparse.o"
 	@echo "... src/v1.0.9/argparse.i"
 	@echo "... src/v1.0.9/argparse.s"
 	@echo "... src/v1.0.9/fastq_filter.o"
 	@echo "... src/v1.0.9/fastq_filter.i"
 	@echo "... src/v1.0.9/fastq_filter.s"
-	@echo "... src/v1.0.9/fastq_parse.o"
-	@echo "... src/v1.0.9/fastq_parse.i"
-	@echo "... src/v1.0.9/fastq_parse.s"
+	@echo "... src/v1.0.9/main.o"
+	@echo "... src/v1.0.9/main.i"
+	@echo "... src/v1.0.9/main.s"
 .PHONY : help
 
 

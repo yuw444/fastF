@@ -1,4 +1,3 @@
 /home/fastF/build/CMakeFiles/rebuild_cache.dir
-/home/fastF/build/CMakeFiles/test_parse.dir
 /home/fastF/build/CMakeFiles/edit_cache.dir
-/home/fastF/build/CMakeFiles/test.dir
+/home/fastF/build/CMakeFiles/test_main.dir
