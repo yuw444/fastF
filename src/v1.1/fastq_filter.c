@@ -10,6 +10,7 @@ It is designed to be run with multiple threads.
 #include "fastq_filter.h"
 
 long int num_waits = 0;
+long int num_waits_read = 0;
 int flag = 0; // flag to indicate the end of the program
 
 pthread_mutex_t queue_lock_i = PTHREAD_MUTEX_INITIALIZER;
@@ -61,31 +62,33 @@ void enqueue(struct queue *q,
              comb_fastq *value,
              pthread_mutex_t *queue_lock,
              pthread_cond_t *not_full,
-             pthread_cond_t *not_empty)
+             pthread_cond_t *not_empty,
+             char *id)
 {
-    pthread_mutex_lock(&queue_lock);
+    pthread_mutex_lock(queue_lock);
     while (is_full(q))
     {
-        printf("queue is full, waiting deque!\n");
-        pthread_cond_wait(&not_full, &queue_lock);
+        printf("%s queue is full, waiting deque! %ld\n", id, num_waits_read++);
+        pthread_cond_wait(not_full, queue_lock);
     }
     value->random_number = (double)rand() / (double)RAND_MAX;
     q->data[q->tail] = value;
     q->tail = (q->tail + 1) % MAX_QUEUE_SIZE;
     q->size++;
-    pthread_cond_signal(&not_empty);
-    pthread_mutex_unlock(&queue_lock);
+    pthread_cond_signal(not_empty);
+    pthread_mutex_unlock(queue_lock);
 }
 
 comb_fastq *dequeue(struct queue *q,
                     pthread_mutex_t *queue_lock,
                     pthread_cond_t *not_full,
-                    pthread_cond_t *not_empty)
+                    pthread_cond_t *not_empty,
+                    char *id)
 {
     pthread_mutex_lock(queue_lock);
     while (is_empty(q))
     {
-        printf("queue is empty, waiting enque! %ld \n", num_waits++);
+        printf("%s queue is empty, waiting enque! %ld \n", id, num_waits++);
         pthread_cond_wait(not_empty, queue_lock);
     }
     comb_fastq *value = q->data[q->head];
@@ -286,49 +289,67 @@ char *combine_string(fastq *block)
 }
 
 // Function reader
-void *producer(void *id)
+void *reader(void *id)
 {
-    int producer_id = *((int *)id);
-    printf("Producer thread %d is running!\n", producer_id);
+    int reader_id = *((int *)id);
+    printf("Reader thread %d is running!\n", reader_id);
+
+    char temp[100];
+    sprintf(temp, "%s%d", "Reader", reader_id);
+
+    int counts = 0;
 
     while (1)
     {
         fastq *I1 = get_fastq(file_in[0]);
         if (flag == 1)
         {
-            printf("Producer thread %d is exiting!\n", producer_id);
+            printf("Reader thread %d is exiting!\n", reader_id);
             pthread_exit(NULL);
         }
         fastq *R1 = get_fastq(file_in[1]);
         fastq *R2 = get_fastq(file_in[2]);
 
-        // printf("Producer:\n %s%s%s", R1->id, R1->seq, R1->qual);
+        // printf("Reader:\n %s%s%s", R1->id, R1->seq, R1->qual);
 
         comb_fastq *comb = malloc(sizeof(comb_fastq));
         comb->I1 = I1;
         comb->R1 = R1;
         comb->R2 = R2;
 
-        enqueue(reader_buffer, comb, &queue_lock_i, &not_full_i, &not_empty_i);
+        enqueue(reader_buffer, comb, &queue_lock_i, &not_full_i, &not_empty_i, temp);
+
+        counts++;
+
+        if (counts == 100000)
+        {
+            sleep(0.01);
+            counts = 0;
+        }
     }
 }
 
-void *consumer(void *id)
+void *processor(void *id)
 {
-    int consumer_id = *((int *)id);
-    printf("Consumer thread %d is running!\n", consumer_id);
+    int processor_id = *((int *)id);
+    printf("Processor thread %d is running!\n", processor_id);
+
+    char temp[100];
+    sprintf(temp, "%s%d", "Processor", processor_id);
+
+    sleep(0.001);
+
     while (1)
     {
-
         if (flag == 1 && is_empty(reader_buffer))
         {
-            printf("Consumer thread %d is exiting!\n", consumer_id);
+            printf("Processor thread %d is exiting!\n", processor_id);
             pthread_exit(NULL);
         }
 
-        comb_fastq *comb = dequeue(reader_buffer, &queue_lock_i, &not_full_i, &not_empty_i);
+        comb_fastq *comb = dequeue(reader_buffer, &queue_lock_i, &not_full_i, &not_empty_i, temp);
 
-        // printf("Consumer:\n%s%s%s", comb->R1->id, comb->R1->seq, comb->R1->qual);
+        // printf("Processor:\n%s%s%s", comb->R1->id, comb->R1->seq, comb->R1->qual);
 
         char *cell_barcode = substring(comb->R1->seq, 0, 16);
 
@@ -336,7 +357,11 @@ void *consumer(void *id)
 
         if (comb->random_number <= rate_threshold && in(tree_whitelist, cell_barcode))
         {
-            enqueue(writer_buffer, comb, &queue_lock_o, &not_full_o, &not_empty_o);
+            enqueue(writer_buffer, comb, &queue_lock_o, &not_full_o, &not_empty_o, temp);
+        }
+        else
+        {
+            free_comb_fastq(comb);
         }
         free(cell_barcode);
     }
@@ -344,17 +369,24 @@ void *consumer(void *id)
     // printf("processor is working!\n");
 }
 
-void *writer()
+void *writer(void *id)
 {
-    printf("Writer thread is running!\n");
+    sleep(0.002);
+
+    int writer_id = *((int *)id);
+    printf("Writer thread %d is running!\n", writer_id);
+
+    char temp[100];
+    sprintf(temp, "%s%d", "Writer", writer_id);
+
     while (1)
     {
         if (flag == 1 && is_empty(writer_buffer))
         {
-            printf("Writer thread is exiting!\n");
+            printf("Writer thread %d is exiting!\n", writer_id);
             pthread_exit(NULL);
         }
-        comb_fastq *comb = dequeue(writer_buffer, &queue_lock_o, &not_full_o, &not_empty_o);
+        comb_fastq *comb = dequeue(writer_buffer, &queue_lock_o, &not_full_o, &not_empty_o, temp);
 
         char *I1 = combine_string(comb->I1);
         char *R1 = combine_string(comb->R1);
@@ -410,36 +442,36 @@ void *writer()
 //     printf("t1 = %d\n", t1);
 
 //     // print_tree(tree_whitelist);
-//     int *prod_id = malloc(NUM_PRODUCERS * sizeof(int));
-//     int *cons_id = malloc(NUM_CONSUMERS * sizeof(int));
+//     int *prod_id = malloc(NUM_READERS * sizeof(int));
+//     int *cons_id = malloc(NUM_PROCESSORS * sizeof(int));
 
-//     pthread_t producer_thread[NUM_PRODUCERS];
-//     pthread_t consumer_thread[NUM_CONSUMERS];
+//     pthread_t reader_thread[NUM_READERS];
+//     pthread_t processor_thread[NUM_PROCESSORS];
 
-//     for (int i = 0; i < NUM_PRODUCERS; i++)
+//     for (int i = 0; i < NUM_READERS; i++)
 //     {
 //         prod_id[i] = i;
-//         pthread_create(&producer_thread[i], NULL, producer, &prod_id[i]);
+//         pthread_create(&reader_thread[i], NULL, reader, &prod_id[i]);
 //     }
 
 //     sleep(1);
 
-//     for (int i = 0; i < NUM_CONSUMERS; i++)
+//     for (int i = 0; i < NUM_PROCESSORS; i++)
 //     {
 //         cons_id[i] = i;
-//         pthread_create(&consumer_thread[i], NULL, consumer, &cons_id[i]);
+//         pthread_create(&processor_thread[i], NULL, processor, &cons_id[i]);
 //     }
 
 //     // wait for the reader and processor threads to finish
-//     for (int i = 0; i < NUM_PRODUCERS; i++)
+//     for (int i = 0; i < NUM_READERS; i++)
 //     {
-//         pthread_join(producer_thread[i], NULL);
+//         pthread_join(reader_thread[i], NULL);
 //     }
 
-//     for (int i = 0; i < NUM_CONSUMERS; i++)
+//     for (int i = 0; i < NUM_PROCESSORS; i++)
 //     {
 
-//         pthread_join(consumer_thread[i], NULL);
+//         pthread_join(processor_thread[i], NULL);
 //     }
 
 //     free(cons_id);

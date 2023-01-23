@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.o"
-  "CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.o"
-  "CMakeFiles/test_main.dir/src/v1.0.9/main.c.o"
+  "CMakeFiles/test_main.dir/src/v1.1/argparse.c.o"
+  "CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.o"
+  "CMakeFiles/test_main.dir/src/v1.1/main.c.o"
   "test_main"
   "test_main.pdb"
 )

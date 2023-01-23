@@ -14,7 +14,8 @@ int main(int argc, const char **argv)
 {
     double startTime = clock();
 
-    const char *whitelist_arg = NULL;
+    char *whitelist_arg = NULL;
+    int seed_arg = 926;
     float rate_arg = 0.f;
     const char *path_i_arg = ".";
     const char *path_o_arg = ".";
@@ -23,10 +24,11 @@ int main(int argc, const char **argv)
         OPT_HELP(),
         OPT_GROUP("Basic options"),
         OPT_STRING('w', "whitelist", &whitelist_arg, "whitelist of cell barcodes", NULL, 0, 0),
+        OPT_INTEGER('s', "seed", &seed_arg, "seed for random number generator", NULL, 0, 0),
         OPT_FLOAT('r', "rate", &rate_arg, "rate of reads to keep after matching cell_barcode", NULL, 0, 0),
         OPT_STRING('i', "in", &path_i_arg, "dir to sample fastq files", NULL, 0, 0),
         OPT_STRING('o', "out", &path_o_arg, "dir to output fastq files", NULL, 0, 0),
-        OPT_STRING('s', "sample", &sample_arg, "sample name of fastq files", NULL, 0, 0),
+        OPT_STRING('n', "sample", &sample_arg, "sample name of fastq files", NULL, 0, 0),
         OPT_END(),
     };
 
@@ -62,6 +64,7 @@ int main(int argc, const char **argv)
 
             errno = 0;
             int ret = mkdir(output_fold, 0777);
+            free(output_fold);
             if (ret == -1)
             {
                 switch (errno)
@@ -106,7 +109,7 @@ int main(int argc, const char **argv)
                         printf("Error: more than 3 fastq files with name start with %s in %s \n", sample_arg, path_i_arg);
                         closedir(dir_i);
                         closedir(dir_o);
-                        
+
                         exit(1);
                     }
                 }
@@ -150,8 +153,8 @@ int main(int argc, const char **argv)
 
     for (int j = 0; j < 3; j++)
     {
-        file_in_path[j] = malloc(strlen(path_i_arg) + strlen(file_in_names[j]) + 2);
-        file_out_path[j] = malloc(strlen(path_o_arg) + strlen(file_in_names[j]) + 2);
+        file_in_path[j] = malloc(strlen(path_i_arg) + strlen(file_in_names[j]) + 100);
+        file_out_path[j] = malloc(strlen(path_o_arg) + strlen(file_in_names[j]) + 100);
     }
 
     sprintf(file_in_path[0], "%s/%s", path_i_arg, I1);
@@ -186,9 +189,8 @@ int main(int argc, const char **argv)
         gzbuffer(file_out[j], 128 * 1024);
     }
 
-    unsigned int seed = 926;
-    srand(seed);
     reader_buffer = init_queue();
+    writer_buffer = init_queue();
 
     rate_threshold = rate_arg;
 
@@ -204,40 +206,57 @@ int main(int argc, const char **argv)
     int t1 = in(tree_whitelist, "TTTGGTTGTGACCAAG");
     printf("t1 = %d\n", t1);
 
-    int *prod_id = malloc(NUM_PRODUCERS * sizeof(int));
-    int *cons_id = malloc(NUM_CONSUMERS * sizeof(int));
+    int *reader_id = malloc(NUM_READERS * sizeof(int));
+    int *proc_id = malloc(NUM_PROCESSORS * sizeof(int));
+    int *writer_id = malloc(NUM_WRITERS * sizeof(int));
 
-    pthread_t producer_thread[NUM_PRODUCERS];
-    pthread_t consumer_thread[NUM_CONSUMERS];
+    srand(seed_arg);
 
-    for (int i = 0; i < NUM_PRODUCERS; i++)
+    pthread_t reader_thread[NUM_READERS];
+    pthread_t processor_thread[NUM_PROCESSORS];
+    pthread_t writer_thread[NUM_WRITERS];
+
+    for (int i = 0; i < NUM_READERS; i++)
     {
-        prod_id[i] = i;
-        pthread_create(&producer_thread[i], NULL, producer, &prod_id[i]);
+        reader_id[i] = i;
+        pthread_create(&reader_thread[i], NULL, reader, &reader_id[i]);
     }
 
     sleep(1);
 
-    for (int i = 0; i < NUM_CONSUMERS; i++)
+    for (int i = 0; i < NUM_PROCESSORS; i++)
     {
-        cons_id[i] = i;
-        pthread_create(&consumer_thread[i], NULL, consumer, &cons_id[i]);
+        proc_id[i] = i;
+        pthread_create(&processor_thread[i], NULL, processor, &proc_id[i]);
+    }
+
+    for (int i = 0; i < NUM_WRITERS; i++)
+    {
+        writer_id[i] = i;
+        pthread_create(&writer_thread[i], NULL, writer, &writer_id[i]);
     }
 
     // wait for the reader and processor threads to finish
-    for (int i = 0; i < NUM_PRODUCERS; i++)
+    for (int i = 0; i < NUM_READERS; i++)
     {
-        pthread_join(producer_thread[i], NULL);
+        pthread_join(reader_thread[i], NULL);
     }
 
-    for (int i = 0; i < NUM_CONSUMERS; i++)
+    for (int i = 0; i < NUM_PROCESSORS; i++)
     {
-
-        pthread_join(consumer_thread[i], NULL);
+        pthread_join(processor_thread[i], NULL);
     }
 
-    free(cons_id);
+    for (int i = 0; i < NUM_WRITERS; i++)
+    {
+        pthread_join(writer_thread[i], NULL);
+    }
+
+    free(proc_id);
+    free(reader_id);
+    free(writer_id);
     free(reader_buffer);
+    free(writer_buffer);
 
     free_tree_node(tree_whitelist);
     free(whitelist);
@@ -267,4 +286,14 @@ int main(int argc, const char **argv)
     return 0;
 }
 
-// 397.7s
+// ./test_main -w ../data/whitelist.txt -r 1.0 -i ../data -o ../data/ -n test
+
+// ./test_main -w /home/rstudio/Frag/data/whitelist.txt -r 1.0 -i /home/rstudio/Frag/data -o /home/rstudio/Frag/data/ -n test
+
+// Elapsed: 397.7s multi-threading with 4 threads
+// Elapsed: 307.436405 seconds used `gzbuffer` to speed up with 1 consumer and 128k buffer
+// Elapsed: 336.436405 seconds used `gzbuffer` to speed up with 2 consumer and 128k buffer
+// Elapsed: 378.906889 seconds used `gzbuffer` to speed up with 4 consumer and 128k buffer
+// Elapsed: 275.436405 seconds used `gzbuffer` to speed up with 1 reader, 1 processor, 1 writer and 128k buffer
+// Elapsed: 374.329000 seconds used `gzbuffer` to speed up with 1 reader, 3 processor, 1 writer and 128k buffer
+// Elapsed: 374.329000 seconds used `gzbuffer` to speed up with 1 reader, 3 processor, 2 writer and 128k buffer

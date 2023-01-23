@@ -57,57 +57,57 @@ include CMakeFiles/test_main.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/test_main.dir/flags.make
 
-CMakeFiles/test_main.dir/src/v1.0.9/main.c.o: CMakeFiles/test_main.dir/flags.make
-CMakeFiles/test_main.dir/src/v1.0.9/main.c.o: ../src/v1.0.9/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test_main.dir/src/v1.0.9/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test_main.dir/src/v1.0.9/main.c.o   -c /home/fastF/src/v1.0.9/main.c
+CMakeFiles/test_main.dir/src/v1.1/main.c.o: CMakeFiles/test_main.dir/flags.make
+CMakeFiles/test_main.dir/src/v1.1/main.c.o: ../src/v1.1/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/test_main.dir/src/v1.1/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test_main.dir/src/v1.1/main.c.o   -c /home/fastF/src/v1.1/main.c
 
-CMakeFiles/test_main.dir/src/v1.0.9/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test_main.dir/src/v1.0.9/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.0.9/main.c > CMakeFiles/test_main.dir/src/v1.0.9/main.c.i
+CMakeFiles/test_main.dir/src/v1.1/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test_main.dir/src/v1.1/main.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.1/main.c > CMakeFiles/test_main.dir/src/v1.1/main.c.i
 
-CMakeFiles/test_main.dir/src/v1.0.9/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test_main.dir/src/v1.0.9/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.0.9/main.c -o CMakeFiles/test_main.dir/src/v1.0.9/main.c.s
+CMakeFiles/test_main.dir/src/v1.1/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test_main.dir/src/v1.1/main.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.1/main.c -o CMakeFiles/test_main.dir/src/v1.1/main.c.s
 
-CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.o: CMakeFiles/test_main.dir/flags.make
-CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.o: ../src/v1.0.9/fastq_filter.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.o   -c /home/fastF/src/v1.0.9/fastq_filter.c
+CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.o: CMakeFiles/test_main.dir/flags.make
+CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.o: ../src/v1.1/fastq_filter.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.o   -c /home/fastF/src/v1.1/fastq_filter.c
 
-CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.0.9/fastq_filter.c > CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.i
+CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.1/fastq_filter.c > CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.i
 
-CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.0.9/fastq_filter.c -o CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.s
+CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.1/fastq_filter.c -o CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.s
 
-CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.o: CMakeFiles/test_main.dir/flags.make
-CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.o: ../src/v1.0.9/argparse.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.o   -c /home/fastF/src/v1.0.9/argparse.c
+CMakeFiles/test_main.dir/src/v1.1/argparse.c.o: CMakeFiles/test_main.dir/flags.make
+CMakeFiles/test_main.dir/src/v1.1/argparse.c.o: ../src/v1.1/argparse.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/test_main.dir/src/v1.1/argparse.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/test_main.dir/src/v1.1/argparse.c.o   -c /home/fastF/src/v1.1/argparse.c
 
-CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.0.9/argparse.c > CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.i
+CMakeFiles/test_main.dir/src/v1.1/argparse.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/test_main.dir/src/v1.1/argparse.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.1/argparse.c > CMakeFiles/test_main.dir/src/v1.1/argparse.c.i
 
-CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.0.9/argparse.c -o CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.s
+CMakeFiles/test_main.dir/src/v1.1/argparse.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/test_main.dir/src/v1.1/argparse.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.1/argparse.c -o CMakeFiles/test_main.dir/src/v1.1/argparse.c.s
 
 # Object files for target test_main
 test_main_OBJECTS = \
-"CMakeFiles/test_main.dir/src/v1.0.9/main.c.o" \
-"CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.o" \
-"CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.o"
+"CMakeFiles/test_main.dir/src/v1.1/main.c.o" \
+"CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.o" \
+"CMakeFiles/test_main.dir/src/v1.1/argparse.c.o"
 
 # External object files for target test_main
 test_main_EXTERNAL_OBJECTS =
 
-test_main: CMakeFiles/test_main.dir/src/v1.0.9/main.c.o
-test_main: CMakeFiles/test_main.dir/src/v1.0.9/fastq_filter.c.o
-test_main: CMakeFiles/test_main.dir/src/v1.0.9/argparse.c.o
+test_main: CMakeFiles/test_main.dir/src/v1.1/main.c.o
+test_main: CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.o
+test_main: CMakeFiles/test_main.dir/src/v1.1/argparse.c.o
 test_main: CMakeFiles/test_main.dir/build.make
 test_main: CMakeFiles/test_main.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable test_main"

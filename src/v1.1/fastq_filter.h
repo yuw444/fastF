@@ -24,9 +24,9 @@ It is designed to be run with multiple threads.
 #define MAX_LINE_LENGTH 128
 #define LEN_CELLBARCODE 16
 #define LEN_WHITELIST 2 ^ 15
-#define NUM_CONSUMERS 4
-#define NUM_PRODUCERS 1
-
+#define NUM_READERS 1    // number of reader thread has to be 1
+#define NUM_PROCESSORS 1 // number of processor thread could be more than 1
+#define NUM_WRITERS 1    // number of writer thread could be more than 1
 // struct node of binary searching tree
 typedef struct node
 {
@@ -76,34 +76,34 @@ node *tree_whitelist;
 double rate_threshold;
 //------------------------------------------------
 
-
 queue *init_queue();
 
 bool is_empty(struct queue *q);
 
 bool is_full(struct queue *q);
 
-
 void enqueue(struct queue *q,
              comb_fastq *value,
              pthread_mutex_t *queue_lock,
              pthread_cond_t *not_full,
-             pthread_cond_t *not_empty);
+             pthread_cond_t *not_empty,
+             char *id);
 
 comb_fastq *dequeue(struct queue *q,
                     pthread_mutex_t *queue_lock,
                     pthread_cond_t *not_full,
-                    pthread_cond_t *not_empty);
+                    pthread_cond_t *not_empty,
+                    char *id);
 
 fastq *get_fastq(gzFile file);
 
 comb_fastq *get_comb_fastq(gzFile fastq[3]);
 
 // read comb_fastq from file to buffer struct
-void *producer(void *id);
+void *reader(void *id);
 
 // filter buffer accordding to whitelist and write to file
-void *consumer(void *id);
+void *processor(void *id);
 
 // sorting function for whitelist
 
@@ -123,7 +123,6 @@ void free_tree_node(node *root);
 
 int get_row(char *file_name);
 
-
 // read whitelist from file
 
 char **read_txt(char *file_name, size_t nrows);
@@ -139,10 +138,13 @@ char *substring(char *string, int position, int length);
 char *combine_string(fastq *block);
 
 // Function reader
-void *producer(void *id);
+void *reader(void *id);
 
 // Function processor
-void *consumer(void *id);
+void *processor(void *id);
+
+// Function writer
+void *writer(void *id);
 
 // int main() {
 //     struct queue *q = init_queue();
