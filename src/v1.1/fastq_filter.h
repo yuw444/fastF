@@ -26,7 +26,7 @@ It is designed to be run with multiple threads.
 #define LEN_WHITELIST 2 ^ 15
 #define NUM_READERS 1    // number of reader thread has to be 1
 #define NUM_PROCESSORS 4 // number of processor thread could be more than 1
-#define NUM_WRITERS 4   // number of writer thread has to be 1
+#define NUM_WRITERS 4   // number of writer thread could be more than 1
 // struct node of binary searching tree
 typedef struct node
 {
