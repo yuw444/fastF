@@ -98,21 +98,21 @@ int main(int argc, const char **argv)
                     }
 
                     // printf("i is %d \n", i);
-
-                    if (i > 3)
-                    {
-                        for (int j = 0; j < 4; j++)
-                        {
-                            free(file_in_names[j]);
-                        }
-                        free(file_in_names);
-                        printf("Error: more than 3 fastq files with name start with %s in %s \n", sample_arg, path_i_arg);
-                        closedir(dir_i);
-                        closedir(dir_o);
-
-                        exit(1);
-                    }
                 }
+            }
+
+            if (i > 3)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    free(file_in_names[j]);
+                }
+                free(file_in_names);
+
+                printf("Error: more than 3 fastq files with name start with %s in %s \n", sample_arg, path_i_arg);
+                closedir(dir_i);
+                closedir(dir_o);
+                exit(1);
             }
 
             closedir(dir_i);

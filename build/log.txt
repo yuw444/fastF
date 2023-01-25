@@ -1,0 +1,1 @@
+Error: fastq file name is not in the format of sample_*_I1_*_.fastq.gz, sample_*_R1_*_.fastq.gz or sample_*_R2_*_.fastq.gz 

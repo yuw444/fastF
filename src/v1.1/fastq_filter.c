@@ -68,7 +68,7 @@ void enqueue(struct queue *q,
     pthread_mutex_lock(queue_lock);
     while (is_full(q))
     {
-        printf("%s queue is full, waiting deque! %ld\n", id, num_waits_read++);
+        // printf("%s queue is full, waiting deque! %ld\n", id, num_waits_read++);
         pthread_cond_wait(not_full, queue_lock);
     }
     value->random_number = (double)rand() / (double)RAND_MAX;
@@ -88,7 +88,7 @@ comb_fastq *dequeue(struct queue *q,
     pthread_mutex_lock(queue_lock);
     while (is_empty(q))
     {
-        printf("%s queue is empty, waiting enque! %ld \n", id, num_waits++);
+        // printf("%s queue is empty, waiting enque! %ld \n", id, num_waits++);
         pthread_cond_wait(not_empty, queue_lock);
     }
     comb_fastq *value = q->data[q->head];
@@ -321,11 +321,11 @@ void *reader(void *id)
 
         counts++;
 
-        if (counts == 100000)
-        {
-            sleep(0.01);
-            counts = 0;
-        }
+        // if (counts == 1000)
+        // {
+        //     sleep(0.01);
+        //     counts = 0;
+        // }
     }
 }
 
@@ -336,8 +336,6 @@ void *processor(void *id)
 
     char temp[100];
     sprintf(temp, "%s%d", "Processor", processor_id);
-
-    sleep(0.001);
 
     while (1)
     {
@@ -371,7 +369,7 @@ void *processor(void *id)
 
 void *writer(void *id)
 {
-    sleep(0.002);
+    // sleep(0.002);
 
     int writer_id = *((int *)id);
     printf("Writer thread %d is running!\n", writer_id);
@@ -386,15 +384,20 @@ void *writer(void *id)
             printf("Writer thread %d is exiting!\n", writer_id);
             pthread_exit(NULL);
         }
+
         comb_fastq *comb = dequeue(writer_buffer, &queue_lock_o, &not_full_o, &not_empty_o, temp);
 
         char *I1 = combine_string(comb->I1);
         char *R1 = combine_string(comb->R1);
         char *R2 = combine_string(comb->R2);
 
+        pthread_mutex_lock(&write_mutex);
+
         gzputs(file_out[0], I1);
         gzputs(file_out[1], R1);
         gzputs(file_out[2], R2);
+
+        pthread_mutex_unlock(&write_mutex);
 
         free(I1);
         free(R1);
