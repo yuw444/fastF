@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_main
+# Target rules for targets named fastF
 
 # Build rule for target.
-test_main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_main
-.PHONY : test_main
+fastF: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 fastF
+.PHONY : fastF
 
 # fast build rule for target.
-test_main/fast:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/build
-.PHONY : test_main/fast
+fastF/fast:
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/build
+.PHONY : fastF/fast
 
 src/v1.1/argparse.o: src/v1.1/argparse.c.o
 
@@ -129,7 +129,7 @@ src/v1.1/argparse.o: src/v1.1/argparse.c.o
 
 # target to build an object file
 src/v1.1/argparse.c.o:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/argparse.c.o
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/argparse.c.o
 .PHONY : src/v1.1/argparse.c.o
 
 src/v1.1/argparse.i: src/v1.1/argparse.c.i
@@ -138,7 +138,7 @@ src/v1.1/argparse.i: src/v1.1/argparse.c.i
 
 # target to preprocess a source file
 src/v1.1/argparse.c.i:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/argparse.c.i
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/argparse.c.i
 .PHONY : src/v1.1/argparse.c.i
 
 src/v1.1/argparse.s: src/v1.1/argparse.c.s
@@ -147,7 +147,7 @@ src/v1.1/argparse.s: src/v1.1/argparse.c.s
 
 # target to generate assembly for a file
 src/v1.1/argparse.c.s:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/argparse.c.s
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/argparse.c.s
 .PHONY : src/v1.1/argparse.c.s
 
 src/v1.1/fastq_filter.o: src/v1.1/fastq_filter.c.o
@@ -156,7 +156,7 @@ src/v1.1/fastq_filter.o: src/v1.1/fastq_filter.c.o
 
 # target to build an object file
 src/v1.1/fastq_filter.c.o:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.o
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/fastq_filter.c.o
 .PHONY : src/v1.1/fastq_filter.c.o
 
 src/v1.1/fastq_filter.i: src/v1.1/fastq_filter.c.i
@@ -165,7 +165,7 @@ src/v1.1/fastq_filter.i: src/v1.1/fastq_filter.c.i
 
 # target to preprocess a source file
 src/v1.1/fastq_filter.c.i:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.i
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/fastq_filter.c.i
 .PHONY : src/v1.1/fastq_filter.c.i
 
 src/v1.1/fastq_filter.s: src/v1.1/fastq_filter.c.s
@@ -174,7 +174,7 @@ src/v1.1/fastq_filter.s: src/v1.1/fastq_filter.c.s
 
 # target to generate assembly for a file
 src/v1.1/fastq_filter.c.s:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/fastq_filter.c.s
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/fastq_filter.c.s
 .PHONY : src/v1.1/fastq_filter.c.s
 
 src/v1.1/main.o: src/v1.1/main.c.o
@@ -183,7 +183,7 @@ src/v1.1/main.o: src/v1.1/main.c.o
 
 # target to build an object file
 src/v1.1/main.c.o:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/main.c.o
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/main.c.o
 .PHONY : src/v1.1/main.c.o
 
 src/v1.1/main.i: src/v1.1/main.c.i
@@ -192,7 +192,7 @@ src/v1.1/main.i: src/v1.1/main.c.i
 
 # target to preprocess a source file
 src/v1.1/main.c.i:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/main.c.i
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/main.c.i
 .PHONY : src/v1.1/main.c.i
 
 src/v1.1/main.s: src/v1.1/main.c.s
@@ -201,7 +201,7 @@ src/v1.1/main.s: src/v1.1/main.c.s
 
 # target to generate assembly for a file
 src/v1.1/main.c.s:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/src/v1.1/main.c.s
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.1/main.c.s
 .PHONY : src/v1.1/main.c.s
 
 # Help Target
@@ -212,7 +212,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... test_main"
+	@echo "... fastF"
 	@echo "... src/v1.1/argparse.o"
 	@echo "... src/v1.1/argparse.i"
 	@echo "... src/v1.1/argparse.s"

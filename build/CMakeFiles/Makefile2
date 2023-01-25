@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /home/fastF/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/test_main.dir/all
+all: CMakeFiles/fastF.dir/all
 
 .PHONY : all
 
@@ -63,36 +63,36 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/test_main.dir/clean
+clean: CMakeFiles/fastF.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/test_main.dir
+# Target rules for target CMakeFiles/fastF.dir
 
 # All Build rule for target.
-CMakeFiles/test_main.dir/all:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/depend
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fastF/build/CMakeFiles --progress-num=1,2,3,4 "Built target test_main"
-.PHONY : CMakeFiles/test_main.dir/all
+CMakeFiles/fastF.dir/all:
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/depend
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/fastF/build/CMakeFiles --progress-num=1,2,3,4 "Built target fastF"
+.PHONY : CMakeFiles/fastF.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/test_main.dir/rule: cmake_check_build_system
+CMakeFiles/fastF.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fastF/build/CMakeFiles 4
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/test_main.dir/all
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/fastF.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/fastF/build/CMakeFiles 0
-.PHONY : CMakeFiles/test_main.dir/rule
+.PHONY : CMakeFiles/fastF.dir/rule
 
 # Convenience name for target.
-test_main: CMakeFiles/test_main.dir/rule
+fastF: CMakeFiles/fastF.dir/rule
 
-.PHONY : test_main
+.PHONY : fastF
 
 # clean rule for target.
-CMakeFiles/test_main.dir/clean:
-	$(MAKE) -f CMakeFiles/test_main.dir/build.make CMakeFiles/test_main.dir/clean
-.PHONY : CMakeFiles/test_main.dir/clean
+CMakeFiles/fastF.dir/clean:
+	$(MAKE) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/clean
+.PHONY : CMakeFiles/fastF.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

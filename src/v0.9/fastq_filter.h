@@ -97,7 +97,7 @@ comb_fastq *dequeue(struct queue *q,
 
 fastq *get_fastq(gzFile file);
 
-comb_fastq *get_comb_fastq(gzFile fastq[3]);
+int get_comb_fastq(gzFile fastq[3], comb_fastq **block)
 
 // read comb_fastq from file to buffer struct
 void *reader(void *id);

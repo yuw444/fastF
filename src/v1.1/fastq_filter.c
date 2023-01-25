@@ -130,6 +130,7 @@ comb_fastq *get_comb_fastq(gzFile fastq[3])
     out->I1 = get_fastq(fastq[0]);
     out->R1 = get_fastq(fastq[1]);
     out->R2 = get_fastq(fastq[2]);
+    out->random_number = rand()/RAND_MAX;
 
     if (out->I1->id == NULL || out->R1->id == NULL || out->R2->id == NULL)
     {
