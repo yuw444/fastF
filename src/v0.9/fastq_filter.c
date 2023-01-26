@@ -232,7 +232,7 @@ void fastF(gzFile file_in[3],
                 {
                     char *cell_barcode = substring(block->R1->seq, 0, LEN_CELLBARCODE);
 
-                    if (in(tree_whitelist, cell_barcode))
+                    if (block->random_number < rate && in(tree_whitelist, cell_barcode))
                     {
 #pragma omp critical
                         {
