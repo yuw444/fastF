@@ -206,16 +206,17 @@ int main(int argc, const char **argv)
 
     printf("Reading whitelist...\n");
     int nrow = get_row(whitelist_arg);
-    printf("nrow = %d\n", nrow);
+    // printf("nrow = %d\n", nrow);
     char **whitelist = read_txt(whitelist_arg, nrow);
 
     qsort(whitelist, nrow, sizeof(char *), compare);
     tree_whitelist = construct_tree(whitelist, 0, nrow - 1);
 
     // print_tree(tree_whitelist);
-    int t1 = in(tree_whitelist, "TTTGGTTGTGACCAAG");
-    printf("t1 = %d\n", t1);
+    // int t1 = in(tree_whitelist, "TTTGGTTGTGACCAAG");
+    // printf("t1 = %d\n", t1);
 
+    printf("Processing fastq files...\n");
     fastF(file_in, file_out, tree_whitelist, seed_arg, rate_threshold);
 
     free_tree_node(tree_whitelist);

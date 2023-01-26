@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/fastF.dir/src/v1.1/argparse.c.o"
-  "CMakeFiles/fastF.dir/src/v1.1/fastq_filter.c.o"
-  "CMakeFiles/fastF.dir/src/v1.1/main.c.o"
+  "CMakeFiles/fastF.dir/src/v0.9/argparse.c.o"
+  "CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.o"
+  "CMakeFiles/fastF.dir/src/v0.9/main.c.o"
   "fastF"
   "fastF.pdb"
 )
