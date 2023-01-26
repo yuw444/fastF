@@ -14,25 +14,24 @@ int main(int argc, const char **argv)
 {
     double startTime = clock();
 
+    char *path_i_arg = ".";
+    char *path_o_arg = ".";
     char *whitelist_arg = NULL;
+    size_t len_cellbarcode = 16;
     int seed_arg = 926;
-    float rate_arg = 0.f;
-    size_t n_proc = 2;
-    size_t n_write = 2;
-    const char *path_i_arg = ".";
-    const char *path_o_arg = ".";
-    const char *sample_arg = NULL;
+    double rate_arg = 0.f;
+    char *sample_arg = NULL;
+
     struct argparse_option options[] = {
         OPT_HELP(),
         OPT_GROUP("Basic options"),
-        OPT_STRING('l', "whitelist", &whitelist_arg, "whitelist of cell barcodes", NULL, 0, 0),
-        OPT_INTEGER('s', "seed", &seed_arg, "seed for random number generator", NULL, 0, 0),
-        OPT_FLOAT('r', "rate", &rate_arg, "rate of reads to keep after matching cell_barcode", NULL, 0, 0),
         OPT_STRING('i', "in", &path_i_arg, "dir to sample fastq files", NULL, 0, 0),
         OPT_STRING('o', "out", &path_o_arg, "dir to output fastq files", NULL, 0, 0),
-        OPT_STRING('n', "sample", &sample_arg, "sample name of fastq files", NULL, 0, 0),
-        OPT_INTEGER('p', "n_proc", &n_proc, "number of threads for processing", NULL, 0, 0),
-        OPT_INTEGER('w', "n_write", &n_write, "number of threads for writing", NULL, 0, 0),
+        OPT_STRING('w', "whitelist", &whitelist_arg, "whitelist of cell barcodes", NULL, 0, 0),
+        OPT_INTEGER('l', "len", &len_cellbarcode, "length of cell barcode", NULL, 0, 0),
+        OPT_INTEGER('s', "seed", &seed_arg, "seed for random number generator", NULL, 0, 0),
+        OPT_FLOAT('r', "rate", &rate_arg, "rate of reads to keep after matching cell_barcode", NULL, 0, 0),
+        OPT_STRING('a', "sample", &sample_arg, "sample name of fastq files", NULL, 0, 0),
         OPT_END(),
     };
 
@@ -185,16 +184,23 @@ int main(int argc, const char **argv)
     /*      process fastq files     */
     /********************************/
 
+    // shared data by the reader and processors
+    //------------------------------------------------
+    gzFile file_in[3];
+    //------------------------------------------------
+
+    // shared data by the processors and writer
+    //------------------------------------------------
+    gzFile file_out[3];
+    node *tree_whitelist;
+    double rate_threshold;
+    //------------------------------------------------
+
     for (int j = 0; j < 3; j++)
     {
         file_in[j] = gzopen(file_in_path[j], "rb");
-        gzbuffer(file_in[j], 128 * 1024);
         file_out[j] = gzopen(file_out_path[j], "wb");
-        gzbuffer(file_out[j], 128 * 1024);
     }
-
-    reader_buffer = init_queue();
-    writer_buffer = init_queue();
 
     rate_threshold = rate_arg;
 
@@ -210,57 +216,7 @@ int main(int argc, const char **argv)
     int t1 = in(tree_whitelist, "TTTGGTTGTGACCAAG");
     printf("t1 = %d\n", t1);
 
-    int *reader_id = malloc(NUM_READERS * sizeof(int));
-    int *proc_id = malloc(n_proc * sizeof(int));
-    int *writer_id = malloc(n_write * sizeof(int));
-
-    srand(seed_arg);
-
-    pthread_t reader_thread[NUM_READERS];
-    pthread_t processor_thread[n_proc];
-    pthread_t writer_thread[n_write];
-
-    for (int i = 0; i < NUM_READERS; i++)
-    {
-        reader_id[i] = i;
-        pthread_create(&reader_thread[i], NULL, reader, &reader_id[i]);
-    }
-
-    sleep(1);
-
-    for (int i = 0; i < n_proc; i++)
-    {
-        proc_id[i] = i;
-        pthread_create(&processor_thread[i], NULL, processor, &proc_id[i]);
-    }
-
-    for (int i = 0; i < n_write; i++)
-    {
-        writer_id[i] = i;
-        pthread_create(&writer_thread[i], NULL, writer, &writer_id[i]);
-    }
-
-    // wait for the reader and processor threads to finish
-    for (int i = 0; i < NUM_READERS; i++)
-    {
-        pthread_join(reader_thread[i], NULL);
-    }
-
-    for (int i = 0; i < n_proc; i++)
-    {
-        pthread_join(processor_thread[i], NULL);
-    }
-
-    for (int i = 0; i < n_write; i++)
-    {
-        pthread_join(writer_thread[i], NULL);
-    }
-
-    free(proc_id);
-    free(reader_id);
-    free(writer_id);
-    free(reader_buffer);
-    free(writer_buffer);
+    fastF(file_in, file_out, tree_whitelist, seed_arg, rate_threshold);
 
     free_tree_node(tree_whitelist);
     free(whitelist);

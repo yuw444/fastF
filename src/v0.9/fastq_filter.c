@@ -42,13 +42,27 @@ int get_comb_fastq(gzFile fastq[3], comb_fastq **block)
     (*block)->R2 = get_fastq(fastq[2]);
     (*block)->random_number = rand() / RAND_MAX;
 
-    if ((*block)->I1->id == NULL || (*block)->R1->id == NULL || (*block)->R2->id == NULL)
+    if ((*block)->I1 == NULL || (*block)->R1 == NULL || (*block)->R2 == NULL)
     {
         return -1;
     }
     return 0;
 }
+void free_fastq(fastq *block)
+{
+    free(block->id);
+    free(block->seq);
+    free(block->qual);
+    free(block);
+}
+void free_comb_fastq(comb_fastq *comb)
+{
+    free_fastq(comb->I1);
+    free_fastq(comb->R1);
+    free_fastq(comb->R2);
 
+    free(comb);
+}
 // sorting function for whitelist
 
 int compare(const void *a, const void *b)
@@ -202,11 +216,12 @@ void fastF(gzFile file_in[3],
            gzFile file_out[3],
            node *tree_whitelist,
            unsigned int seed,
-           float rate)
+           double rate)
 {
     srand(seed);
 
     comb_fastq *block = (comb_fastq *)malloc(sizeof(comb_fastq));
+
 #pragma omp parallel
     {
 #pragma omp single
@@ -215,73 +230,88 @@ void fastF(gzFile file_in[3],
             {
 #pragma omp task firstprivate(block)
                 {
-                    if (in(tree_whitelist, substring(block->R1->seq, 0, LEN_CELLBARCODE)))
+                    char *cell_barcode = substring(block->R1->seq, 0, LEN_CELLBARCODE);
+
+                    if (in(tree_whitelist, cell_barcode))
                     {
 #pragma omp critical
                         {
-                            gzputs(file_out[0], combine_string(block->I1));
-                            gzputs(file_out[1], combine_string(block->R1));
-                            gzputs(file_out[2], combine_string(block->R2));
+                            char *I1 = combine_string(block->I1);
+                            char *R1 = combine_string(block->R1);
+                            char *R2 = combine_string(block->R2);
+                            gzputs(file_out[0], I1);
+                            gzputs(file_out[1], R1);
+                            gzputs(file_out[2], R2);
+                            free(I1);
+                            free(R1);
+                            free(R2);
                         }
                     }
-                    free_comb_fastq(block);
+                    free(cell_barcode);
+                    free_fastq(block->I1);
+                    free_fastq(block->R1);
+                    free_fastq(block->R2);
                 }
             }
         }
     }
+
+    free(block);
 }
 
-int main()
-{
-    double startTime = clock();
+// int main()
+// {
+//     double startTime = clock();
 
-    unsigned int seed = 926;
-    srand(seed);
+//     unsigned int seed = 926;
+//     srand(seed);
 
-    file_in[0] = gzopen("/home/rstudio/Frag/data/AI_S1_L001_I1_001.fastq.gz", "rb");
-    file_in[1] = gzopen("/home/rstudio/Frag/data/AI_S1_L001_R1_001.fastq.gz", "rb");
-    file_in[2] = gzopen("/home/rstudio/Frag/data/AI_S1_L001_R1_001.fastq.gz", "rb");
+//     file_in[0] = gzopen("/home/rstudio/Frag/data/I1.fastq.gz", "rb");
+//     file_in[1] = gzopen("/home/rstudio/Frag/data/R1.fastq.gz", "rb");
+//     file_in[2] = gzopen("/home/rstudio/Frag/data/R2.fastq.gz", "rb");
 
-    file_out[0] = gzopen("/home/rstudio/Frag/data/I1_thread.fastq.gz", "wb");
-    file_out[1] = gzopen("/home/rstudio/Frag/data/R1_thread.fastq.gz", "wb");
-    file_out[2] = gzopen("/home/rstudio/Frag/data/R2_thread.fastq.gz", "wb");
+//     file_out[0] = gzopen("/home/rstudio/Frag/data/I1_openmp.fastq.gz", "wb");
+//     file_out[1] = gzopen("/home/rstudio/Frag/data/R1_openmp.fastq.gz", "wb");
+//     file_out[2] = gzopen("/home/rstudio/Frag/data/R2_openmp.fastq.gz", "wb");
 
-    rate_threshold = 0.8;
+//     rate_threshold = 0.8;
 
-    char *filename_whitelist = "../data/whitelist.txt";
+//     char *filename_whitelist = "../data/whitelist.txt";
 
-    printf("Reading whitelist...\n");
-    int nrow = get_row(filename_whitelist);
+//     printf("Reading whitelist...\n");
+//     int nrow = get_row(filename_whitelist);
 
-    printf("nrow = %d\n", nrow);
+//     printf("nrow = %d\n", nrow);
 
-    char **whitelist = read_txt(filename_whitelist, nrow);
+//     char **whitelist = read_txt(filename_whitelist, nrow);
 
-    qsort(whitelist, nrow, sizeof(char *), compare);
+//     qsort(whitelist, nrow, sizeof(char *), compare);
 
-    tree_whitelist = construct_tree(whitelist, 0, nrow - 1);
+//     tree_whitelist = construct_tree(whitelist, 0, nrow - 1);
 
-    // print_tree(tree_whitelist);
+//     // print_tree(tree_whitelist);
 
-    int t1 = in(tree_whitelist, "TTTGGTTGTGACCAAG");
+//     int t1 = in(tree_whitelist, "TTTGGTTGTGACCAAG");
 
-    printf("t1 = %d\n", t1);
+//     printf("t1 = %d\n", t1);
 
-    free_tree_node(tree_whitelist);
-    free(whitelist);
+//     fastF(file_in, file_out, tree_whitelist, seed, rate_threshold);
 
-    for (int i = 0; i < 3; i++)
-    {
-        gzclose(file_in[i]);
-        gzclose(file_out[i]);
-    }
+//     free_tree_node(tree_whitelist);
+//     free(whitelist);
 
-    double stopTime = clock();
+//     for (int i = 0; i < 3; i++)
+//     {
+//         gzclose(file_in[i]);
+//         gzclose(file_out[i]);
+//     }
 
-    double secsElapsed = (stopTime - startTime) / CLOCKS_PER_SEC;
+//     double stopTime = clock();
 
-    printf("Elapsed: %f seconds\n", secsElapsed);
-    return 0;
-}
+//     double secsElapsed = (stopTime - startTime) / CLOCKS_PER_SEC;
 
-// Elapsed: 403.236648 seconds
+//     printf("Elapsed: %f seconds\n", secsElapsed);
+//     return 0;
+// }
+
+// // Elapsed: 403.236648 seconds
