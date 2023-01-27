@@ -216,7 +216,8 @@ void fastF(gzFile file_in[3],
            gzFile file_out[3],
            node *tree_whitelist,
            unsigned int seed,
-           float rate)
+           float rate,
+           bool  all_cell)
 {
     srand(seed);
 
@@ -232,7 +233,7 @@ void fastF(gzFile file_in[3],
                 {
                     char *cell_barcode = substring(block->R1->seq, 0, LEN_CELLBARCODE);
 
-                    if (block->random_number < rate && in(tree_whitelist, cell_barcode))
+                    if (block->random_number < rate && (all_cell || in(tree_whitelist, cell_barcode)))
                     {
 #pragma omp critical
                         {

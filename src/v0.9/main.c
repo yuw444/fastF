@@ -19,8 +19,9 @@ int main(int argc, const char **argv)
     char *whitelist_arg = NULL;
     size_t len_cellbarcode = 16;
     int seed_arg = 926;
-    float rate_arg = 0.f;
     char *sample_arg = NULL;
+    float rate_arg = 0.f;
+    bool all_cell = false;
 
     struct argparse_option options[] = {
         OPT_HELP(),
@@ -30,8 +31,9 @@ int main(int argc, const char **argv)
         OPT_STRING('w', "whitelist", &whitelist_arg, "whitelist of cell barcodes", NULL, 0, 0),
         OPT_INTEGER('l', "len", &len_cellbarcode, "length of cell barcode", NULL, 0, 0),
         OPT_INTEGER('s', "seed", &seed_arg, "seed for random number generator", NULL, 0, 0),
-        OPT_FLOAT('r', "rate", &rate_arg, "rate of reads to keep after matching cell_barcode", NULL, 0, 0),
         OPT_STRING('a', "sample", &sample_arg, "sample name of fastq files", NULL, 0, 0),
+        OPT_FLOAT('r', "rate", &rate_arg, "rate of reads to keep after matching cell_barcode", NULL, 0, 0),
+        OPT_BOOLEAN('c', "allcells", &all_cell, "keep all reads with cell barcode", NULL, 0, 0),
         OPT_END(),
     };
 
@@ -214,7 +216,7 @@ int main(int argc, const char **argv)
     // printf("t1 = %d\n", t1);
 
     printf("Processing fastq files...\n");
-    fastF(file_in, file_out, tree_whitelist, seed_arg, rate_arg);
+    fastF(file_in, file_out, tree_whitelist, seed_arg, rate_arg, all_cell);
 
     free_tree_node(tree_whitelist);
     free(whitelist);
