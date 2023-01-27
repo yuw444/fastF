@@ -49,7 +49,7 @@ int main(int argc, const char **argv)
 
     int i = 0;
 
-    if (whitelist_arg != NULL && rate_arg != 0 && sample_arg != NULL)
+    if ((whitelist_arg != NULL || !all_cell) && rate_arg != 0 && sample_arg != NULL)
     {
         DIR *dir_i, *dir_o;
         struct dirent *ptr;
@@ -126,7 +126,7 @@ int main(int argc, const char **argv)
     }
     else
     {
-        printf("Error: missing arguments for whitelist, rate or sample\n");
+        printf("Error: missing arguments for whitelist, all_cell, rate or sample\n");
         exit(1);
     }
 
@@ -170,10 +170,13 @@ int main(int argc, const char **argv)
     sprintf(file_out_path[1], "%s/%s/%s", path_o_arg, sample_arg, R1);
     sprintf(file_out_path[2], "%s/%s/%s", path_o_arg, sample_arg, R2);
 
-    printf("whitelist is %s \n", whitelist_arg);
-    printf("rate is %f \n", rate_arg);
     printf("path_i is %s \n", path_i_arg);
     printf("path_o is %s \n", path_o_arg);
+    printf("rate is %f \n", rate_arg);
+    if (whitelist_arg != NULL && !all_cell)
+    {
+        printf("whitelist is %s \n", whitelist_arg);
+    }
     printf("sample is %s \n", sample_arg);
     printf("I1 is %s \n", file_in_path[0]);
     printf("R1 is %s \n", file_in_path[1]);
@@ -203,23 +206,34 @@ int main(int argc, const char **argv)
         file_out[j] = gzopen(file_out_path[j], "wb");
     }
 
-    printf("Reading whitelist...\n");
-    int nrow = get_row(whitelist_arg);
-    // printf("nrow = %d\n", nrow);
-    char **whitelist = read_txt(whitelist_arg, nrow);
+    if (whitelist_arg != NULL)
+    {
+        printf("Reading whitelist...\n");
+        int nrow = get_row(whitelist_arg);
+        // printf("nrow = %d\n", nrow);
+        char **whitelist = read_txt(whitelist_arg, nrow);
 
-    qsort(whitelist, nrow, sizeof(char *), compare);
-    tree_whitelist = construct_tree(whitelist, 0, nrow - 1);
+        qsort(whitelist, nrow, sizeof(char *), compare);
+        tree_whitelist = construct_tree(whitelist, 0, nrow - 1);
+
+        printf("Processing fastq files...\n");
+        fastF(file_in, file_out, tree_whitelist, seed_arg, rate_arg, all_cell);
+
+        free_tree_node(tree_whitelist);
+        free(whitelist);
+    } 
+    else
+    {   
+        printf("Subsample fastq files directly without cell barcode whitelist...\n");
+        printf("Processing fastq files...\n");
+        fastF(file_in, file_out, NULL, seed_arg, rate_arg, all_cell);
+    }
+
 
     // print_tree(tree_whitelist);
     // int t1 = in(tree_whitelist, "TTTGGTTGTGACCAAG");
     // printf("t1 = %d\n", t1);
 
-    printf("Processing fastq files...\n");
-    fastF(file_in, file_out, tree_whitelist, seed_arg, rate_arg, all_cell);
-
-    free_tree_node(tree_whitelist);
-    free(whitelist);
 
     for (int i = 0; i < 3; i++)
     {
@@ -248,7 +262,7 @@ int main(int argc, const char **argv)
 
 // ./test_main -w ../data/whitelist.txt -r 1.0 -i ../data -o ../data/ -n test
 
-// ./test_main -w /home/rstudio/Frag/data/whitelist.txt -r 1.0 -i /home/rstudio/Frag/data -o /home/rstudio/Frag/data/ -n test
+// ./fastF -w /home/rstudio/Frag/data/whitelist.txt -r 1.0 -i /home/rstudio/Frag/data -o /home/rstudio/Frag/data/ -a filtered
 
 // Elapsed: 397.7s multi-threading with 4 threads
 // Elapsed: 307.436405 seconds used `gzbuffer` to speed up with 1 consumer and 128k buffer
