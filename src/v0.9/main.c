@@ -49,7 +49,7 @@ int main(int argc, const char **argv)
 
     int i = 0;
 
-    if ((whitelist_arg != NULL || !all_cell) && rate_arg != 0 && sample_arg != NULL)
+    if ((whitelist_arg != NULL || all_cell) && rate_arg != 0 && sample_arg != NULL)
     {
         DIR *dir_i, *dir_o;
         struct dirent *ptr;
