@@ -216,7 +216,7 @@ void fastF(gzFile file_in[3],
            gzFile file_out[3],
            node *tree_whitelist,
            unsigned int seed,
-           double rate)
+           float rate)
 {
     srand(seed);
 

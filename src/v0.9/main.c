@@ -19,7 +19,7 @@ int main(int argc, const char **argv)
     char *whitelist_arg = NULL;
     size_t len_cellbarcode = 16;
     int seed_arg = 926;
-    double rate_arg = 0.f;
+    float rate_arg = 0.f;
     char *sample_arg = NULL;
 
     struct argparse_option options[] = {
@@ -193,7 +193,6 @@ int main(int argc, const char **argv)
     //------------------------------------------------
     gzFile file_out[3];
     node *tree_whitelist;
-    double rate_threshold;
     //------------------------------------------------
 
     for (int j = 0; j < 3; j++)
@@ -201,8 +200,6 @@ int main(int argc, const char **argv)
         file_in[j] = gzopen(file_in_path[j], "rb");
         file_out[j] = gzopen(file_out_path[j], "wb");
     }
-
-    rate_threshold = rate_arg;
 
     printf("Reading whitelist...\n");
     int nrow = get_row(whitelist_arg);
@@ -217,7 +214,7 @@ int main(int argc, const char **argv)
     // printf("t1 = %d\n", t1);
 
     printf("Processing fastq files...\n");
-    fastF(file_in, file_out, tree_whitelist, seed_arg, rate_threshold);
+    fastF(file_in, file_out, tree_whitelist, seed_arg, rate_arg);
 
     free_tree_node(tree_whitelist);
     free(whitelist);
