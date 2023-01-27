@@ -40,7 +40,7 @@ int get_comb_fastq(gzFile fastq[3], comb_fastq **block)
     (*block)->I1 = get_fastq(fastq[0]);
     (*block)->R1 = get_fastq(fastq[1]);
     (*block)->R2 = get_fastq(fastq[2]);
-    (*block)->random_number = rand() / RAND_MAX;
+    (*block)->random_number = (float) rand() / RAND_MAX;
 
     if ((*block)->I1 == NULL || (*block)->R1 == NULL || (*block)->R2 == NULL)
     {
