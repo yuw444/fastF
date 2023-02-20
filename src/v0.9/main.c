@@ -21,7 +21,7 @@ int main(int argc, const char **argv)
     int seed_arg = 926;
     char *sample_arg = NULL;
     float rate_arg = 0.f;
-    bool all_cell = false;
+    int all_cell = 0;
 
     struct argparse_option options[] = {
         OPT_HELP(),
