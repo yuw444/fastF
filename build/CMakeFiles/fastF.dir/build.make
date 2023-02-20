@@ -57,58 +57,60 @@ include CMakeFiles/fastF.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/fastF.dir/flags.make
 
-CMakeFiles/fastF.dir/src/v0.9/main.c.o: CMakeFiles/fastF.dir/flags.make
-CMakeFiles/fastF.dir/src/v0.9/main.c.o: ../src/v0.9/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/fastF.dir/src/v0.9/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fastF.dir/src/v0.9/main.c.o   -c /home/fastF/src/v0.9/main.c
+CMakeFiles/fastF.dir/src/v1.2/main.c.o: CMakeFiles/fastF.dir/flags.make
+CMakeFiles/fastF.dir/src/v1.2/main.c.o: ../src/v1.2/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/fastF.dir/src/v1.2/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fastF.dir/src/v1.2/main.c.o   -c /home/fastF/src/v1.2/main.c
 
-CMakeFiles/fastF.dir/src/v0.9/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/fastF.dir/src/v0.9/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v0.9/main.c > CMakeFiles/fastF.dir/src/v0.9/main.c.i
+CMakeFiles/fastF.dir/src/v1.2/main.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/fastF.dir/src/v1.2/main.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.2/main.c > CMakeFiles/fastF.dir/src/v1.2/main.c.i
 
-CMakeFiles/fastF.dir/src/v0.9/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fastF.dir/src/v0.9/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v0.9/main.c -o CMakeFiles/fastF.dir/src/v0.9/main.c.s
+CMakeFiles/fastF.dir/src/v1.2/main.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fastF.dir/src/v1.2/main.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.2/main.c -o CMakeFiles/fastF.dir/src/v1.2/main.c.s
 
-CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.o: CMakeFiles/fastF.dir/flags.make
-CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.o: ../src/v0.9/fastq_filter.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.o   -c /home/fastF/src/v0.9/fastq_filter.c
+CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o: CMakeFiles/fastF.dir/flags.make
+CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o: ../src/v1.2/fastq_filter.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o   -c /home/fastF/src/v1.2/fastq_filter.c
 
-CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v0.9/fastq_filter.c > CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.i
+CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.2/fastq_filter.c > CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.i
 
-CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v0.9/fastq_filter.c -o CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.s
+CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.2/fastq_filter.c -o CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.s
 
-CMakeFiles/fastF.dir/src/v0.9/argparse.c.o: CMakeFiles/fastF.dir/flags.make
-CMakeFiles/fastF.dir/src/v0.9/argparse.c.o: ../src/v0.9/argparse.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/fastF.dir/src/v0.9/argparse.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fastF.dir/src/v0.9/argparse.c.o   -c /home/fastF/src/v0.9/argparse.c
+CMakeFiles/fastF.dir/src/v1.2/argparse.c.o: CMakeFiles/fastF.dir/flags.make
+CMakeFiles/fastF.dir/src/v1.2/argparse.c.o: ../src/v1.2/argparse.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/fastF.dir/src/v1.2/argparse.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fastF.dir/src/v1.2/argparse.c.o   -c /home/fastF/src/v1.2/argparse.c
 
-CMakeFiles/fastF.dir/src/v0.9/argparse.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/fastF.dir/src/v0.9/argparse.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v0.9/argparse.c > CMakeFiles/fastF.dir/src/v0.9/argparse.c.i
+CMakeFiles/fastF.dir/src/v1.2/argparse.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/fastF.dir/src/v1.2/argparse.c.i"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/fastF/src/v1.2/argparse.c > CMakeFiles/fastF.dir/src/v1.2/argparse.c.i
 
-CMakeFiles/fastF.dir/src/v0.9/argparse.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fastF.dir/src/v0.9/argparse.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v0.9/argparse.c -o CMakeFiles/fastF.dir/src/v0.9/argparse.c.s
+CMakeFiles/fastF.dir/src/v1.2/argparse.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fastF.dir/src/v1.2/argparse.c.s"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/fastF/src/v1.2/argparse.c -o CMakeFiles/fastF.dir/src/v1.2/argparse.c.s
 
 # Object files for target fastF
 fastF_OBJECTS = \
-"CMakeFiles/fastF.dir/src/v0.9/main.c.o" \
-"CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.o" \
-"CMakeFiles/fastF.dir/src/v0.9/argparse.c.o"
+"CMakeFiles/fastF.dir/src/v1.2/main.c.o" \
+"CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o" \
+"CMakeFiles/fastF.dir/src/v1.2/argparse.c.o"
 
 # External object files for target fastF
 fastF_EXTERNAL_OBJECTS =
 
-fastF: CMakeFiles/fastF.dir/src/v0.9/main.c.o
-fastF: CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.o
-fastF: CMakeFiles/fastF.dir/src/v0.9/argparse.c.o
+fastF: CMakeFiles/fastF.dir/src/v1.2/main.c.o
+fastF: CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o
+fastF: CMakeFiles/fastF.dir/src/v1.2/argparse.c.o
 fastF: CMakeFiles/fastF.dir/build.make
+fastF: /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so
+fastF: /usr/lib/x86_64-linux-gnu/libpthread.so
 fastF: CMakeFiles/fastF.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable fastF"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/fastF.dir/link.txt --verbose=$(VERBOSE)

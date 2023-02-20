@@ -224,6 +224,24 @@ CMAKE_STRIP:FILEPATH=/usr/bin/strip
 // Studio IDE projects all commands are done without /nologo.
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
+//CXX compiler flags for OpenMP parallelization
+OpenMP_CXX_FLAGS:STRING=-fopenmp
+
+//CXX compiler libraries for OpenMP parallelization
+OpenMP_CXX_LIB_NAMES:STRING=gomp;pthread
+
+//C compiler flags for OpenMP parallelization
+OpenMP_C_FLAGS:STRING=-fopenmp
+
+//C compiler libraries for OpenMP parallelization
+OpenMP_C_LIB_NAMES:STRING=gomp;pthread
+
+//Path to the gomp library for OpenMP
+OpenMP_gomp_LIBRARY:FILEPATH=/usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so
+
+//Path to the pthread library for OpenMP
+OpenMP_pthread_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.so
+
 //Value Computed by CMake
 fastF_BINARY_DIR:STATIC=/home/fastF/build
 
@@ -378,4 +396,34 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_UNAME:INTERNAL=/usr/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding OpenMP
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP:INTERNAL=[TRUE][TRUE][c ][v4.5()]
+//Details about finding OpenMP_C
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_C:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.so][v4.5()]
+//Details about finding OpenMP_CXX
+FIND_PACKAGE_MESSAGE_DETAILS_OpenMP_CXX:INTERNAL=[-fopenmp][/usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so][/usr/lib/x86_64-linux-gnu/libpthread.so][v4.5()]
+//Result of TRY_COMPILE
+OpenMP_COMPILE_RESULT_CXX_fopenmp:INTERNAL=TRUE
+//Result of TRY_COMPILE
+OpenMP_COMPILE_RESULT_C_fopenmp:INTERNAL=TRUE
+//ADVANCED property for variable: OpenMP_CXX_FLAGS
+OpenMP_CXX_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_CXX_LIB_NAMES
+OpenMP_CXX_LIB_NAMES-ADVANCED:INTERNAL=1
+//CXX compiler's OpenMP specification date
+OpenMP_CXX_SPEC_DATE:INTERNAL=201511
+//ADVANCED property for variable: OpenMP_C_FLAGS
+OpenMP_C_FLAGS-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_C_LIB_NAMES
+OpenMP_C_LIB_NAMES-ADVANCED:INTERNAL=1
+//C compiler's OpenMP specification date
+OpenMP_C_SPEC_DATE:INTERNAL=201511
+//Result of TRY_COMPILE
+OpenMP_SPECTEST_CXX_:INTERNAL=TRUE
+//Result of TRY_COMPILE
+OpenMP_SPECTEST_C_:INTERNAL=TRUE
+//ADVANCED property for variable: OpenMP_gomp_LIBRARY
+OpenMP_gomp_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OpenMP_pthread_LIBRARY
+OpenMP_pthread_LIBRARY-ADVANCED:INTERNAL=1
 

@@ -1,1 +1,1 @@
-/usr/bin/cc -O3 -DNDEBUG   CMakeFiles/fastF.dir/src/v0.9/main.c.o CMakeFiles/fastF.dir/src/v0.9/fastq_filter.c.o CMakeFiles/fastF.dir/src/v0.9/argparse.c.o  -o fastF  -lz -lpthread 
+/usr/bin/cc -O3 -DNDEBUG   CMakeFiles/fastF.dir/src/v1.2/main.c.o CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o CMakeFiles/fastF.dir/src/v1.2/argparse.c.o  -o fastF  -lz /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so /usr/lib/x86_64-linux-gnu/libpthread.so 
