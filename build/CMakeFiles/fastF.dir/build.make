@@ -109,8 +109,6 @@ fastF: CMakeFiles/fastF.dir/src/v1.2/main.c.o
 fastF: CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o
 fastF: CMakeFiles/fastF.dir/src/v1.2/argparse.c.o
 fastF: CMakeFiles/fastF.dir/build.make
-fastF: /usr/lib/gcc/x86_64-linux-gnu/9/libgomp.so
-fastF: /usr/lib/x86_64-linux-gnu/libpthread.so
 fastF: CMakeFiles/fastF.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/fastF/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking C executable fastF"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/fastF.dir/link.txt --verbose=$(VERBOSE)
