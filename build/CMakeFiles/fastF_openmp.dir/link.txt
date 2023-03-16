@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG   CMakeFiles/fastF_openmp.dir/src/v0.9/main.c.o CMakeFiles/fastF_openmp.dir/src/v0.9/fastq_filter.c.o CMakeFiles/fastF_openmp.dir/src/v0.9/argparse.c.o  -o fastF_openmp  -lz -lpthread 
