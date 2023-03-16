@@ -1,0 +1,252 @@
+==32728== Memcheck, a memory error detector
+==32728== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==32728== Using Valgrind-3.16.1-36d6727e1d-20200622X and LibVEX; rerun with -h for copyright info
+==32728== Command: ./fastF whitelist -R ../data/test_R1.fastq.gz -o .
+==32728== Parent PID: 26251
+==32728== 
+--32728-- 
+--32728-- Valgrind options:
+--32728--    --trace-children=yes
+--32728--    --show-leak-kinds=all
+--32728--    --leak-check=full
+--32728--    -v
+--32728--    --track-origins=yes
+--32728--    --dsymutil=yes
+--32728--    --log-file=vg_logfile_%p.out
+--32728-- Contents of /proc/version:
+--32728--   Linux version 3.10.0-1127.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ) #1 SMP Tue Mar 31 23:36:51 UTC 2020
+--32728-- 
+--32728-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--32728-- Page sizes: currently 4096, max supported 4096
+--32728-- Valgrind library directory: /hpc/apps/valgrind/3.16.1/lib/valgrind
+--32728-- Reading syms from /scratch/u/yu89975/fastF/build/fastF
+--32728-- Reading syms from /usr/lib64/ld-2.17.so
+--32728-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/memcheck-amd64-linux
+--32728--    object doesn't have a dynamic symbol table
+--32728-- Scheduler: using generic scheduler lock implementation.
+--32728-- Reading suppressions file: /hpc/apps/valgrind/3.16.1/lib/valgrind/default.supp
+==32728== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-32728-by-yu89975-on-ln02
+==32728== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-32728-by-yu89975-on-ln02
+==32728== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-32728-by-yu89975-on-ln02
+==32728== 
+==32728== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==32728== don't want to do, unless you know exactly what you're doing,
+==32728== or are doing some strange experiment):
+==32728==   /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=32728 ...command...
+==32728== 
+==32728== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==32728==   /path/to/gdb ./fastF
+==32728== and then give GDB the following command
+==32728==   target remote | /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=32728
+==32728== --pid is optional if only one valgrind process is running
+==32728== 
+--32728-- REDIR: 0x4019e30 (ld-linux-x86-64.so.2:strlen) redirected to 0x580cb245 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--32728-- REDIR: 0x4019c00 (ld-linux-x86-64.so.2:index) redirected to 0x580cb25f (vgPlain_amd64_linux_REDIR_FOR_index)
+--32728-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_core-amd64-linux.so
+--32728-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+==32728== WARNING: new redirection conflicts with existing -- ignoring it
+--32728--     old: 0x04019e30 (strlen              ) R-> (0000.0) 0x580cb245 vgPlain_amd64_linux_REDIR_FOR_strlen
+--32728--     new: 0x04019e30 (strlen              ) R-> (2007.0) 0x04c2d1b0 strlen
+--32728-- REDIR: 0x4019db0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2e300 (strcmp)
+--32728-- REDIR: 0x401aa70 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31f90 (mempcpy)
+--32728-- Reading syms from /usr/lib64/libz.so.1.2.7
+--32728--    object doesn't have a symbol table
+--32728-- Reading syms from /usr/lib64/libpthread-2.17.so
+--32728-- Reading syms from /usr/lib64/libc-2.17.so
+--32728-- REDIR: 0x52f9130 (libc.so.6:strcasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f5eb0 (libc.so.6:strnlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52fb400 (libc.so.6:strncasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f8910 (libc.so.6:memset) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f88c0 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f5d80 (libc.so.6:strlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f4330 (libc.so.6:strcmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52fdad0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f8a70 (libc.so.6:mempcpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f57c0 (libc.so.6:strcpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f4070 (libc.so.6:strcat) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x52f5dd0 (libc.so.6:__GI_strlen) redirected to 0x4c2d110 (__GI_strlen)
+--32728-- REDIR: 0x52f78a0 (libc.so.6:__GI_strrchr) redirected to 0x4c2cb70 (__GI_strrchr)
+--32728-- REDIR: 0x52f8970 (libc.so.6:__GI_memset) redirected to 0x4c30ee0 (memset)
+--32728-- REDIR: 0x53c2fe0 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2e460 (memcpy@GLIBC_2.2.5)
+--32728-- REDIR: 0x53a7d90 (libc.so.6:__strcmp_sse42) redirected to 0x4c2e2b0 (__strcmp_sse42)
+--32728-- REDIR: 0x52ee6b0 (libc.so.6:malloc) redirected to 0x4c29eec (malloc)
+--32728-- REDIR: 0x53d8680 (libc.so.6:__strlen_sse2_pminub) redirected to 0x4c2d0f0 (strlen)
+--32728-- REDIR: 0x53036e0 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2d1d0 (strcpy)
+--32728-- REDIR: 0x53bda40 (libc.so.6:__memcpy_ssse3_back) redirected to 0x4c2e7b0 (memcpy@@GLIBC_2.14)
+--32728-- REDIR: 0x52f7fa0 (libc.so.6:memchr) redirected to 0x4c2e3a0 (memchr)
+--32728-- REDIR: 0x52f7820 (libc.so.6:strncpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--32728-- REDIR: 0x5303d10 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x4c2d780 (__strncpy_sse2_unaligned)
+==32728== Use of uninitialised value of size 8
+==32728==    at 0x4C2D1F0: strcpy (vg_replace_strmem.c:511)
+==32728==    by 0x402299: insert_tree (fastq_filter.c:80)
+==32728==    by 0x4038C1: cell_counts (count.c:16)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728==  Uninitialised value was created by a heap allocation
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x40227F: insert_tree (fastq_filter.c:79)
+==32728==    by 0x4038C1: cell_counts (count.c:16)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== Invalid write of size 1
+==32728==    at 0x4C2D1F0: strcpy (vg_replace_strmem.c:511)
+==32728==    by 0x402299: insert_tree (fastq_filter.c:80)
+==32728==    by 0x4038C1: cell_counts (count.c:16)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==32728== 
+==32728== 
+==32728== Process terminating with default action of signal 11 (SIGSEGV)
+==32728==  Access not within mapped region at address 0x0
+==32728==    at 0x4C2D1F0: strcpy (vg_replace_strmem.c:511)
+==32728==    by 0x402299: insert_tree (fastq_filter.c:80)
+==32728==    by 0x4038C1: cell_counts (count.c:16)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728==  If you believe this happened as a result of a stack
+==32728==  overflow in your program's main thread (unlikely but
+==32728==  possible), you can try to increase the size of the
+==32728==  main thread stack using the --main-stacksize= flag.
+==32728==  The main thread stack size used in this run was 8388608.
+--32728-- REDIR: 0x52eead0 (libc.so.6:free) redirected to 0x4c2afe6 (free)
+==32728== 
+==32728== HEAP SUMMARY:
+==32728==     in use at exit: 65,220 bytes in 12 blocks
+==32728==   total heap usage: 12 allocs, 0 frees, 65,220 bytes allocated
+==32728== 
+==32728== Searching for pointers to 12 not-freed blocks
+==32728== Checked 158,744 bytes
+==32728== 
+==32728== 24 bytes in 1 blocks are still reachable in loss record 1 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x40201C: get_fastq (fastq_filter.c:16)
+==32728==    by 0x403879: cell_counts (count.c:9)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 25 bytes in 1 blocks are still reachable in loss record 2 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x4E43AF0: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x40155E: cmd_whitelist (main.c:49)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 27 bytes in 1 blocks are still reachable in loss record 3 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x402695: substring (fastq_filter.c:217)
+==32728==    by 0x40389E: cell_counts (count.c:14)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 32 bytes in 1 blocks are still reachable in loss record 4 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x40227F: insert_tree (fastq_filter.c:79)
+==32728==    by 0x4038C1: cell_counts (count.c:16)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 128 bytes in 1 blocks are still reachable in loss record 5 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x40202A: get_fastq (fastq_filter.c:17)
+==32728==    by 0x403879: cell_counts (count.c:9)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 128 bytes in 1 blocks are still reachable in loss record 6 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x40203E: get_fastq (fastq_filter.c:18)
+==32728==    by 0x403879: cell_counts (count.c:9)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 128 bytes in 1 blocks are still reachable in loss record 7 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x402053: get_fastq (fastq_filter.c:19)
+==32728==    by 0x403879: cell_counts (count.c:9)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 232 bytes in 1 blocks are still reachable in loss record 8 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x4E43A09: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x40155E: cmd_whitelist (main.c:49)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 7,152 bytes in 1 blocks are still reachable in loss record 9 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x4E3ECE2: inflateInit2_ (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E442A9: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E4455F: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E44B12: gzgets (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x40207C: get_fastq (fastq_filter.c:22)
+==32728==    by 0x403879: cell_counts (count.c:9)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 8,192 bytes in 1 blocks are still reachable in loss record 10 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x4E44233: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E4455F: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E44B12: gzgets (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x40207C: get_fastq (fastq_filter.c:22)
+==32728==    by 0x403879: cell_counts (count.c:9)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 16,384 bytes in 1 blocks are still reachable in loss record 11 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x4E44243: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E4455F: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E44B12: gzgets (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x40207C: get_fastq (fastq_filter.c:22)
+==32728==    by 0x403879: cell_counts (count.c:9)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== 32,768 bytes in 1 blocks are still reachable in loss record 12 of 12
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x4E3EAD0: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E3F48F: inflate (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E443B9: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E4458D: ??? (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x4E44B12: gzgets (in /usr/lib64/libz.so.1.2.7)
+==32728==    by 0x40207C: get_fastq (fastq_filter.c:22)
+==32728==    by 0x403879: cell_counts (count.c:9)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== LEAK SUMMARY:
+==32728==    definitely lost: 0 bytes in 0 blocks
+==32728==    indirectly lost: 0 bytes in 0 blocks
+==32728==      possibly lost: 0 bytes in 0 blocks
+==32728==    still reachable: 65,220 bytes in 12 blocks
+==32728==         suppressed: 0 bytes in 0 blocks
+==32728== 
+==32728== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)
+==32728== 
+==32728== 1 errors in context 1 of 2:
+==32728== Invalid write of size 1
+==32728==    at 0x4C2D1F0: strcpy (vg_replace_strmem.c:511)
+==32728==    by 0x402299: insert_tree (fastq_filter.c:80)
+==32728==    by 0x4038C1: cell_counts (count.c:16)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==32728== 
+==32728== 
+==32728== 1 errors in context 2 of 2:
+==32728== Use of uninitialised value of size 8
+==32728==    at 0x4C2D1F0: strcpy (vg_replace_strmem.c:511)
+==32728==    by 0x402299: insert_tree (fastq_filter.c:80)
+==32728==    by 0x4038C1: cell_counts (count.c:16)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728==  Uninitialised value was created by a heap allocation
+==32728==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==32728==    by 0x40227F: insert_tree (fastq_filter.c:79)
+==32728==    by 0x4038C1: cell_counts (count.c:16)
+==32728==    by 0x40159C: cmd_whitelist (main.c:57)
+==32728==    by 0x401FC6: main (main.c:242)
+==32728== 
+==32728== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

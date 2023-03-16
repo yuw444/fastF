@@ -1,0 +1,1343 @@
+==12693== Memcheck, a memory error detector
+==12693== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==12693== Using Valgrind-3.16.1-36d6727e1d-20200622X and LibVEX; rerun with -h for copyright info
+==12693== Command: ./fastF whitelist -R ../data/test_R1.fastq.gz -o . -u 0
+==12693== Parent PID: 4669
+==12693== 
+--12693-- 
+--12693-- Valgrind options:
+--12693--    --trace-children=yes
+--12693--    --show-leak-kinds=all
+--12693--    --leak-check=full
+--12693--    -v
+--12693--    --track-origins=yes
+--12693--    --dsymutil=yes
+--12693--    --log-file=vg_logfile_%p.out
+--12693-- Contents of /proc/version:
+--12693--   Linux version 3.10.0-1127.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ) #1 SMP Tue Mar 31 23:36:51 UTC 2020
+--12693-- 
+--12693-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--12693-- Page sizes: currently 4096, max supported 4096
+--12693-- Valgrind library directory: /hpc/apps/valgrind/3.16.1/lib/valgrind
+--12693-- Reading syms from /scratch/u/yu89975/fastF/build/fastF
+--12693-- Reading syms from /usr/lib64/ld-2.17.so
+--12693-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/memcheck-amd64-linux
+--12693--    object doesn't have a dynamic symbol table
+--12693-- Scheduler: using generic scheduler lock implementation.
+--12693-- Reading suppressions file: /hpc/apps/valgrind/3.16.1/lib/valgrind/default.supp
+==12693== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-12693-by-yu89975-on-ln02
+==12693== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-12693-by-yu89975-on-ln02
+==12693== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-12693-by-yu89975-on-ln02
+==12693== 
+==12693== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==12693== don't want to do, unless you know exactly what you're doing,
+==12693== or are doing some strange experiment):
+==12693==   /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=12693 ...command...
+==12693== 
+==12693== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==12693==   /path/to/gdb ./fastF
+==12693== and then give GDB the following command
+==12693==   target remote | /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=12693
+==12693== --pid is optional if only one valgrind process is running
+==12693== 
+--12693-- REDIR: 0x4019e30 (ld-linux-x86-64.so.2:strlen) redirected to 0x580cb245 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--12693-- REDIR: 0x4019c00 (ld-linux-x86-64.so.2:index) redirected to 0x580cb25f (vgPlain_amd64_linux_REDIR_FOR_index)
+--12693-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_core-amd64-linux.so
+--12693-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+==12693== WARNING: new redirection conflicts with existing -- ignoring it
+--12693--     old: 0x04019e30 (strlen              ) R-> (0000.0) 0x580cb245 vgPlain_amd64_linux_REDIR_FOR_strlen
+--12693--     new: 0x04019e30 (strlen              ) R-> (2007.0) 0x04c2d1b0 strlen
+--12693-- REDIR: 0x4019db0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2e300 (strcmp)
+--12693-- REDIR: 0x401aa70 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31f90 (mempcpy)
+--12693-- Reading syms from /usr/lib64/libz.so.1.2.7
+--12693--    object doesn't have a symbol table
+--12693-- Reading syms from /usr/lib64/libpthread-2.17.so
+--12693-- Reading syms from /usr/lib64/libc-2.17.so
+--12693-- REDIR: 0x52f9130 (libc.so.6:strcasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f5eb0 (libc.so.6:strnlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52fb400 (libc.so.6:strncasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f8910 (libc.so.6:memset) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f88c0 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f5d80 (libc.so.6:strlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f4330 (libc.so.6:strcmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52fdad0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f8a70 (libc.so.6:mempcpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f57c0 (libc.so.6:strcpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f4070 (libc.so.6:strcat) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x52f5dd0 (libc.so.6:__GI_strlen) redirected to 0x4c2d110 (__GI_strlen)
+--12693-- REDIR: 0x52f78a0 (libc.so.6:__GI_strrchr) redirected to 0x4c2cb70 (__GI_strrchr)
+--12693-- REDIR: 0x52f8970 (libc.so.6:__GI_memset) redirected to 0x4c30ee0 (memset)
+--12693-- REDIR: 0x53c2fe0 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2e460 (memcpy@GLIBC_2.2.5)
+--12693-- REDIR: 0x53a7d90 (libc.so.6:__strcmp_sse42) redirected to 0x4c2e2b0 (__strcmp_sse42)
+--12693-- REDIR: 0x52ee6b0 (libc.so.6:malloc) redirected to 0x4c29eec (malloc)
+--12693-- REDIR: 0x53d8680 (libc.so.6:__strlen_sse2_pminub) redirected to 0x4c2d0f0 (strlen)
+--12693-- REDIR: 0x53036e0 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2d1d0 (strcpy)
+--12693-- REDIR: 0x53bda40 (libc.so.6:__memcpy_ssse3_back) redirected to 0x4c2e7b0 (memcpy@@GLIBC_2.14)
+--12693-- REDIR: 0x52f7fa0 (libc.so.6:memchr) redirected to 0x4c2e3a0 (memchr)
+--12693-- REDIR: 0x52f7820 (libc.so.6:strncpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--12693-- REDIR: 0x5303d10 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x4c2d780 (__strncpy_sse2_unaligned)
+--12693-- REDIR: 0x52eead0 (libc.so.6:free) redirected to 0x4c2afe6 (free)
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647160 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647161 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x56474c0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x56474c1 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647b80 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647b81 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee1 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647820 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647821 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5648c60 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5648c61 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5649320 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5649321 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+--12693-- REDIR: 0x52ff3c0 (libc.so.6:strchrnul) redirected to 0x4c31ab0 (strchrnul)
+--12693-- REDIR: 0x530e920 (libc.so.6:__GI_strstr) redirected to 0x4c32220 (__strstr_sse2)
+==12693== Invalid read of size 1
+==12693==    at 0x52B6079: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647160 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 16
+==12693==    at 0x52E5F2B: _IO_default_xsputn (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52E3A01: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647160 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+--12693-- REDIR: 0x52f8ae0 (libc.so.6:__GI_mempcpy) redirected to 0x4c31cc0 (__GI_mempcpy)
+==12693== Invalid read of size 1
+==12693==    at 0x52B6079: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C31D98: __GI_mempcpy (vg_replace_strmem.c:1537)
+==12693==    by 0x52E3974: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x4C31DA6: __GI_mempcpy (vg_replace_strmem.c:1537)
+==12693==    by 0x52E3974: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee2 is 2 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x52B6079: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==  Address 0x57206c0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x52E6008: _IO_default_xsputn (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52E3A01: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==  Address 0x5786123 is 3 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid read of size 1
+==12693==    at 0x52E6017: _IO_default_xsputn (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52E3A01: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==  Address 0x5786125 is 5 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647160 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5648c60 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x57206c0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x56d79a0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==  Address 0x579ce60 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x56474c0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== HEAP SUMMARY:
+==12693==     in use at exit: 0 bytes in 0 blocks
+==12693==   total heap usage: 14,070 allocs, 15,629 frees, 1,178,117 bytes allocated
+==12693== 
+==12693== All heap blocks were freed -- no leaks are possible
+==12693== 
+==12693== ERROR SUMMARY: 155260 errors from 29 contexts (suppressed: 0 from 0)
+==12693== 
+==12693== 1 errors in context 1 of 29:
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x56474c0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 1 errors in context 2 of 29:
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 1 errors in context 3 of 29:
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647160 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 1 errors in context 4 of 29:
+==12693== Invalid read of size 16
+==12693==    at 0x52E5F2B: _IO_default_xsputn (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52E3A01: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647160 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 13 errors in context 5 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x52E6017: _IO_default_xsputn (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52E3A01: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==  Address 0x5786125 is 5 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 17 errors in context 6 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x52E6008: _IO_default_xsputn (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52E3A01: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==  Address 0x5786123 is 3 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 17 errors in context 7 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x52B6079: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647160 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 374 errors in context 8 of 29:
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==  Address 0x579ce60 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 384 errors in context 9 of 29:
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x57206c0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 386 errors in context 10 of 29:
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5648c60 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 412 errors in context 11 of 29:
+==12693== Invalid free() / delete / delete[] / realloc()
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x4024F9: free_tree_node (fastq_filter.c:138)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402519: free_tree_node (fastq_filter.c:140)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x402509: free_tree_node (fastq_filter.c:139)
+==12693==    by 0x4016F2: cmd_whitelist (main.c:80)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x56d79a0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 567 errors in context 12 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 714 errors in context 13 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee1 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 944 errors in context 14 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x56474c1 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 1079 errors in context 15 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647161 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 1927 errors in context 16 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x56474c0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 2499 errors in context 17 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647160 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 4813 errors in context 18 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5648c60 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 4864 errors in context 19 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5649320 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 5519 errors in context 20 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647820 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 6618 errors in context 21 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2B4: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647b80 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 10892 errors in context 22 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C31DA6: __GI_mempcpy (vg_replace_strmem.c:1537)
+==12693==    by 0x52E3974: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee2 is 2 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 12937 errors in context 23 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x52B6079: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 13549 errors in context 24 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x52B6079: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024D2: print_tree (fastq_filter.c:127)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==  Address 0x57206c0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 14006 errors in context 25 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C31D98: __GI_mempcpy (vg_replace_strmem.c:1537)
+==12693==    by 0x52E3974: _IO_file_xsputn@@GLIBC_2.2.5 (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52B6032: vfprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x52BC406: fprintf (in /usr/lib64/libc-2.17.so)
+==12693==    by 0x4024A4: print_tree (fastq_filter.c:125)
+==12693==    by 0x4024BB: print_tree (fastq_filter.c:126)
+==12693==    by 0x4016DA: cmd_whitelist (main.c:75)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647ee0 is 0 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 17227 errors in context 26 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5649321 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 17433 errors in context 27 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5648c61 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 18010 errors in context 28 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023BD: insert_tree (fastq_filter.c:95)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647821 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== 
+==12693== 20055 errors in context 29 of 29:
+==12693== Invalid read of size 1
+==12693==    at 0x4C2E2CB: __strcmp_sse42 (vg_replace_strmem.c:850)
+==12693==    by 0x40239D: insert_tree (fastq_filter.c:92)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x4023E4: insert_tree (fastq_filter.c:98)
+==12693==    by 0x403980: cell_counts (count.c:15)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Address 0x5647b81 is 1 bytes inside a block of size 17 free'd
+==12693==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==12693==    by 0x403990: cell_counts (count.c:16)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693==  Block was alloc'd at
+==12693==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==12693==    by 0x40274F: substring (fastq_filter.c:219)
+==12693==    by 0x403969: cell_counts (count.c:14)
+==12693==    by 0x401651: cmd_whitelist (main.c:61)
+==12693==    by 0x40207B: main (main.c:246)
+==12693== 
+==12693== ERROR SUMMARY: 155260 errors from 29 contexts (suppressed: 0 from 0)

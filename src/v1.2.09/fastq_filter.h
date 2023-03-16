@@ -19,8 +19,6 @@ It is designed to be run with multiple threads.
 #include <time.h>
 
 #define MAX_LINE_LENGTH 128
-#define LEN_CELLBARCODE 16
-#define LEN_UMI 10
 #define LEN_WHITELIST 2 ^ 15
 
 // struct node of binary searching tree
@@ -56,8 +54,10 @@ fastq *get_fastq(gzFile file);
 int get_comb_fastq(gzFile fastq[3], comb_fastq **block);
 
 // sorting function for whitelist
+// int compare(const void *a, const void *b);
 
-int compare(const void *a, const void *b);
+// insert a node to binary searching tree
+node *insert_tree(node *root, char *data);
 
 // construct a binary searching tree for the whitelist
 node *construct_tree(char **string_vector, size_t len);
@@ -77,7 +77,7 @@ int get_row(char *file_name);
 
 char **read_txt(char *file_name, size_t nrows);
 
-bool in(node *root, char *element);
+bool in(node *root, char *element, int len_cellbarcode);
 
 // get substring of a string
 

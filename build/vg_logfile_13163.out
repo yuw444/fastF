@@ -1,0 +1,105 @@
+==13163== Memcheck, a memory error detector
+==13163== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==13163== Using Valgrind-3.16.1-36d6727e1d-20200622X and LibVEX; rerun with -h for copyright info
+==13163== Command: ./fastF whitelist -R ../data/test_R1.fastq.gz -o . -u 0
+==13163== Parent PID: 4669
+==13163== 
+--13163-- 
+--13163-- Valgrind options:
+--13163--    --trace-children=yes
+--13163--    --show-leak-kinds=all
+--13163--    --leak-check=full
+--13163--    -v
+--13163--    --track-origins=yes
+--13163--    --dsymutil=yes
+--13163--    --log-file=vg_logfile_%p.out
+--13163-- Contents of /proc/version:
+--13163--   Linux version 3.10.0-1127.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ) #1 SMP Tue Mar 31 23:36:51 UTC 2020
+--13163-- 
+--13163-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--13163-- Page sizes: currently 4096, max supported 4096
+--13163-- Valgrind library directory: /hpc/apps/valgrind/3.16.1/lib/valgrind
+--13163-- Reading syms from /scratch/u/yu89975/fastF/build/fastF
+--13163-- Reading syms from /usr/lib64/ld-2.17.so
+--13163-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/memcheck-amd64-linux
+--13163--    object doesn't have a dynamic symbol table
+--13163-- Scheduler: using generic scheduler lock implementation.
+--13163-- Reading suppressions file: /hpc/apps/valgrind/3.16.1/lib/valgrind/default.supp
+==13163== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-13163-by-yu89975-on-ln02
+==13163== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-13163-by-yu89975-on-ln02
+==13163== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-13163-by-yu89975-on-ln02
+==13163== 
+==13163== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==13163== don't want to do, unless you know exactly what you're doing,
+==13163== or are doing some strange experiment):
+==13163==   /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=13163 ...command...
+==13163== 
+==13163== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==13163==   /path/to/gdb ./fastF
+==13163== and then give GDB the following command
+==13163==   target remote | /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=13163
+==13163== --pid is optional if only one valgrind process is running
+==13163== 
+--13163-- REDIR: 0x4019e30 (ld-linux-x86-64.so.2:strlen) redirected to 0x580cb245 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--13163-- REDIR: 0x4019c00 (ld-linux-x86-64.so.2:index) redirected to 0x580cb25f (vgPlain_amd64_linux_REDIR_FOR_index)
+--13163-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_core-amd64-linux.so
+--13163-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+==13163== WARNING: new redirection conflicts with existing -- ignoring it
+--13163--     old: 0x04019e30 (strlen              ) R-> (0000.0) 0x580cb245 vgPlain_amd64_linux_REDIR_FOR_strlen
+--13163--     new: 0x04019e30 (strlen              ) R-> (2007.0) 0x04c2d1b0 strlen
+--13163-- REDIR: 0x4019db0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2e300 (strcmp)
+--13163-- REDIR: 0x401aa70 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31f90 (mempcpy)
+--13163-- Reading syms from /usr/lib64/libz.so.1.2.7
+--13163--    object doesn't have a symbol table
+--13163-- Reading syms from /usr/lib64/libpthread-2.17.so
+--13163-- Reading syms from /usr/lib64/libc-2.17.so
+--13163-- REDIR: 0x52f9130 (libc.so.6:strcasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f5eb0 (libc.so.6:strnlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52fb400 (libc.so.6:strncasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f8910 (libc.so.6:memset) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f88c0 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f5d80 (libc.so.6:strlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f4330 (libc.so.6:strcmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52fdad0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f8a70 (libc.so.6:mempcpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f57c0 (libc.so.6:strcpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f4070 (libc.so.6:strcat) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x52f5dd0 (libc.so.6:__GI_strlen) redirected to 0x4c2d110 (__GI_strlen)
+--13163-- REDIR: 0x52f78a0 (libc.so.6:__GI_strrchr) redirected to 0x4c2cb70 (__GI_strrchr)
+--13163-- REDIR: 0x52f8970 (libc.so.6:__GI_memset) redirected to 0x4c30ee0 (memset)
+--13163-- REDIR: 0x53c2fe0 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2e460 (memcpy@GLIBC_2.2.5)
+--13163-- REDIR: 0x53a7d90 (libc.so.6:__strcmp_sse42) redirected to 0x4c2e2b0 (__strcmp_sse42)
+--13163-- REDIR: 0x52ee6b0 (libc.so.6:malloc) redirected to 0x4c29eec (malloc)
+--13163-- REDIR: 0x53d8680 (libc.so.6:__strlen_sse2_pminub) redirected to 0x4c2d0f0 (strlen)
+--13163-- REDIR: 0x53036e0 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2d1d0 (strcpy)
+--13163-- REDIR: 0x53bda40 (libc.so.6:__memcpy_ssse3_back) redirected to 0x4c2e7b0 (memcpy@@GLIBC_2.14)
+--13163-- REDIR: 0x52f7fa0 (libc.so.6:memchr) redirected to 0x4c2e3a0 (memchr)
+--13163-- REDIR: 0x52f7820 (libc.so.6:strncpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--13163-- REDIR: 0x5303d10 (libc.so.6:__strncpy_sse2_unaligned) redirected to 0x4c2d780 (__strncpy_sse2_unaligned)
+--13163-- REDIR: 0x52eead0 (libc.so.6:free) redirected to 0x4c2afe6 (free)
+--13163-- REDIR: 0x52ff3c0 (libc.so.6:strchrnul) redirected to 0x4c31ab0 (strchrnul)
+--13163-- REDIR: 0x530e920 (libc.so.6:__GI_strstr) redirected to 0x4c32220 (__strstr_sse2)
+--13163-- REDIR: 0x52f8ae0 (libc.so.6:__GI_mempcpy) redirected to 0x4c31cc0 (__GI_mempcpy)
+==13163== 
+==13163== HEAP SUMMARY:
+==13163==     in use at exit: 15,997 bytes in 941 blocks
+==13163==   total heap usage: 14,070 allocs, 13,129 frees, 1,178,117 bytes allocated
+==13163== 
+==13163== Searching for pointers to 941 not-freed blocks
+==13163== Checked 113,160 bytes
+==13163== 
+==13163== 15,997 bytes in 941 blocks are definitely lost in loss record 1 of 1
+==13163==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==13163==    by 0x40274F: substring (fastq_filter.c:219)
+==13163==    by 0x403969: cell_counts (count.c:14)
+==13163==    by 0x401651: cmd_whitelist (main.c:61)
+==13163==    by 0x40207B: main (main.c:246)
+==13163== 
+==13163== LEAK SUMMARY:
+==13163==    definitely lost: 15,997 bytes in 941 blocks
+==13163==    indirectly lost: 0 bytes in 0 blocks
+==13163==      possibly lost: 0 bytes in 0 blocks
+==13163==    still reachable: 0 bytes in 0 blocks
+==13163==         suppressed: 0 bytes in 0 blocks
+==13163== 
+==13163== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

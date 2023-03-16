@@ -72,31 +72,33 @@ void free_comb_fastq(comb_fastq *comb)
     free(comb);
 }
 
+node *new_node(char *data)
+{
+    node *out = (node *)malloc(sizeof(node));
+    out->data = strdup(data);
+    out->count = 1;
+    out->left = NULL;
+    out->right = NULL;
+    return out;
+}
+
 node *insert_tree(node *root, char *data)
 {
     if (root == NULL)
     {
-        root = (node *)malloc(sizeof(node));
-        strcpy(root->data, data);
-        root->count = 1;
-        root->left = NULL;
-        root->right = NULL;
-        return root;
+        return new_node(data);
     }
     
     int cmp = strcmp(data, root->data);
 
-    if (cmp = 0)
-    {
-        root->count++;
-    }
-    else if (cmp < 0)
-    {
+    if (cmp < 0) {
         root->left = insert_tree(root->left, data);
     }
-    else
-    {
+    else if (cmp > 0) {
         root->right = insert_tree(root->right, data);
+    }
+    else {  // data is equal to root->data
+        root->count++;
     }
     return root;
 }
@@ -120,7 +122,7 @@ void print_tree(node *root, FILE *stream)
     {
         return;
     }
-    fprintf(stream, "%s %ld\n", root->data, root->count);
+    fprintf(stream, "%s,%ld\n", root->data, root->count);
     print_tree(root->left, stream);
     print_tree(root->right, stream);
 }
@@ -179,9 +181,8 @@ char **read_txt(char *file_name, size_t nrows)
 
     for (int i = 0; i < nrows; i++)
     {
-        whitelist[i] = (char *)malloc((LEN_CELLBARCODE + 2) * sizeof(char));
-        fgets(whitelist[i], LEN_CELLBARCODE + 2, stream);
-        // printf("%s %ld", whitelist[i], strlen(whitelist[i]));
+        whitelist[i] = (char *)malloc(100 * sizeof(char));
+        fgets(whitelist[i], 100, stream);
     }
 
     fclose(stream);
@@ -189,24 +190,24 @@ char **read_txt(char *file_name, size_t nrows)
     return whitelist;
 }
 
-bool in(node *root, char *element)
+bool in(node *root, char *element, int len_cellbarcode)
 {
     if (root == NULL)
     {
         return 0;
     }
 
-    if (strncmp(root->data, element, LEN_CELLBARCODE) == 0)
+    if (strncmp(root->data, element, len_cellbarcode) == 0)
     {
         return 1;
     }
-    else if (strncmp(root->data, element, LEN_CELLBARCODE) > 0)
+    else if (strncmp(root->data, element, len_cellbarcode) > 0)
     {
-        return in(root->left, element);
+        return in(root->left, element, len_cellbarcode);
     }
     else
     {
-        return in(root->right, element);
+        return in(root->right, element, len_cellbarcode);
     }
 }
 
@@ -263,7 +264,7 @@ void fastF(gzFile file_in[3],
                 {
                     char *cell_barcode = substring(block->R1->seq, 0, len_cellbarcode);
 
-                    if (block->random_number < rate && (all_cell || in(tree_whitelist, cell_barcode)))
+                    if (block->random_number < rate && (all_cell || in(tree_whitelist, cell_barcode, len_cellbarcode)))
                     {
 #pragma omp critical
                         {

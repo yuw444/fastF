@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include "argparse.h"
 #include "fastq_filter.h"
+#include "count.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
@@ -21,11 +22,17 @@ int cmd_whitelist(int argc, const char **argv)
 {
 
     char * path_R1_arg = NULL;
+    char * path_out_arg = NULL;
+    size_t len_cellbarcode = 16;
+    size_t len_umi = 10;
 
     struct argparse_option options[] = {
         OPT_HELP(),
         OPT_GROUP("Basic options"),
         OPT_STRING('R', "R1", &path_R1_arg, "path to R1 fastq files", NULL, 0, 0),
+        OPT_STRING('o', "out", &path_out_arg, "path to output whitelist", NULL, 0, 0),
+        OPT_INTEGER('l', "len", &len_cellbarcode, "length of cell barcode", NULL, 0, 0),
+        OPT_INTEGER('u', "umi", &len_umi, "length of UMI", NULL, 0, 0),
         OPT_END(),
     };
 
@@ -51,12 +58,13 @@ int cmd_whitelist(int argc, const char **argv)
         exit(1);
     }
 
-    node *head = cell_counts(R1);
+    node *head = cell_counts(R1, len_cellbarcode, len_umi);
 
     gzclose(R1);
 
     // output the cell barcode whitelist
-    char *path_out = "whitelist.txt";
+    char path_out[1024];
+    sprintf(path_out, "%s/whitelist.txt", path_out_arg);
     FILE *fp = fopen(path_out, "w");
     if (fp == NULL)
     {
@@ -174,7 +182,6 @@ int cmd_filter(int argc, const char **argv)
         // printf("nrow = %d\n", nrow);
         char **whitelist = read_txt(whitelist_arg, nrow);
 
-        qsort(whitelist, nrow, sizeof(char *), compare);
         tree_whitelist = construct_tree(whitelist, nrow);
 
         printf("Processing fastq files...\n");

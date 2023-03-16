@@ -1,19 +1,17 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "C"
   )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_C
-  "/home/fastF/src/v1.2/argparse.c" "/home/fastF/build/CMakeFiles/fastF.dir/src/v1.2/argparse.c.o"
-  "/home/fastF/src/v1.2/fastq_filter.c" "/home/fastF/build/CMakeFiles/fastF.dir/src/v1.2/fastq_filter.c.o"
-  "/home/fastF/src/v1.2/main.c" "/home/fastF/build/CMakeFiles/fastF.dir/src/v1.2/main.c.o"
-  )
-set(CMAKE_C_COMPILER_ID "GNU")
 
-# The include file search paths:
-set(CMAKE_C_TARGET_INCLUDE_PATH
-  "/usr/local/lib/R/site-library/Rcpp/include"
-  "/usr/local/lib/R/include"
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/scratch/u/yu89975/fastF/src/v1.2.09/argparse.c" "CMakeFiles/fastF.dir/src/v1.2.09/argparse.c.o" "gcc" "CMakeFiles/fastF.dir/src/v1.2.09/argparse.c.o.d"
+  "/scratch/u/yu89975/fastF/src/v1.2.09/count.c" "CMakeFiles/fastF.dir/src/v1.2.09/count.c.o" "gcc" "CMakeFiles/fastF.dir/src/v1.2.09/count.c.o.d"
+  "/scratch/u/yu89975/fastF/src/v1.2.09/fastq_filter.c" "CMakeFiles/fastF.dir/src/v1.2.09/fastq_filter.c.o" "gcc" "CMakeFiles/fastF.dir/src/v1.2.09/fastq_filter.c.o.d"
+  "/scratch/u/yu89975/fastF/src/v1.2.09/main.c" "CMakeFiles/fastF.dir/src/v1.2.09/main.c.o" "gcc" "CMakeFiles/fastF.dir/src/v1.2.09/main.c.o.d"
   )
 
 # Targets to which this target links.
