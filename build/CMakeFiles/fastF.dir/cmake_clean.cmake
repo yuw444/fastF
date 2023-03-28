@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/fastF.dir/src/v1.2.09/argparse.c.o.d"
   "CMakeFiles/fastF.dir/src/v1.2.09/count.c.o"
   "CMakeFiles/fastF.dir/src/v1.2.09/count.c.o.d"
+  "CMakeFiles/fastF.dir/src/v1.2.09/extract.c.o"
+  "CMakeFiles/fastF.dir/src/v1.2.09/extract.c.o.d"
   "CMakeFiles/fastF.dir/src/v1.2.09/fastq_filter.c.o"
   "CMakeFiles/fastF.dir/src/v1.2.09/fastq_filter.c.o.d"
   "CMakeFiles/fastF.dir/src/v1.2.09/main.c.o"

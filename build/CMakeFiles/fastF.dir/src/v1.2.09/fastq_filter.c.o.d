@@ -22,4 +22,5 @@ CMakeFiles/fastF.dir/src/v1.2.09/fastq_filter.c.o: \
  /usr/include/zconf.h /usr/include/unistd.h /usr/include/bits/posix_opt.h \
  /usr/include/bits/environments.h /usr/include/bits/confname.h \
  /usr/include/getopt.h \
- /hpc/apps/gcc/9.3.0/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include/stdbool.h
+ /hpc/apps/gcc/9.3.0/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include/stdbool.h \
+ /hpc/apps/gcc/9.3.0/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include/omp.h

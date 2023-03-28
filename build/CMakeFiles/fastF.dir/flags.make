@@ -4,7 +4,7 @@
 # compile C with /hpc/apps/gcc/9.3.0/bin/gcc
 C_DEFINES = 
 
-C_INCLUDES = -I/usr/local/lib/R/site-library/Rcpp/include -I/usr/local/lib/R/include
+C_INCLUDES = -I/usr/local/lib/R/site-library/Rcpp/include -I/usr/local/lib/R/include -I/scratch/u/yu89975/fastF/./htslib/include
 
 C_FLAGS = -g -std=gnu99
 

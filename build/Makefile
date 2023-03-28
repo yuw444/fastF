@@ -177,6 +177,30 @@ src/v1.2.09/count.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.2.09/count.c.s
 .PHONY : src/v1.2.09/count.c.s
 
+src/v1.2.09/extract.o: src/v1.2.09/extract.c.o
+.PHONY : src/v1.2.09/extract.o
+
+# target to build an object file
+src/v1.2.09/extract.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.2.09/extract.c.o
+.PHONY : src/v1.2.09/extract.c.o
+
+src/v1.2.09/extract.i: src/v1.2.09/extract.c.i
+.PHONY : src/v1.2.09/extract.i
+
+# target to preprocess a source file
+src/v1.2.09/extract.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.2.09/extract.c.i
+.PHONY : src/v1.2.09/extract.c.i
+
+src/v1.2.09/extract.s: src/v1.2.09/extract.c.s
+.PHONY : src/v1.2.09/extract.s
+
+# target to generate assembly for a file
+src/v1.2.09/extract.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fastF.dir/build.make CMakeFiles/fastF.dir/src/v1.2.09/extract.c.s
+.PHONY : src/v1.2.09/extract.c.s
+
 src/v1.2.09/fastq_filter.o: src/v1.2.09/fastq_filter.c.o
 .PHONY : src/v1.2.09/fastq_filter.o
 
@@ -240,6 +264,9 @@ help:
 	@echo "... src/v1.2.09/count.o"
 	@echo "... src/v1.2.09/count.i"
 	@echo "... src/v1.2.09/count.s"
+	@echo "... src/v1.2.09/extract.o"
+	@echo "... src/v1.2.09/extract.i"
+	@echo "... src/v1.2.09/extract.s"
 	@echo "... src/v1.2.09/fastq_filter.o"
 	@echo "... src/v1.2.09/fastq_filter.i"
 	@echo "... src/v1.2.09/fastq_filter.s"

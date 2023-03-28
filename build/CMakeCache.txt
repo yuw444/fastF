@@ -251,6 +251,9 @@ fastF_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 fastF_SOURCE_DIR:STATIC=/scratch/u/yu89975/fastF
 
+//The directory containing a CMake configuration file for htslib.
+htslib_DIR:PATH=htslib_DIR-NOTFOUND
+
 
 ########################
 # INTERNAL cache entries

@@ -1,3 +1,5 @@
 
 # build folder
 ./build/
+./htslib-1.17/
+./htslib/

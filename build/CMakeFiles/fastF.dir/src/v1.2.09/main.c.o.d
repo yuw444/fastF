@@ -31,4 +31,17 @@ CMakeFiles/fastF.dir/src/v1.2.09/main.c.o: \
  /usr/include/bits/environments.h /usr/include/bits/confname.h \
  /usr/include/getopt.h \
  /hpc/apps/gcc/9.3.0/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include/stdbool.h \
- /scratch/u/yu89975/fastF/src/v1.2.09/count.h
+ /hpc/apps/gcc/9.3.0/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include/omp.h \
+ /scratch/u/yu89975/fastF/src/v1.2.09/count.h \
+ /scratch/u/yu89975/fastF/src/v1.2.09/extract.h \
+ /scratch/u/yu89975/fastF/./htslib/include/htslib/sam.h \
+ /scratch/u/yu89975/fastF/./htslib/include/htslib/hts.h \
+ /usr/include/inttypes.h \
+ /scratch/u/yu89975/fastF/./htslib/include/htslib/hts_defs.h \
+ /scratch/u/yu89975/fastF/./htslib/include/htslib/hts_log.h \
+ /scratch/u/yu89975/fastF/./htslib/include/htslib/kstring.h \
+ /hpc/apps/gcc/9.3.0/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include-fixed/limits.h \
+ /hpc/apps/gcc/9.3.0/lib/gcc/x86_64-pc-linux-gnu/9.3.0/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/bits/posix2_lim.h \
+ /scratch/u/yu89975/fastF/./htslib/include/htslib/kroundup.h \
+ /scratch/u/yu89975/fastF/./htslib/include/htslib/hts_endian.h
