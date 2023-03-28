@@ -4,6 +4,7 @@
 #include "argparse.h"
 #include "fastq_filter.h"
 #include "count.h"
+#include "extract.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
@@ -229,9 +230,64 @@ int cmd_filter(int argc, const char **argv)
     return 0;
 }
 
+int cmd_extract(int argc, const char **argv)
+{
+    char *path_bam_arg = NULL;
+    char *path_out_arg = ".";
+
+    struct argparse_option options[] = {
+        OPT_HELP(),
+        OPT_STRING('b', "bam", &path_bam_arg, "path to bam file", NULL, 0, 0),
+        OPT_STRING('o', "out", &path_out_arg, "path to output directory", NULL, 0, 0),
+        OPT_END(),
+    };
+
+    struct argparse argparse;
+    argparse_init(&argparse, options, usages, 0);
+    argparse_describe(
+        &argparse,
+        "\nExtract CR and CB from bam file.",
+        ""
+    );
+
+    argc = argparse_parse(&argparse, argc, argv);
+
+    if (path_bam_arg == NULL)
+    {
+        printf("Error: path to bam file can not been NULL while extracting .\n");
+        exit(1);
+    }
+
+    char *path_out = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_out, "%s/CR_CB.txt", path_out_arg);
+
+    // open file stream
+    FILE *file_out = fopen(path_out, "w");
+    if (file_out == NULL)
+    {
+        printf("Error: can not open file %s\n", path_out);
+        exit(1);
+    }
+
+    // read bam
+    struct CB_node *CB_tree = read_bam(path_bam_arg);
+
+    // write to file
+    print_CB_node(CB_tree, file_out);
+
+    // close file stream
+    fclose(file_out);
+
+    // free memory
+    free_CB_node(CB_tree);
+    free(path_out);
+    
+}
+
 static struct cmd_struct commands[] = {
     {"filter", cmd_filter},
     {"whitelist", cmd_whitelist},
+    {"extract", cmd_extract},
 };
 
 int main(int argc, const char **argv)

@@ -17,6 +17,7 @@ It is designed to be run with multiple threads.
 #include <string.h>
 #include <stdbool.h>
 #include <time.h>
+#include <omp.h>
 
 #define MAX_LINE_LENGTH 1024
 #define LEN_WHITELIST 2 ^ 15
@@ -29,6 +30,8 @@ typedef struct node
     struct node *left;
     struct node *right;
 } node;
+
+node *new_node(char *data);
 
 typedef struct fastq
 {
@@ -64,6 +67,9 @@ node *construct_tree(char **string_vector, size_t len);
 
 // print the binary searching tree of whitelist
 void print_tree(node *root, FILE *stream);
+
+// print the binary searching tree of root in the same row
+void print_tree_same_row(node *root, FILE *stream);
 
 // free binary tree node
 

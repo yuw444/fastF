@@ -127,6 +127,17 @@ void print_tree(node *root, FILE *stream)
     print_tree(root->right, stream);
 }
 
+void print_tree_same_row(node *root, FILE *stream)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    fprintf(stream, "%s,%ld,", root->data, root->count);
+    print_tree_same_row(root->left, stream);
+    print_tree_same_row(root->right, stream);
+}
+
 // free binary tree node
 
 void free_tree_node(node *root)
