@@ -18,7 +18,7 @@ It is designed to be run with multiple threads.
 #include <stdbool.h>
 #include <time.h>
 
-#define MAX_LINE_LENGTH 128
+#define MAX_LINE_LENGTH 1024
 #define LEN_WHITELIST 2 ^ 15
 
 // struct node of binary searching tree

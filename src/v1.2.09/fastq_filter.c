@@ -154,7 +154,7 @@ int get_row(char *file_name)
         exit(1);
     }
 
-    while (fgets(buffer, 1024, stream) != NULL)
+    while (fgets(buffer, MAX_LINE_LENGTH, stream) != NULL)
     {
         i++;
         // printf("%s", buffer);

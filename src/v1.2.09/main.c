@@ -118,13 +118,15 @@ int cmd_filter(int argc, const char **argv)
 
     argc = argparse_parse(&argparse, argc, argv);
 
+    printf("whitelist: %s\n", whitelist_arg);
+
     if (path_R1_arg == NULL)
     {
         printf("Error: path to R1 fastq files can not been NULL while filtering .\n");
         exit(1);
     }
 
-    if (whitelist_arg == NULL || !all_cell)
+    if (whitelist_arg == NULL && !all_cell)
     {
         printf("Error: whitelist and --all cell option can not been both NULL at the same time.\n");
         exit(1);
@@ -145,9 +147,9 @@ int cmd_filter(int argc, const char **argv)
     node *tree_whitelist;
     //------------------------------------------------
 
-    file_in[0] = gzopen(path_I1_arg, "r");
-    file_in[1] = gzopen(path_R1_arg, "r");
-    file_in[2] = gzopen(path_R2_arg, "r");
+    // file_in[0] = gzopen(path_I1_arg, "r");
+    // file_in[1] = gzopen(path_R1_arg, "r");
+    // file_in[2] = gzopen(path_R2_arg, "r");
 
     if (path_I1_arg == NULL)
     {
@@ -157,29 +159,38 @@ int cmd_filter(int argc, const char **argv)
     else
     {
        file_in[0] = gzopen(path_I1_arg, "r");
-       file_out[0] = gzopen(strcat(path_o_arg, "/I1.fastq.gz"), "w"); 
+       char *path_I1_out = (char *)malloc(1024 * sizeof(char));
+       sprintf(path_I1_out, "%s/I1.fastq.gz", path_o_arg);
+       file_out[0] = gzopen(path_I1_out, "w"); 
+       free(path_I1_out);
     }
 
     file_in[1] = gzopen(path_R1_arg, "r");
-    file_out[1] = gzopen(strcat(path_o_arg, "/R1.fastq.gz"), "w");
+    char *path_R1_out = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_R1_out, "%s/R1.fastq.gz", path_o_arg);
+    file_out[1] = gzopen(path_R1_out, "w");
+    free(path_R1_out);
 
     if (path_R2_arg == NULL)
     {
         file_in[2] = Z_NULL;
         file_out[2] = Z_NULL;
+        printf("TRUE\n");
     }
     else
     {
         file_in[2] = gzopen(path_R2_arg, "r");
-        file_out[2] = gzopen(strcat(path_o_arg, "/R2.fastq.gz"), "w");
+        char *path_R2_out = (char *)malloc(1024 * sizeof(char));
+        sprintf(path_R2_out, "%s/R2.fastq.gz", path_o_arg);
+        file_out[2] = gzopen(path_R2_out, "w");
+        free(path_R2_out);
     }
-
 
     if (whitelist_arg != NULL)
     {
         printf("Reading whitelist...\n");
         int nrow = get_row(whitelist_arg);
-        // printf("nrow = %d\n", nrow);
+        printf("nrow = %d\n", nrow);
         char **whitelist = read_txt(whitelist_arg, nrow);
 
         tree_whitelist = construct_tree(whitelist, nrow);
@@ -188,6 +199,10 @@ int cmd_filter(int argc, const char **argv)
         fastF(file_in, file_out, tree_whitelist, len_cellbarcode, seed_arg, rate_arg, all_cell);
 
         free_tree_node(tree_whitelist);
+        for(int i = 0; i < nrow; i++)
+        {
+            free(whitelist[i]);
+        }
         free(whitelist);
     } 
     else
@@ -203,8 +218,12 @@ int cmd_filter(int argc, const char **argv)
 
     for (int i = 0; i < 3; i++)
     {
-        gzclose(file_in[i]);
-        gzclose(file_out[i]);
+        if(file_in[i] != Z_NULL)
+        {
+            gzclose(file_in[i]);
+            gzclose(file_out[i]);
+        }
+
     }
 
     return 0;
