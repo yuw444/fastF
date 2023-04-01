@@ -4,8 +4,8 @@ project(fastF VERSION 1.0)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_BUILD_TYPE Debug)
-# set(CMAKE_BUILD_TYPE Release)
+# set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 include_directories(/usr/local/lib/R/site-library/Rcpp/include)
 include_directories(/usr/local/lib/R/include)

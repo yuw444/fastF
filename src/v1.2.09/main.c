@@ -1,5 +1,4 @@
 #include <dirent.h>
-#include <errno.h>
 #include <sys/stat.h>
 #include "argparse.h"
 #include "fastq_filter.h"
@@ -272,6 +271,8 @@ int cmd_extract(int argc, const char **argv)
     // read bam
     struct CB_node *CB_tree = read_bam(path_bam_arg);
 
+    printf("Writing to file...\n");
+
     // write to file
     print_CB_node(CB_tree, file_out);
 
@@ -281,6 +282,9 @@ int cmd_extract(int argc, const char **argv)
     // free memory
     free_CB_node(CB_tree);
     free(path_out);
+
+    printf("Done.\n");
+    return 0;
     
 }
 
@@ -292,13 +296,12 @@ static struct cmd_struct commands[] = {
 
 int main(int argc, const char **argv)
 {
-    clock_t startTime = clock();
-
     struct argparse argparse;
     struct argparse_option options[] = {
         OPT_HELP(),
         OPT_END(),
     };
+
     argparse_init(&argparse, options, usages, ARGPARSE_STOP_AT_NON_OPTION);
     argc = argparse_parse(&argparse, argc, argv);
     if (argc < 1)
@@ -316,14 +319,11 @@ int main(int argc, const char **argv)
             cmd = &commands[i];
         }
     }
+
     if (cmd)
     {
         return cmd->fn(argc, argv);
     }
-
-    clock_t endTime = clock();
-
-    printf("Elapsed time: %f seconds\n", (double)(endTime - startTime) / CLOCKS_PER_SEC);
 
     return 0;
 }

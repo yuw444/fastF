@@ -80,6 +80,9 @@ CB_node *read_bam(char *bam_file)
     // initialize cell barcode tree
     CB_node *root = NULL;
 
+    // counter for reads
+    long unsigned int read_count = 0;
+
     // read bam file
     while (sam_read1(bam_reader, bam_header, bam_record) >= 0)
     {
@@ -100,8 +103,27 @@ CB_node *read_bam(char *bam_file)
             free(CB);
             free(CR);
         }
+
+        // print progress
+        read_count++;
+        if (read_count % 10000000 == 0)
+        {
+            // time stamp
+            time_t t = time(NULL);
+
+            // print time stamp
+            struct tm *tm = localtime(&t);
+            char s[64];
+            strftime(s, sizeof(s), "%c", tm);
+            printf("%s: ", s);
+
+            printf("Processed %lu reads \n", read_count);
+        }
+        
     }
 
+    // 
+    printf("Processed all %lu reads\n", read_count);
     // free bam record
     bam_destroy1(bam_record);
     bam_hdr_destroy(bam_header);
