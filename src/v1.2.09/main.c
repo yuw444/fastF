@@ -288,10 +288,75 @@ int cmd_extract(int argc, const char **argv)
     
 }
 
+int cmd_sample(int argc, const char **argv)
+{
+    char *path_bam_arg = NULL;
+    char *path_CB_arg = NULL;
+    float rate_reads_arg = 1.0f;
+    char *path_out_arg = ".";
+
+    struct argparse_option options[] = {
+        OPT_HELP(),
+        OPT_STRING('b', "bam", &path_bam_arg, "path to bam file", NULL, 0, 0),
+        OPT_STRING('c', "CB", &path_CB_arg, "path to CB list file", NULL, 0, 0),
+        OPT_FLOAT('r', "rate", &rate_reads_arg, "rate of reads to be sampled", NULL, 0, 0),
+        OPT_STRING('o', "out", &path_out_arg, "path to output directory", NULL, 0, 0),
+        OPT_END(),
+    };
+
+    struct argparse argparse;
+    argparse_init(&argparse, options, usages, 0);
+    argparse_describe(
+        &argparse,
+        "\nExtract CR and CB from bam file.",
+        ""
+    );
+
+    argc = argparse_parse(&argparse, argc, argv);
+
+    if (path_bam_arg == NULL)
+    {
+        printf("Error: path to bam file can not been NULL while sampling .\n");
+        exit(1);
+    }
+
+    char *path_out = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_out, "%s/temp.txt", path_out_arg);
+
+    // open file stream
+    FILE *file_out = fopen(path_out, "w");
+    if (file_out == NULL)
+    {
+        printf("Error: can not open file %s\n", path_out);
+        exit(1);
+    }
+
+    // read bam
+    UMI_node *UMI_tree = sample_bam_UMI(path_bam_arg, path_CB_arg, rate_reads_arg);
+
+    printf("Writing to file...\n");
+
+    // write to file
+    // print_CB_node(CB_tree, file_out);
+
+    // close file stream
+    fclose(file_out);
+
+    // free memory
+    free_UMI_node(UMI_tree);
+    free(path_out);
+
+    printf("Done.\n");
+    return 0;
+    
+}
+
+
 static struct cmd_struct commands[] = {
     {"filter", cmd_filter},
     {"whitelist", cmd_whitelist},
     {"extract", cmd_extract},
+    {"sample", cmd_sample},
 };
 
 int main(int argc, const char **argv)

@@ -1,3 +1,6 @@
+#ifndef EXTRACT_H
+#define EXTRACT_H
+
 #include <htslib/sam.h>
 #include "fastq_filter.h"
 
@@ -20,3 +23,5 @@ void print_CB_node(CB_node *root, FILE *fp);
 
 // read bam file and extract CB and CR tags and store them in CB_node
 CB_node *read_bam(char *bam_file);
+
+#endif

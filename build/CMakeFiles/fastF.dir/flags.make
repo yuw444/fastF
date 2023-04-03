@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = -I/usr/local/lib/R/site-library/Rcpp/include -I/usr/local/lib/R/include -I/scratch/u/yu89975/fastF/./htslib/include
 
-C_FLAGS = -O3 -DNDEBUG -std=gnu99
+C_FLAGS = -g -std=gnu99
 
