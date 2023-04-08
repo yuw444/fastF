@@ -122,6 +122,7 @@ typedef struct cell_gene_node_geneID_name_node
 cell_gene_node_geneID_name_node *sample_bam_UMI(
     char *bam_file, 
     char *CB_list,
+    unsigned int all_cell,
     double rate_reads,
     unsigned int seed
 );

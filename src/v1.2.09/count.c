@@ -292,32 +292,36 @@ size_t count_total_UMI_node(cell_gene_node *root)
 cell_gene_node_geneID_name_node *sample_bam_UMI(
     char *bam_file,
     char *CB_list,
+    unsigned int all_cell,
     double rate_reads,
     unsigned int seed)
 {
     srand(seed);
 
-    // open CB list file
-    FILE *CB_list_file = fopen(CB_list, "r");
-    if (CB_list_file == NULL)
-    {
-        printf("ERROR: Cannot open CB list file %s\n", CB_list);
-        exit(1);
-    }
-
     // initialize CB list tree
     node *CB_list_tree = NULL;
 
-    // read CB list file
-    char CB[MAX_LINE_LENGTH];
-    while (fgets(CB, MAX_LINE_LENGTH, CB_list_file) != NULL)
+    if (all_cell == 0)
     {
-        // remove newline character
-        CB[16] = '\0';
-        CB_list_tree = insert_tree(CB_list_tree, CB);
+        // open CB list file
+        FILE *CB_list_file = fopen(CB_list, "r");
+        if (CB_list_file == NULL)
+        {
+            printf("ERROR: Cannot open CB list file %s\n", CB_list);
+            exit(1);
+        }
+        
+        // read CB list file
+        char CB[MAX_LINE_LENGTH];
+        while (fgets(CB, MAX_LINE_LENGTH, CB_list_file) != NULL)
+        {
+            // remove newline character
+            CB[16] = '\0';
+            CB_list_tree = insert_tree(CB_list_tree, CB);
+        }
+        // close CB list file
+        fclose(CB_list_file);
     }
-    // close CB list file
-    fclose(CB_list_file);
 
     // open bam file
     samFile *bam_reader = hts_open(bam_file, "r");
@@ -352,7 +356,7 @@ cell_gene_node_geneID_name_node *sample_bam_UMI(
 
         // print progress
         total_read_counts++;
-        
+
         if (total_read_counts % 10000000 == 0)
         {
             // time stamp
@@ -380,7 +384,7 @@ cell_gene_node_geneID_name_node *sample_bam_UMI(
             char *cell_barcode = bam_aux2Z(cb);
             // printf("%s\n", cell_barcode);
 
-            if (in(CB_list_tree, cell_barcode, 16))
+            if (all_cell || in(CB_list_tree, cell_barcode, 16))
             {
                 // printf("%s\n", cell_barcode);
 
@@ -413,7 +417,7 @@ cell_gene_node_geneID_name_node *sample_bam_UMI(
                             gene_ID,
                             UMI,
                             quality_string);
-                        
+
                         geneID_name_root = insert_geneID_name_node(
                             geneID_name_root,
                             gene_ID,
@@ -433,7 +437,10 @@ cell_gene_node_geneID_name_node *sample_bam_UMI(
     printf("Total reads: %zu\n", total_read_counts);
     printf("Valid reads: %zu\n", valid_read_counts);
 
-    free_tree_node(CB_list_tree);
+    if (CB_list_tree != NULL)
+    {
+        free_tree_node(CB_list_tree);
+    }
 
     cell_gene_node_geneID_name_node *root = (cell_gene_node_geneID_name_node *)malloc(sizeof(cell_gene_node_geneID_name_node));
     root->cell_gene_root = cell_gene_root;
@@ -517,7 +524,7 @@ void inorder_index_geneID_name_node(geneID_name_node *root, char *ensembleID, in
     inorder_index_geneID_name_node(root->left, ensembleID, index);
     if (strcmp(root->ensembleID, ensembleID) <= 0)
     {
-     (*index)++;   
+        (*index)++;
     }
     inorder_index_geneID_name_node(root->right, ensembleID, index);
 }
@@ -544,7 +551,7 @@ void write_gene_UMI_node_output(
 
     int rownumber = search_geneID_for_rownumber(geneID_name_root, gene_UMI_root->geneID);
     size_t unique_UMI_counts = count_UMI_node(gene_UMI_root->UMI);
-    
+
     gzprintf(fp, "%d %zu %zu\n", rownumber, cell_counts, unique_UMI_counts);
 
     write_gene_UMI_node_output(cell_counts, gene_UMI_root->right, geneID_name_root, fp);
@@ -568,8 +575,7 @@ void write_cell_UMI_node_output(
         cell_gene_root->left,
         geneID_name_root,
         fp_barcodes,
-        fp_matrix
-    );
+        fp_matrix);
 
     // write barcodes
     gzprintf(fp_barcodes, "%s\n", cell_gene_root->CB);
@@ -578,8 +584,7 @@ void write_cell_UMI_node_output(
         *cell_counts,
         cell_gene_root->gene_UMI,
         geneID_name_root,
-        fp_matrix
-    );
+        fp_matrix);
 
     (*cell_counts)++;
 
@@ -588,10 +593,8 @@ void write_cell_UMI_node_output(
         cell_gene_root->right,
         geneID_name_root,
         fp_barcodes,
-        fp_matrix
-    );
+        fp_matrix);
 }
-
 
 void write_geneID_name_node_output(
     geneID_name_node *geneID_name_root,
@@ -608,4 +611,3 @@ void write_geneID_name_node_output(
 
     write_geneID_name_node_output(geneID_name_root->right, fp);
 }
-

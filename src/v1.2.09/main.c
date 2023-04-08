@@ -294,6 +294,7 @@ int cmd_sample(int argc, const char **argv)
     char *path_CB_arg = NULL;
     float rate_reads_arg = 1.0f;
     char *path_out_arg = ".";
+    unsigned int all_cell = 0;
     int seed_arg = 926;
 
     struct argparse_option options[] = {
@@ -302,6 +303,7 @@ int cmd_sample(int argc, const char **argv)
         OPT_STRING('c', "CB", &path_CB_arg, "path to CB list file", NULL, 0, 0),
         OPT_FLOAT('r', "rate", &rate_reads_arg, "rate of reads to be sampled", NULL, 0, 0),
         OPT_STRING('o', "out", &path_out_arg, "path to output directory", NULL, 0, 0),
+        OPT_BOOLEAN('a', "all", &all_cell, "sample all cells", NULL, 0, 0),
         OPT_INTEGER('s', "seed", &seed_arg, "seed for random number generator", NULL, 0, 0),
         OPT_END(),
     };
@@ -319,6 +321,12 @@ int cmd_sample(int argc, const char **argv)
     if (path_bam_arg == NULL)
     {
         printf("Error: path to bam file can not been NULL while sampling .\n");
+        exit(1);
+    }
+
+    if (path_CB_arg == NULL && all_cell == 0)
+    {
+        printf("Error: path to CB list file can not been NULL without all_cell option while sampling .\n");
         exit(1);
     }
 
@@ -346,6 +354,7 @@ int cmd_sample(int argc, const char **argv)
     cell_gene_node_geneID_name_node *root = sample_bam_UMI(
         path_bam_arg,
         path_CB_arg, 
+        all_cell,
         (double)rate_reads_arg,
         seed_arg);
 
@@ -392,7 +401,7 @@ int cmd_sample(int argc, const char **argv)
     return 0;
     
     // run command
-    // ./fastF sample -b ../data/test.bam  -c whitelist.txt 
+    // ./fastF sample -b ../data/test.bam  -c whitelist.txt -a
 
 }
 
