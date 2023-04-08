@@ -19,7 +19,7 @@ CB_node *insert_CB_node(CB_node *root, char *CB, char *CR);
 void free_CB_node(CB_node *root);
 
 // void to write the CB_node tree to a file stream;
-void print_CB_node(CB_node *root, FILE *fp);
+void print_CB_node(CB_node *root, gzFile fp);
 
 // read bam file and extract CB and CR tags and store them in CB_node
 CB_node *read_bam(char *bam_file);

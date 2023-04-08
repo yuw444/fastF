@@ -74,6 +74,11 @@ void free_comb_fastq(comb_fastq *comb)
 
 node *new_node(char *data)
 {
+    if (data == NULL)
+    {
+        return NULL;
+    }
+
     node *out = (node *)malloc(sizeof(node));
     out->data = strdup(data);
     out->count = 1;
@@ -127,16 +132,17 @@ void print_tree(node *root, FILE *stream)
     print_tree(root->right, stream);
 }
 
-void print_tree_same_row(node *root, FILE *stream)
+void print_tree_same_row(node *root, gzFile stream)
 {
     if (root == NULL)
     {
         return;
     }
-    fprintf(stream, "%s,%ld,", root->data, root->count);
+    gzprintf(stream, "%s,%ld;", root->data, root->count);
     print_tree_same_row(root->left, stream);
     print_tree_same_row(root->right, stream);
 }
+
 
 // free binary tree node
 
@@ -146,6 +152,7 @@ void free_tree_node(node *root)
     {
         return;
     }
+
     free(root->data);
     free_tree_node(root->left);
     free_tree_node(root->right);

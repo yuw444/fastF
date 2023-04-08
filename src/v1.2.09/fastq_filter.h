@@ -69,7 +69,7 @@ node *construct_tree(char **string_vector, size_t len);
 void print_tree(node *root, FILE *stream);
 
 // print the binary searching tree of root in the same row
-void print_tree_same_row(node *root, FILE *stream);
+void print_tree_same_row(node *root, gzFile stream);
 
 // free binary tree node
 

@@ -44,7 +44,7 @@ void free_CB_node(CB_node *root)
     free(root);
 }
 
-void print_CB_node(CB_node *root, FILE *fp)
+void print_CB_node(CB_node *root, gzFile fp)
 {
     if (root == NULL)
     {

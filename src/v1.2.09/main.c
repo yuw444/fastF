@@ -258,10 +258,10 @@ int cmd_extract(int argc, const char **argv)
     }
 
     char *path_out = (char *)malloc(1024 * sizeof(char));
-    sprintf(path_out, "%s/CR_CB.txt", path_out_arg);
+    sprintf(path_out, "%s/CR_CB.tsv.gz", path_out_arg);
 
     // open file stream
-    FILE *file_out = fopen(path_out, "w");
+    gzFile file_out = gzopen(path_out, "w");
     if (file_out == NULL)
     {
         printf("Error: can not open file %s\n", path_out);
@@ -277,7 +277,7 @@ int cmd_extract(int argc, const char **argv)
     print_CB_node(CB_tree, file_out);
 
     // close file stream
-    fclose(file_out);
+    gzclose(file_out);
 
     // free memory
     free_CB_node(CB_tree);
@@ -292,17 +292,17 @@ int cmd_sample(int argc, const char **argv)
 {
     char *path_bam_arg = NULL;
     char *path_CB_arg = NULL;
-    char *path_feature_arg = NULL;
     float rate_reads_arg = 1.0f;
     char *path_out_arg = ".";
+    int seed_arg = 926;
 
     struct argparse_option options[] = {
         OPT_HELP(),
         OPT_STRING('b', "bam", &path_bam_arg, "path to bam file", NULL, 0, 0),
         OPT_STRING('c', "CB", &path_CB_arg, "path to CB list file", NULL, 0, 0),
-        OPT_STRING('f', "feature", &path_feature_arg, "path to feature list file", NULL, 0, 0),
         OPT_FLOAT('r', "rate", &rate_reads_arg, "rate of reads to be sampled", NULL, 0, 0),
         OPT_STRING('o', "out", &path_out_arg, "path to output directory", NULL, 0, 0),
+        OPT_INTEGER('s', "seed", &seed_arg, "seed for random number generator", NULL, 0, 0),
         OPT_END(),
     };
 
@@ -322,39 +322,78 @@ int cmd_sample(int argc, const char **argv)
         exit(1);
     }
 
-    char *path_out = (char *)malloc(1024 * sizeof(char));
-    sprintf(path_out, "%s/temp.txt", path_out_arg);
+    // open gzFile stream
+    char *path_barcode = (char *)malloc(1024 * sizeof(char));
+    char *path_feature = (char *)malloc(1024 * sizeof(char));
+    char *path_matrix = (char *)malloc(1024 * sizeof(char));
 
-    // open file stream
-    FILE *file_out = fopen(path_out, "w");
-    if (file_out == NULL)
+    sprintf(path_barcode, "%s/barcodes.tsv.gz", path_out_arg);
+    sprintf(path_feature, "%s/features.tsv.gz", path_out_arg);
+    sprintf(path_matrix, "%s/matrix.mtx.gz", path_out_arg);
+
+    
+    gzFile file_barcode = gzopen(path_barcode, "w");
+    gzFile file_feature = gzopen(path_feature, "w");
+    gzFile file_matrix = gzopen(path_matrix, "w");
+
+    if (file_barcode == Z_NULL || file_feature == Z_NULL || file_matrix == Z_NULL)
     {
-        printf("Error: can not open file %s\n", path_out);
+        printf("Error: can not open output file in %s\n", path_out_arg);
         exit(1);
     }
 
     // read bam
-    cell_UMI_node *UMI_tree = sample_bam_UMI(
+    cell_gene_node_geneID_name_node *root = sample_bam_UMI(
         path_bam_arg,
         path_CB_arg, 
-        path_feature_arg,
-        (double)rate_reads_arg);
+        (double)rate_reads_arg,
+        seed_arg);
+
+    // count number of cells
+    size_t n_cells = count_cell_gene_node(root->cell_gene_root);
+    // count number of (unique) genes
+    size_t n_genes = count_geneID_name_node(root->geneID_name_root);
+    // count total number of non-zero genes across all cells
+    size_t n_features = count_total_UMI_node(root->cell_gene_root);
 
     printf("Writing to file...\n");
 
-    // write to file
-    // print_CB_node(CB_tree, file_out);
+    // write to matrix.mtx.gz
+    gzprintf(file_matrix, "%%%%MatrixMarket matrix coordinate integer general\n");
+    // gzprintf(file_matrix, "%%metadata_json: {\"software_version\": \"cellranger\", \"format_version\": 2}\n");
+    gzprintf(file_matrix, "%%%%generated_by: fastF sample (v0.0.9)\n");
+    gzprintf(file_matrix, "%zu %zu %zu\n", n_genes, n_cells, n_features);
+
+    write_geneID_name_node_output(root->geneID_name_root, file_feature);
+    size_t nth_cell = 1;
+
+    write_cell_UMI_node_output(
+        &nth_cell, 
+        root->cell_gene_root, 
+        root->geneID_name_root,
+        file_barcode, 
+        file_matrix
+    );
 
     // close file stream
-    fclose(file_out);
+    gzclose(file_barcode);
+    gzclose(file_feature);
+    gzclose(file_matrix);
 
     // free memory
-    free_cell_UMI_node(UMI_tree);
-    free(path_out);
+    free_cell_gene_node(root->cell_gene_root);
+    free_geneID_name_node(root->geneID_name_root);
+    free(root);
+    free(path_barcode);
+    free(path_feature);
+    free(path_matrix);
 
     printf("Done.\n");
     return 0;
     
+    // run command
+    // ./fastF sample -b ../data/test.bam  -c whitelist.txt 
+
 }
 
 
