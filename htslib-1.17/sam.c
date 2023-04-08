@@ -4658,7 +4658,7 @@ uint8_t *bam_aux_get(const bam1_t *b, const char tag[2])
 
             return s;
         }
-
+    // printf("bam_aux_get: tag '%c%c' not found\n", tag[0], tag[1]);
     // errno now as set by bam_aux_first()/bam_aux_next()
     return NULL;
 

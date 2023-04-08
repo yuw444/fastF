@@ -292,6 +292,7 @@ int cmd_sample(int argc, const char **argv)
 {
     char *path_bam_arg = NULL;
     char *path_CB_arg = NULL;
+    char *path_feature_arg = NULL;
     float rate_reads_arg = 1.0f;
     char *path_out_arg = ".";
 
@@ -299,6 +300,7 @@ int cmd_sample(int argc, const char **argv)
         OPT_HELP(),
         OPT_STRING('b', "bam", &path_bam_arg, "path to bam file", NULL, 0, 0),
         OPT_STRING('c', "CB", &path_CB_arg, "path to CB list file", NULL, 0, 0),
+        OPT_STRING('f', "feature", &path_feature_arg, "path to feature list file", NULL, 0, 0),
         OPT_FLOAT('r', "rate", &rate_reads_arg, "rate of reads to be sampled", NULL, 0, 0),
         OPT_STRING('o', "out", &path_out_arg, "path to output directory", NULL, 0, 0),
         OPT_END(),
@@ -332,7 +334,11 @@ int cmd_sample(int argc, const char **argv)
     }
 
     // read bam
-    UMI_node *UMI_tree = sample_bam_UMI(path_bam_arg, path_CB_arg, rate_reads_arg);
+    cell_UMI_node *UMI_tree = sample_bam_UMI(
+        path_bam_arg,
+        path_CB_arg, 
+        path_feature_arg,
+        (double)rate_reads_arg);
 
     printf("Writing to file...\n");
 
@@ -343,7 +349,7 @@ int cmd_sample(int argc, const char **argv)
     fclose(file_out);
 
     // free memory
-    free_UMI_node(UMI_tree);
+    free_cell_UMI_node(UMI_tree);
     free(path_out);
 
     printf("Done.\n");

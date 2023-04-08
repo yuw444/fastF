@@ -1,3 +1,0 @@
-/scratch/u/yu89975/fastF/build/CMakeFiles/fastF.dir
-/scratch/u/yu89975/fastF/build/CMakeFiles/edit_cache.dir
-/scratch/u/yu89975/fastF/build/CMakeFiles/rebuild_cache.dir
