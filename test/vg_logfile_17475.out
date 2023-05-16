@@ -1,0 +1,1014 @@
+==17475== Memcheck, a memory error detector
+==17475== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==17475== Using Valgrind-3.16.1-36d6727e1d-20200622X and LibVEX; rerun with -h for copyright info
+==17475== Command: ./myprogram
+==17475== Parent PID: 22633
+==17475== 
+--17475-- 
+--17475-- Valgrind options:
+--17475--    --trace-children=yes
+--17475--    --show-leak-kinds=all
+--17475--    --leak-check=full
+--17475--    -v
+--17475--    --track-origins=yes
+--17475--    --dsymutil=yes
+--17475--    --log-file=vg_logfile_%p.out
+--17475-- Contents of /proc/version:
+--17475--   Linux version 3.10.0-1127.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ) #1 SMP Tue Mar 31 23:36:51 UTC 2020
+--17475-- 
+--17475-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--17475-- Page sizes: currently 4096, max supported 4096
+--17475-- Valgrind library directory: /hpc/apps/valgrind/3.16.1/lib/valgrind
+--17475-- Reading syms from /scratch/u/yu89975/fastF/test/myprogram
+--17475-- Reading syms from /usr/lib64/ld-2.17.so
+--17475-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/memcheck-amd64-linux
+--17475--    object doesn't have a dynamic symbol table
+--17475-- Scheduler: using generic scheduler lock implementation.
+--17475-- Reading suppressions file: /hpc/apps/valgrind/3.16.1/lib/valgrind/default.supp
+==17475== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-17475-by-yu89975-on-ln04
+==17475== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-17475-by-yu89975-on-ln04
+==17475== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-17475-by-yu89975-on-ln04
+==17475== 
+==17475== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==17475== don't want to do, unless you know exactly what you're doing,
+==17475== or are doing some strange experiment):
+==17475==   /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=17475 ...command...
+==17475== 
+==17475== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==17475==   /path/to/gdb ./myprogram
+==17475== and then give GDB the following command
+==17475==   target remote | /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=17475
+==17475== --pid is optional if only one valgrind process is running
+==17475== 
+--17475-- REDIR: 0x4019e30 (ld-linux-x86-64.so.2:strlen) redirected to 0x580cb245 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--17475-- REDIR: 0x4019c00 (ld-linux-x86-64.so.2:index) redirected to 0x580cb25f (vgPlain_amd64_linux_REDIR_FOR_index)
+--17475-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_core-amd64-linux.so
+--17475-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+==17475== WARNING: new redirection conflicts with existing -- ignoring it
+--17475--     old: 0x04019e30 (strlen              ) R-> (0000.0) 0x580cb245 vgPlain_amd64_linux_REDIR_FOR_strlen
+--17475--     new: 0x04019e30 (strlen              ) R-> (2007.0) 0x04c2d1b0 strlen
+--17475-- REDIR: 0x4019db0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2e300 (strcmp)
+--17475-- REDIR: 0x401aa70 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31f90 (mempcpy)
+--17475-- Reading syms from /usr/lib64/libsqlite3.so.0.8.6
+--17475--    object doesn't have a symbol table
+--17475-- Reading syms from /usr/lib64/libz.so.1.2.7
+--17475--    object doesn't have a symbol table
+--17475-- Reading syms from /usr/lib64/libc-2.17.so
+--17475-- Reading syms from /usr/lib64/libdl-2.17.so
+--17475-- Reading syms from /usr/lib64/libpthread-2.17.so
+--17475-- REDIR: 0x5392130 (libc.so.6:strcasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x538eeb0 (libc.so.6:strnlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x5394400 (libc.so.6:strncasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x5391910 (libc.so.6:memset) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x53918c0 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x538ed80 (libc.so.6:strlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x538d330 (libc.so.6:strcmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x5396ad0 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x5391a70 (libc.so.6:mempcpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x538e7c0 (libc.so.6:strcpy) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x538d070 (libc.so.6:strcat) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x538edd0 (libc.so.6:__GI_strlen) redirected to 0x4c2d110 (__GI_strlen)
+--17475-- REDIR: 0x53908a0 (libc.so.6:__GI_strrchr) redirected to 0x4c2cb70 (__GI_strrchr)
+--17475-- REDIR: 0x53876b0 (libc.so.6:malloc) redirected to 0x4c29eec (malloc)
+--17475-- REDIR: 0x5391970 (libc.so.6:__GI_memset) redirected to 0x4c30ee0 (memset)
+--17475-- REDIR: 0x5387ad0 (libc.so.6:free) redirected to 0x4c2afe6 (free)
+--17475-- REDIR: 0x5456a40 (libc.so.6:__memcpy_ssse3_back) redirected to 0x4c2e7b0 (memcpy@@GLIBC_2.14)
+--17475-- REDIR: 0x5471680 (libc.so.6:__strlen_sse2_pminub) redirected to 0x4c2d0f0 (strlen)
+--17475-- REDIR: 0x538ef90 (libc.so.6:strncmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x5441b40 (libc.so.6:__strncmp_sse42) redirected to 0x4c2da20 (__strncmp_sse42)
+--17475-- REDIR: 0x539c6e0 (libc.so.6:__strcpy_sse2_unaligned) redirected to 0x4c2d1d0 (strcpy)
+--17475-- REDIR: 0x53912f0 (libc.so.6:bcmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x546bfb0 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c30590 (__memcmp_sse4_1)
+--17475-- REDIR: 0x5387bb0 (libc.so.6:realloc) redirected to 0x4c2c1c5 (realloc)
+--17475-- REDIR: 0x54171f0 (libc.so.6:__memcpy_chk) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--17475-- REDIR: 0x5456a30 (libc.so.6:__memcpy_chk_ssse3_back) redirected to 0x4c32080 (__memcpy_chk)
+==17475== Invalid free() / delete / delete[] / realloc()
+==17475==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==17475==    by 0x4E4F6BD: sqlite3_free (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401371: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475==  Address 0x4020f0 is in a r-- mapped file /scratch/u/yu89975/fastF/test/myprogram segment
+==17475== 
+--17475-- REDIR: 0x5390fa0 (libc.so.6:memchr) redirected to 0x4c2e3a0 (memchr)
+--17475-- REDIR: 0x53981b0 (libc.so.6:__GI___rawmemchr) redirected to 0x4c31b10 (__GI___rawmemchr)
+==17475== 
+==17475== Process terminating with default action of signal 2 (SIGINT)
+==17475==    at 0x53F199E: __read_nocancel (in /usr/lib64/libc-2.17.so)
+==17475==    by 0x4E56E60: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E820EA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E82AA8: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA3DF7: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAACFE: sqlite3_step (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA07F9: sqlite3_exec (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4013DE: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== HEAP SUMMARY:
+==17475==     in use at exit: 294,835 bytes in 230 blocks
+==17475==   total heap usage: 37,923 allocs, 37,694 frees, 34,147,451 bytes allocated
+==17475== 
+==17475== Searching for pointers to 230 not-freed blocks
+==17475== Checked 365,696 bytes
+==17475== 
+==17475== 16 bytes in 1 blocks are still reachable in loss record 1 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F07C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F22B: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC940A: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 16 bytes in 1 blocks are still reachable in loss record 2 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F07C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F22B: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC947D: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 16 bytes in 1 blocks are still reachable in loss record 3 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E41EBF: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E42444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EB12FA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9CC74: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FB48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EB57B1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EB626C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EB682A: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 16 bytes in 1 blocks are still reachable in loss record 4 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E41EBF: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E42444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EB3EDA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9CCBE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FB48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA06E7: sqlite3_prepare_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 24 bytes in 1 blocks are still reachable in loss record 5 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E69FE7: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E85291: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC91B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 40 bytes in 1 blocks are still reachable in loss record 6 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC93BE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 40 bytes in 1 blocks are definitely lost in loss record 7 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5DE4F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E965A2: sqlite3_vmprintf (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9667C: sqlite3_mprintf (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4012B4: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 43 bytes in 1 blocks are still reachable in loss record 8 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x50F8AF0: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x401272: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 9 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA2C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E56FC7: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC9162: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 10 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E58732: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E75412: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC902E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 11 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E58732: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E75412: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC9091: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 12 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E58732: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E75412: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC90F1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 13 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746AA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC93AC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 14 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746F1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC93AC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 15 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F07C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F204: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC940A: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 16 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F07C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F204: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC947D: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 17 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746AA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC95A4: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 18 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746F1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC95A4: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 19 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746AA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC95C8: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 20 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746F1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC95C8: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 21 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746F1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC95E9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 22 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746AA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC968E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 23 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746F1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC968E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 48 bytes in 1 blocks are still reachable in loss record 24 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746F1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC96B4: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 56 bytes in 1 blocks are still reachable in loss record 25 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746AA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC95E9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 56 bytes in 1 blocks are still reachable in loss record 26 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E746AA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC96B4: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 64 bytes in 1 blocks are still reachable in loss record 27 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBED: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74533: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E75447: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC902E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 80 bytes in 1 blocks are still reachable in loss record 28 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA2C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E84669: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC91B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 80 bytes in 1 blocks are still reachable in loss record 29 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E6A35B: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E85291: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC91B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 80 bytes in 1 blocks are still reachable in loss record 30 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5DE4F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E965A2: sqlite3_vmprintf (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9667C: sqlite3_mprintf (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4013B9: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 88 bytes in 1 blocks are still reachable in loss record 31 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74C3E: sqlite3_overload_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC9271: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 88 bytes in 1 blocks are still reachable in loss record 32 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74C3E: sqlite3_overload_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC950C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 88 bytes in 1 blocks are still reachable in loss record 33 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74C3E: sqlite3_overload_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC9528: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 88 bytes in 4 blocks are still reachable in loss record 34 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EF68: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EFB0: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAF079: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9CFBE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FAF9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 35 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7497B: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B2C: sqlite3_create_function_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B74: sqlite3_create_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC94B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 36 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E749BF: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B2C: sqlite3_create_function_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B74: sqlite3_create_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC94B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 37 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B2C: sqlite3_create_function_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B74: sqlite3_create_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC94B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 38 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7497B: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B2C: sqlite3_create_function_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B74: sqlite3_create_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC94F2: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 39 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E749BF: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B2C: sqlite3_create_function_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B74: sqlite3_create_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC94F2: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 40 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B2C: sqlite3_create_function_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B74: sqlite3_create_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC94F2: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 41 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74C3E: sqlite3_overload_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC9544: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 42 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74C3E: sqlite3_overload_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC9560: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 43 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74C3E: sqlite3_overload_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC957C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 44 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B2C: sqlite3_create_function_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B74: sqlite3_create_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC962F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 96 bytes in 1 blocks are still reachable in loss record 45 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E53DFA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74860: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B2C: sqlite3_create_function_v2 (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E74B74: sqlite3_create_function (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC966B: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 104 bytes in 1 blocks are still reachable in loss record 46 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA2C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA89: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4BE89: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76B95: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76E4E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E82ACA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAEBBE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAEF30: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 128 bytes in 1 blocks are still reachable in loss record 47 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E59DAB: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC91F9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 128 bytes in 1 blocks are still reachable in loss record 48 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E59DCB: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC920C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 136 bytes in 1 blocks are still reachable in loss record 49 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E586DF: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E75412: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC902E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 136 bytes in 1 blocks are still reachable in loss record 50 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E586DF: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E75412: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC9091: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 136 bytes in 1 blocks are still reachable in loss record 51 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E586DF: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E75412: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC90F1: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 136 bytes in 1 blocks are still reachable in loss record 52 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F07C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F0BD: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E5F362: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC940A: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 144 bytes in 1 blocks are still reachable in loss record 53 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA2C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E846A0: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC91B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 192 bytes in 4 blocks are still reachable in loss record 54 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E50BAA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EB5ADF: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9CE64: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FB48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA04D4: sqlite3_prepare (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA059E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 232 bytes in 1 blocks are still reachable in loss record 55 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x50F8A09: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x401272: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 240 bytes in 15 blocks are still reachable in loss record 56 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EF68: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EFB0: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9C29F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FAF9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA04D4: sqlite3_prepare (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 272 bytes in 15 blocks are still reachable in loss record 57 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EF68: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EFB0: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9C310: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FAF9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA04D4: sqlite3_prepare (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 280 bytes in 1 blocks are still reachable in loss record 58 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EC1D: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E61DAD: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EB3AD7: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9CCBE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FB48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 512 bytes in 4 blocks are still reachable in loss record 59 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EBBC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAF1BC: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9CFBE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FAF9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA04D4: sqlite3_prepare (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 784 bytes in 2 blocks are still reachable in loss record 60 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9D28F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FAF9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA04D4: sqlite3_prepare (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA059E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAEAB5: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 784 bytes in 2 blocks are still reachable in loss record 61 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9D28F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FAF9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0444: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA04D4: sqlite3_prepare (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA059E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0970: sqlite3_exec (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 856 bytes in 1 blocks are still reachable in loss record 62 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA2C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC8E50: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 872 bytes in 1 blocks are still reachable in loss record 63 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA2C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E84755: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC91B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 1,016 bytes in 1 blocks are still reachable in loss record 64 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EB40: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E61CCD: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E61D74: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E61DCD: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EB3AD7: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9CCBE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E9FB48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA0149: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 1,032 bytes in 1 blocks are still reachable in loss record 65 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E514CA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E51A57: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E848D9: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC91B6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 1,032 bytes in 1 blocks are still reachable in loss record 66 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E514CA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7F133: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA5E1B: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAACFE: sqlite3_step (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA07F9: sqlite3_exec (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401333: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 1,280 bytes in 1 blocks are possibly lost in loss record 67 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E514CA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E51721: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4BD48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76B95: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76E4E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E82ACA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAEBBE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAEF30: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 1,280 bytes in 1 blocks are possibly lost in loss record 68 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E514CA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E51721: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4BD48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76B95: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76E4E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA9D67: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAACFE: sqlite3_step (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EA07F9: sqlite3_exec (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 1,280 bytes in 1 blocks are possibly lost in loss record 69 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E514CA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E51721: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4BD48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76B95: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76E4E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7CBF6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7CE25: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAA274: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 1,280 bytes in 1 blocks are possibly lost in loss record 70 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E514CA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E51721: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4BD48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76B95: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76E4E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E79E0F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7D894: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7EF70: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 2,056 bytes in 1 blocks are still reachable in loss record 71 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA2C: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E517FE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4BD48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76B95: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76E4E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E82ACA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAEBBE: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EAEF30: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== 7,152 bytes in 1 blocks are still reachable in loss record 72 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x50F3CE2: inflateInit2_ (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F92A9: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F955F: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F9B12: gzgets (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x401437: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 8,192 bytes in 1 blocks are still reachable in loss record 73 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x50F9233: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F955F: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F9B12: gzgets (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x401437: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 16,384 bytes in 1 blocks are still reachable in loss record 74 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x50F9243: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F955F: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F9B12: gzgets (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x401437: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 32,768 bytes in 1 blocks are still reachable in loss record 75 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x50F3AD0: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F448F: inflate (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F93B9: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F958D: ??? (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x50F9B12: gzgets (in /usr/lib64/libz.so.1.2.7)
+==17475==    by 0x401437: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 64,008 bytes in 1 blocks are still reachable in loss record 76 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E55291: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4EC945D: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401212: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475== 
+==17475== 147,200 bytes in 115 blocks are possibly lost in loss record 77 of 77
+==17475==    at 0x4C29F73: malloc (vg_replace_malloc.c:307)
+==17475==    by 0x4E6B2C6: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E46689: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4EA05: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E514CA: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E51721: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E4BD48: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76B95: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E76E4E: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E79E0F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7DE2F: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x4E7EF70: ??? (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475== 
+==17475== LEAK SUMMARY:
+==17475==    definitely lost: 40 bytes in 1 blocks
+==17475==    indirectly lost: 0 bytes in 0 blocks
+==17475==      possibly lost: 152,320 bytes in 119 blocks
+==17475==    still reachable: 142,475 bytes in 110 blocks
+==17475==                       of which reachable via heuristic:
+==17475==                         length64           : 77,704 bytes in 104 blocks
+==17475==         suppressed: 0 bytes in 0 blocks
+==17475== 
+==17475== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)
+==17475== 
+==17475== 1 errors in context 1 of 7:
+==17475== Invalid free() / delete / delete[] / realloc()
+==17475==    at 0x4C2B06D: free (vg_replace_malloc.c:538)
+==17475==    by 0x4E4F6BD: sqlite3_free (in /usr/lib64/libsqlite3.so.0.8.6)
+==17475==    by 0x401371: main (in /scratch/u/yu89975/fastF/test/myprogram)
+==17475==  Address 0x4020f0 is in a r-- mapped file /scratch/u/yu89975/fastF/test/myprogram segment
+==17475== 
+==17475== ERROR SUMMARY: 7 errors from 7 contexts (suppressed: 0 from 0)

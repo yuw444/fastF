@@ -310,7 +310,7 @@ cell_gene_node_geneID_name_node *sample_bam_UMI(
             printf("ERROR: Cannot open CB list file %s\n", CB_list);
             exit(1);
         }
-        
+
         // read CB list file
         char CB[MAX_LINE_LENGTH];
         while (fgets(CB, MAX_LINE_LENGTH, CB_list_file) != NULL)
@@ -408,7 +408,7 @@ cell_gene_node_geneID_name_node *sample_bam_UMI(
                         char *gene_name = bam_aux2Z(gn);
                         char *UMI = bam_aux2Z(ub);
 
-                        printf("%s; %ld; %s; %s\n", cell_barcode, UMI_quality, gene_ID, UMI);
+                        // printf("%s; %ld; %s; %s\n", cell_barcode, UMI_quality, gene_ID, UMI);
 
                         cell_gene_root = insert_cell_gene_node(
                             cell_gene_root,

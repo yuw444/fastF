@@ -374,6 +374,7 @@ int cmd_sample(int argc, const char **argv)
     gzprintf(file_matrix, "%zu %zu %zu\n", n_genes, n_cells, n_features);
 
     write_geneID_name_node_output(root->geneID_name_root, file_feature);
+    
     size_t nth_cell = 1;
 
     write_cell_UMI_node_output(

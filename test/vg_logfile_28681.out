@@ -1,0 +1,72 @@
+==28681== Memcheck, a memory error detector
+==28681== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==28681== Using Valgrind-3.16.1-36d6727e1d-20200622X and LibVEX; rerun with -h for copyright info
+==28681== Command: ./a.out
+==28681== Parent PID: 22633
+==28681== 
+--28681-- 
+--28681-- Valgrind options:
+--28681--    --trace-children=yes
+--28681--    --show-leak-kinds=all
+--28681--    --leak-check=full
+--28681--    -v
+--28681--    --track-origins=yes
+--28681--    --dsymutil=yes
+--28681--    --log-file=vg_logfile_%p.out
+--28681-- Contents of /proc/version:
+--28681--   Linux version 3.10.0-1127.el7.x86_64 (mockbuild@kbuilder.bsys.centos.org) (gcc version 4.8.5 20150623 (Red Hat 4.8.5-39) (GCC) ) #1 SMP Tue Mar 31 23:36:51 UTC 2020
+--28681-- 
+--28681-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand
+--28681-- Page sizes: currently 4096, max supported 4096
+--28681-- Valgrind library directory: /hpc/apps/valgrind/3.16.1/lib/valgrind
+--28681-- Reading syms from /scratch/u/yu89975/fastF/test/a.out
+--28681-- Reading syms from /usr/lib64/ld-2.17.so
+--28681-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/memcheck-amd64-linux
+--28681--    object doesn't have a dynamic symbol table
+--28681-- Scheduler: using generic scheduler lock implementation.
+--28681-- Reading suppressions file: /hpc/apps/valgrind/3.16.1/lib/valgrind/default.supp
+==28681== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-28681-by-yu89975-on-ln04
+==28681== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-28681-by-yu89975-on-ln04
+==28681== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-28681-by-yu89975-on-ln04
+==28681== 
+==28681== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==28681== don't want to do, unless you know exactly what you're doing,
+==28681== or are doing some strange experiment):
+==28681==   /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=28681 ...command...
+==28681== 
+==28681== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==28681==   /path/to/gdb ./a.out
+==28681== and then give GDB the following command
+==28681==   target remote | /hpc/apps/valgrind/3.16.1/lib/valgrind/../../bin/vgdb --pid=28681
+==28681== --pid is optional if only one valgrind process is running
+==28681== 
+--28681-- REDIR: 0x4019e30 (ld-linux-x86-64.so.2:strlen) redirected to 0x580cb245 (vgPlain_amd64_linux_REDIR_FOR_strlen)
+--28681-- REDIR: 0x4019c00 (ld-linux-x86-64.so.2:index) redirected to 0x580cb25f (vgPlain_amd64_linux_REDIR_FOR_index)
+--28681-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_core-amd64-linux.so
+--28681-- Reading syms from /hpc/apps/valgrind/3.16.1/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+==28681== WARNING: new redirection conflicts with existing -- ignoring it
+--28681--     old: 0x04019e30 (strlen              ) R-> (0000.0) 0x580cb245 vgPlain_amd64_linux_REDIR_FOR_strlen
+--28681--     new: 0x04019e30 (strlen              ) R-> (2007.0) 0x04c2d1b0 strlen
+--28681-- REDIR: 0x4019db0 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2e300 (strcmp)
+--28681-- REDIR: 0x401aa70 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31f90 (mempcpy)
+--28681-- Reading syms from /usr/lib64/libc-2.17.so
+--28681-- REDIR: 0x4ec7130 (libc.so.6:strcasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--28681-- REDIR: 0x4ec3eb0 (libc.so.6:strnlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--28681-- REDIR: 0x4ec9400 (libc.so.6:strncasecmp) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--28681-- REDIR: 0x4ec6910 (libc.so.6:memset) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--28681-- REDIR: 0x4ec68c0 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--28681-- REDIR: 0x4ec58a0 (libc.so.6:__GI_strrchr) redirected to 0x4c2cb70 (__GI_strrchr)
+--28681-- REDIR: 0x4ec3d80 (libc.so.6:strlen) redirected to 0x4a247a0 (_vgnU_ifunc_wrapper)
+--28681-- REDIR: 0x4fa6680 (libc.so.6:__strlen_sse2_pminub) redirected to 0x4c2d0f0 (strlen)
+--28681-- REDIR: 0x4ebd0d0 (libc.so.6:calloc) redirected to 0x4c2bff3 (calloc)
+--28681-- REDIR: 0x4ecd3c0 (libc.so.6:strchrnul) redirected to 0x4c31ab0 (strchrnul)
+--28681-- REDIR: 0x4ec6ae0 (libc.so.6:__GI_mempcpy) redirected to 0x4c31cc0 (__GI_mempcpy)
+--28681-- REDIR: 0x4ebcad0 (libc.so.6:free) redirected to 0x4c2afe6 (free)
+==28681== 
+==28681== HEAP SUMMARY:
+==28681==     in use at exit: 0 bytes in 0 blocks
+==28681==   total heap usage: 2 allocs, 2 frees, 6 bytes allocated
+==28681== 
+==28681== All heap blocks were freed -- no leaks are possible
+==28681== 
+==28681== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
