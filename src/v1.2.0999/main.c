@@ -392,7 +392,7 @@ int cmd_bam2db(int argc, const char **argv)
     char *sql =   "CREATE TABLE mtx AS "
                   "SELECT feature_index, cell_index, COUNT(DISTINCT encoded_umi) AS expression_level "
                   " FROM umi "
-                  " GROUP BY feature_index, cell_index;"; 
+                  " GROUP BY cell_index, feature_index;"; 
     if (sqlite3_exec(db, sql, NULL, 0, &error_msg) != SQLITE_OK)
     {
         printf("\x1b[31mError:\x1b[0m SQL error: %s\n", error_msg);
@@ -407,7 +407,7 @@ int cmd_bam2db(int argc, const char **argv)
     
     // write the nrows to the header of matrix.mtx.gz
     char *header = (char *)malloc(1024 * sizeof(char));
-    gzprintf(file_matrix, "%%MatrixMarket matrix coordinate integer general\n");
+    gzprintf(file_matrix, "%%%MatrixMarket matrix coordinate integer general\n");
     gzprintf(file_matrix, "%%metadata_json: {\"software_version\": \"bamDesign-1.0.0\", \"format_version\": 1}\n");
     gzprintf(file_matrix, "%zu %zu %zu\n", nrow_feature, nrow_barcode, nrow_mtx);
 

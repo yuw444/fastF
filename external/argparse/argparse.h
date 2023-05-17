@@ -116,8 +116,13 @@ int argparse_help_cb_no_exit(struct argparse *self,
 #define OPT_STRING(...)  { ARGPARSE_OPT_STRING, __VA_ARGS__ }
 #define OPT_GROUP(h)     { ARGPARSE_OPT_GROUP, 0, NULL, NULL, h, NULL, 0, 0 }
 #define OPT_HELP()       OPT_BOOLEAN('h', "help", NULL,                 \
-                                     "show this help message and exit", \
-                                     argparse_help_cb, 0, OPT_NONEG)
+                                      "show this help message and exit\n\n"\
+                                      "subcommands:\n\n"\
+                                      "\tfreq:   Find all the cell barcode whitelist and their frequencies\n"\
+                                      "\tfilter: Filter fastq file using cell barcode whitelist and read depth\n"\
+                                      "\tcrb:    Extract CR and CB tags from bam file and summarize them to a tsv file\n"\
+                                      "\tbam2db: Convert bam files to SQL database and summrise to UMI matrix\n",\
+                                      argparse_help_cb, 0, OPT_NONEG)
 
 int argparse_init(struct argparse *self, struct argparse_option *options,
                   const char *const *usages, int flags);
