@@ -9,7 +9,9 @@
 #include <htslib/sam.h>
 #include <zlib.h>
 #include <sqlite3.h>
+#include <sys/stat.h>
 #include "hashtable.h"
+#include "mt19937ar.h"
 
 #define MAX_LINE_LENGTH 1024
 #define BASE_BITS 2                      // the number of bits to encode a base
@@ -62,4 +64,37 @@ void bam2db(
     float rate_depth,
     unsigned int seed);
 
+
+
+/**
+ * @brief convert sql table to gz file
+ * 
+ * @param db_handle sqlite3 handle
+ * @param table_name table name
+ * @param gz_file_ptr gz file pointer
+ * @param header whether to write header
+ * @param delim delimiter
+ * 
+ * @return 0 if success, 1 if fail
+ */
+
+int table2gz(
+    sqlite3 *db_handle,
+    const char *table_name, 
+    gzFile gz_file_ptr,
+    unsigned int header, 
+    const char *delim);
+
+/**
+ * @brief  get the number of rows in a sql table
+ * 
+ * @param db_handle sqlite3 handle
+ * @param table_name table name
+ * 
+ * @return the number of rows in a sql table
+ */
+
+size_t nrow_sql_table (
+    sqlite3 *db_handle,
+    const char *table_name);
 #endif

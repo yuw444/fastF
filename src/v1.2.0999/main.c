@@ -4,7 +4,7 @@
 #include "filter.h"
 #include "count.h"
 #include "extract.h"
-#include "bam2db.h"
+#include "bam2db_ds.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
@@ -288,14 +288,22 @@ int cmd_bam2db(int argc, const char **argv)
     char *path_bam_arg = NULL;
     char *path_feature_arg = NULL;
     char *path_barcode_arg = NULL;
-    char *path_database_arg = NULL;
+    float rate_cell;
+    float rate_depth;
+    char *name_database_arg = NULL;
+    char *path_out_arg = ".";
+    unsigned int seed_arg = 926;
 
     struct argparse_option options[] = {
         OPT_HELP(),
         OPT_STRING('b', "bam", &path_bam_arg, "path to bam file", NULL, 0, 0),
         OPT_STRING('f', "feature", &path_feature_arg, "path to feature list file", NULL, 0, 0),
         OPT_STRING('a', "barcode", &path_barcode_arg, "path to barcode list file", NULL, 0, 0),
-        OPT_STRING('d', "dbname", &path_database_arg, "name of database", NULL, 0, 0),
+        OPT_STRING('d', "dbname", &name_database_arg, "name of database", NULL, 0, 0),
+        OPT_FLOAT('c', "cell", &rate_cell, "rate of cell barcode", NULL, 0, 0),
+        OPT_FLOAT('r', "depth", &rate_depth, "rate of depth", NULL, 0, 0),
+        OPT_STRING('o', "out", &path_out_arg, "path to output directory", NULL, 0, 0),
+        OPT_INTEGER('s', "seed", &seed_arg, "seed for random number generator", NULL, 0, 0),
         OPT_END(),
     };
 
@@ -328,15 +336,101 @@ int cmd_bam2db(int argc, const char **argv)
         exit(1);
     }
 
-    if (access(path_database_arg, F_OK) != -1)
+    if (access(name_database_arg, F_OK) != -1)
     {
-        printf("\x1b[31mError:\x1b[0m database: %s already exists, change the name of database in -d argument!\n", path_database_arg);
+        printf("\x1b[31mError:\x1b[0m database: %s already exists, change the name of database in -d argument!\n", name_database_arg);
         exit(1);
     }
 
-    bam2db(path_bam_arg, path_database_arg, path_barcode_arg, path_feature_arg);
+    bam2db(
+        path_bam_arg, 
+        name_database_arg, 
+        path_barcode_arg, 
+        path_feature_arg, 
+        rate_cell,
+        rate_depth,
+        seed_arg);
     
+    // open the database
+    sqlite3 *db;
+    int rc = sqlite3_open(name_database_arg, &db);
+
+    if (rc)
+    {
+        printf("\x1b[31mError:\x1b[0m can not open database: %s\n", name_database_arg);
+        return 1;
+    }
+
+    // file path of output
+    char *path_barcode = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_barcode, "%s/barcodes.tsv.gz", path_out_arg);
+    gzFile file_barcode = gzopen(path_barcode, "wb");
+    if (file_barcode == NULL)
+    {
+        printf("\x1b[31mError:\x1b[0m can not open file %s\n", path_barcode);
+        exit(1);
+    }
+    char *path_feature = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_feature, "%s/features.tsv.gz", path_out_arg);
+    gzFile file_feature = gzopen(path_feature, "wb");
+    if (file_feature == NULL)
+    {
+        printf("\x1b[31mError:\x1b[0m can not open file %s\n", path_feature);
+        exit(1);
+    }
+    char *path_matrix = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_matrix, "%s/matrix.mtx.gz", path_out_arg);
+    gzFile file_matrix = gzopen(path_matrix, "wb");
+    if (file_matrix == NULL)
+    {
+        printf("\x1b[31mError:\x1b[0m can not open file %s\n", path_matrix);
+        exit(1);
+    }
+
+    // create summary table of umi
+    char *error_msg = NULL;
+    char *sql =   "CREATE TABLE mtx AS "
+                  "SELECT feature_index, cell_index, COUNT(DISTINCT encoded_umi) AS expression_level "
+                  " FROM umi "
+                  " GROUP BY feature_index, cell_index;"; 
+    if (sqlite3_exec(db, sql, NULL, 0, &error_msg) != SQLITE_OK)
+    {
+        printf("\x1b[31mError:\x1b[0m SQL error: %s\n", error_msg);
+        sqlite3_free(error_msg);
+        return 1;
+    }
+
+    // get the number of rows of every table
+    size_t nrow_mtx = nrow_sql_table(db, "mtx");
+    size_t nrow_barcode = nrow_sql_table(db, "cell");
+    size_t nrow_feature = nrow_sql_table(db, "feature");
+    
+    // write the nrows to the header of matrix.mtx.gz
+    char *header = (char *)malloc(1024 * sizeof(char));
+    gzprintf(file_matrix, "%%MatrixMarket matrix coordinate integer general\n");
+    gzprintf(file_matrix, "%%metadata_json: {\"software_version\": \"bamDesign-1.0.0\", \"format_version\": 1}\n");
+    gzprintf(file_matrix, "%zu %zu %zu\n", nrow_feature, nrow_barcode, nrow_mtx);
+
+    // write table mtx to matrix.mtx.gz
+    table2gz(db, "mtx", file_matrix, 0, " ");
+    printf("matrix.mtx.gz is generated.\n");
+
+    // write table cell to barcodes.tsv.gz
+    table2gz(db, "cell", file_barcode, 0, " ");
+    printf("barcodes.tsv.gz is generated.\n");
+
+    // write table feature to features.tsv.gz
+    table2gz(db, "feature", file_feature, 0, "\t");
+    printf("features.tsv.gz is generated.\n");
+
+    free(path_barcode);
+    free(path_feature);
+    free(path_matrix);
+    free(header);
+    sqlite3_close(db);
+
     return 0;
+
 
 }
 

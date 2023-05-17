@@ -22,15 +22,26 @@ set(CODING
     ../external/hashtable/hashtable.c
     )
 
+set(TABLE2GZ
+
+    ./test_sql_table2gz.c)
+
+set(CDTABLE
+
+    ./test_sql_create_drop_table.c)
 
 add_executable(test_data ${TEST_SOURCES_UTILS})
 add_executable(convert ${CONVERT})
 add_executable(fastf ${FASTF})
 add_executable(coding ${CODING})
+add_executable(table2gz ${TABLE2GZ})
+add_executable(cdtable ${CDTABLE})
 target_link_libraries(test_data criterion m)
 target_link_libraries(convert hts z criterion)
 target_link_libraries(fastf hts z sqlite3 criterion)
 target_link_libraries(coding hts z sqlite3 criterion)
+target_link_libraries(table2gz z sqlite3)
+target_link_libraries(cdtable z sqlite3)
 
 # add_test(NAME MyTests COMMAND test_data)
 

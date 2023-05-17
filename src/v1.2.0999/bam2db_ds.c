@@ -113,7 +113,9 @@ void bam2db(
     char *sql;
     sqlite3_stmt *stmt;
 
-
+    init_genrand(seed);
+    double rand_cell;
+    double rand_depth;
 
     // open database
     rc = sqlite3_open(db_file, &db);
@@ -215,6 +217,12 @@ void bam2db(
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     while (gzgets(cell_barcode, cell_barcode_buffer, 1024) != NULL)
     {
+        // downsample cell
+        rand_cell = genrand_real1();
+        if (rand_cell >= rate_cell)
+        {
+            continue;
+        }
         cell_barcode_buffer[strcspn(cell_barcode_buffer, "\n\r\t")] = '\0';
         int *cell_index_ptr = (int *)calloc(1, sizeof(int));
         *cell_index_ptr = cell_index;
@@ -231,6 +239,7 @@ void bam2db(
         else
         {
             printf("Warning: Duplicate cell barcodes were found in %s!\n", barcodes_file);
+            free(cell_index_ptr);
         }
     }
     sqlite3_exec(db, "END TRANSACTION", NULL, NULL, &zErrMsg);
@@ -277,9 +286,6 @@ void bam2db(
     sqlite3_finalize(stmt);
     gzclose(feature);
     free(feature_buffer);
-    // free(feature_id);
-    // free(feature_name);
-    // free(feature_type);
 
     /*********convert bam file to sqlite3 database***********/
     bam_hdr_t *bam_header = sam_hdr_read(bam);
@@ -297,6 +303,7 @@ void bam2db(
 
     while (sam_read1(bam, bam_header, bam_record) >= 0)
     {
+
         total_reads_counts++;
 
         if (total_reads_counts % 1000000 == 0)
@@ -306,6 +313,15 @@ void bam2db(
             printf("%s: Processed %zu reads...\n", s, total_reads_counts);
         }
 
+        // downsample the depth
+        rand_depth = genrand_real1();
+
+        if (rand_depth >= rate_depth)
+        {
+            continue;
+        }
+
+        // check if CB tag exists
         uint8_t *cell_barcode_ptr = bam_aux_get(bam_record, "CB");
 
         if (cell_barcode_ptr == NULL)
@@ -313,6 +329,7 @@ void bam2db(
             continue;
         }
 
+        // check if CB tag is in the cell barcode hash table
         char *cell_barcode = bam_aux2Z(cell_barcode_ptr);
         void *temp1 = hash_table_lookup(ht_cell, cell_barcode);
 
@@ -322,6 +339,8 @@ void bam2db(
         }
 
         int cell_index = *(int *)temp1;
+
+        // check if UMI quality is 25
         uint8_t *xf_ptr = bam_aux_get(bam_record, "xf");
         int UMI_quality = bam_aux2i(xf_ptr);
 
@@ -330,6 +349,7 @@ void bam2db(
             continue;
         }
 
+        // if quality is 25, GX tag must exist, check the feature index 
         uint8_t *gx_ptr = bam_aux_get(bam_record, "GX");
         char *feature_ID = bam_aux2Z(gx_ptr);
         void *temp2 = hash_table_lookup(ht_feature, feature_ID);
@@ -342,11 +362,7 @@ void bam2db(
         int feature_index = *(int *)temp2;
         uint8_t *ub_ptr = bam_aux_get(bam_record, "UB");
         char *UMI = bam_aux2Z(ub_ptr);
-        // printf("%s\n", UMI);
         uint8_t *encoded_UMI = encode_DNA(UMI);
-        // printf("%s\n", encoded_UMI);
-        // char *decoded_UMI = decode_DNA(encoded_UMI, 10);
-        // printf("%s\n", decoded_UMI);
 
         sqlite3_bind_int(stmt, 1, cell_index);
         sqlite3_bind_int(stmt, 2, feature_index);
@@ -382,4 +398,148 @@ void bam2db(
 
     hash_table_destroy(ht_cell);
     hash_table_destroy(ht_feature);
+}
+
+
+int table2gz(
+    sqlite3 *db_handle,
+    const char *table_name, 
+    gzFile gz_file_ptr,
+    unsigned int header, 
+    const char *delim)
+{
+    char *sql = malloc(1024 * sizeof(char));
+
+    // prepare the sql statement
+    sprintf(sql, "SELECT * FROM %s;", table_name);
+    sqlite3_stmt *stmt;
+    if (sqlite3_prepare_v2(db_handle, sql, -1, &stmt, NULL) != SQLITE_OK)
+    {
+        fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db_handle));
+        gzclose(gz_file_ptr);
+        return EXIT_FAILURE;
+    }
+
+    // get the number of columns
+    int column_count = sqlite3_column_count(stmt);
+
+    if (header == 1) 
+    {
+        for (int i = 0; i < column_count; i++)
+        {
+            gzprintf(gz_file_ptr, "%s", sqlite3_column_name(stmt, i));
+            if (i < column_count - 1)
+            {
+                gzprintf(gz_file_ptr, "%s", delim);
+            }
+        }
+
+        gzprintf(gz_file_ptr, "\n");
+    }
+
+    // loop through the rows
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        for (int i = 0; i < column_count; i++)
+        {
+            switch (sqlite3_column_type(stmt, i))
+            {
+                case SQLITE_INTEGER:
+                    gzprintf(gz_file_ptr, "%d", sqlite3_column_int(stmt, i));
+                    break;
+                case SQLITE_FLOAT:
+                    gzprintf(gz_file_ptr, "%.3f", sqlite3_column_double(stmt, i));
+                    break;
+                case SQLITE_TEXT:
+                    gzprintf(gz_file_ptr, "%s", sqlite3_column_text(stmt, i));
+                    break;
+                default:
+                    gzprintf(gz_file_ptr, "%s", "NULL");
+                    break;
+            }
+            if (i < column_count - 1)
+            {
+                gzprintf(gz_file_ptr, "%s", delim);
+            }
+        }
+        gzprintf(gz_file_ptr, "\n");
+    }
+
+    sqlite3_finalize(stmt);
+    gzclose(gz_file_ptr);
+    free(sql);
+    return EXIT_SUCCESS;
+}
+
+// get the number of rows in a table of sqlite3 database
+size_t nrow_sql_table (
+    sqlite3 *db_handle,
+    const char *table_name)
+{
+    char *err_msg = NULL;
+    int rc;
+    sqlite3_stmt *stmt;
+
+    char *sql = malloc(1024 * sizeof(char));
+    sprintf(sql, "SELECT COUNT(*) FROM %s;", table_name);
+
+    rc = sqlite3_prepare_v2(db_handle, sql, -1, &stmt, NULL);
+
+    if (rc != SQLITE_OK)
+    {
+        fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db_handle));
+        sqlite3_close(db_handle);
+        return 0;
+    }
+
+    rc = sqlite3_step(stmt);
+
+    if (rc != SQLITE_ROW)
+    {
+        fprintf(stderr, "Failed to execute statement: %s\n", sqlite3_errmsg(db_handle));
+        sqlite3_close(db_handle);
+        return 0;
+    }
+
+    size_t nrow = sqlite3_column_int(stmt, 0);
+
+    sqlite3_finalize(stmt);
+
+    free(sql);
+
+    return nrow;
+
+}
+
+void write_umi_matrix(
+    char *db,
+    char *name_folder)
+{
+    // open sqlite3 database
+    sqlite3 *db_handle;
+    char *zErrMsg = 0;
+    int rc;
+    rc = sqlite3_open(db, &db_handle);
+
+    if (rc)
+    {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_handle));
+        exit(0);
+    }
+
+    // check existence of the folder
+    if (access(name_folder, F_OK) == -1)
+    {
+        mkdir(name_folder, 0777);
+    }
+
+    // path of each file
+    char *path_barcode = malloc(strlen(name_folder) + 20);
+    char *path_feature = malloc(strlen(name_folder) + 20);
+    char *path_matrix = malloc(strlen(name_folder) + 20);
+    sprintf(path_barcode, "%s/barcodes.tsv.gz", name_folder);
+    sprintf(path_feature, "%s/features.tsv.gz", name_folder);
+    sprintf(path_matrix, "%s/matrix.mtx.gz", name_folder);
+
+    
 }
