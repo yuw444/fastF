@@ -32,12 +32,35 @@ Test (code, code_DNA)
     free(decoded_DNA2);
 }
 
-Test (code, db)
-{
-    char *bam_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/possorted_genome_bam_filtered.bam";
-    char *db_file = "/scratch/u/yu89975/fastF/data/test_pure.db";
-    char *barcode_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/filtered_feature_bc_matrix/barcodes.tsv.gz";
-    char *feature_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/filtered_feature_bc_matrix/features.tsv.gz";
+// Test (code, db)
+// {
+//     char *bam_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/possorted_genome_bam_filtered.bam";
+//     char *db_file = "/scratch/u/yu89975/fastF/data/test_pure.db";
+//     char *barcode_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/filtered_feature_bc_matrix/barcodes.tsv.gz";
+//     char *feature_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/filtered_feature_bc_matrix/features.tsv.gz";
 
-    bam2db(bam_file, db_file, barcode_file, feature_file);
+//     bam2db(bam_file, db_file, barcode_file, feature_file);
+// }
+
+Test(code, end)
+{
+    char temp[] = "ATCGATCGATGCTACC";
+    temp[4] = '\0';
+
+    printf("%s\n", temp);
+    printf("%s\n", temp+5);
+
+    char *temp2 = (char *)malloc(18 * sizeof(char));
+    memcpy(temp2, temp, 17);
+
+    printf("%s\n", temp2);
+    printf("%s\n", temp2+5);
+
+    if (strncmp(temp, temp2, 18) == 0) {
+        printf("temp == temp2\n");
+    } else {
+        printf("temp != temp2\n");
+    }
+
+    free(temp2);
 }

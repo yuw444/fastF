@@ -20,6 +20,7 @@ uint8_t encode_base(char base)
 uint8_t *encode_DNA(const char *DNA_seq)
 {
     uint16_t len_DNA = strlen(DNA_seq);
+    // plus 1 for the end of string if like to print it out
     uint8_t *encoded_DNA = (uint8_t *)calloc((len_DNA + BYTE_SIZE / BASE_BITS - 1) / 4 + 1, sizeof(uint8_t));
     if (encoded_DNA == NULL)
     {
@@ -364,10 +365,12 @@ void bam2db(
         uint8_t *ub_ptr = bam_aux_get(bam_record, "UB");
         char *UMI = bam_aux2Z(ub_ptr);
         uint8_t *encoded_UMI = encode_DNA(UMI);
+        size_t encoded_size = (strlen(UMI) + BYTE_SIZE / BASE_BITS - 1) / 4;
 
         sqlite3_bind_int(stmt, 1, cell_index);
         sqlite3_bind_int(stmt, 2, feature_index);
-        sqlite3_bind_text(stmt, 3, encoded_UMI, strlen(encoded_UMI), SQLITE_STATIC);
+        // sqlite3_bind_text(stmt, 3, encoded_UMI, strlen(encoded_UMI), SQLITE_STATIC);
+        sqlite3_bind_blob(stmt, 3, encoded_UMI, encoded_size, SQLITE_STATIC);
 
         if (sqlite3_step(stmt) != SQLITE_DONE)
         {
@@ -512,35 +515,3 @@ size_t nrow_sql_table (
 
 }
 
-void write_umi_matrix(
-    char *db,
-    char *name_folder)
-{
-    // open sqlite3 database
-    sqlite3 *db_handle;
-    char *zErrMsg = 0;
-    int rc;
-    rc = sqlite3_open(db, &db_handle);
-
-    if (rc)
-    {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db_handle));
-        exit(0);
-    }
-
-    // check existence of the folder
-    if (access(name_folder, F_OK) == -1)
-    {
-        mkdir(name_folder, 0777);
-    }
-
-    // path of each file
-    char *path_barcode = malloc(strlen(name_folder) + 20);
-    char *path_feature = malloc(strlen(name_folder) + 20);
-    char *path_matrix = malloc(strlen(name_folder) + 20);
-    sprintf(path_barcode, "%s/barcodes.tsv.gz", name_folder);
-    sprintf(path_feature, "%s/features.tsv.gz", name_folder);
-    sprintf(path_matrix, "%s/matrix.mtx.gz", name_folder);
-
-    
-}
