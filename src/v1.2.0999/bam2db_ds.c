@@ -260,6 +260,7 @@ void bam2db(
         char *feature_id = strtok(feature_buffer, "\t");
         char *feature_name = strtok(NULL, "\t");
         char *feature_type = strtok(NULL, "\t");
+        feature_type[strcspn(feature_type, "\n\r\t")] = '\0';
         int *feature_index_ptr = (int *)calloc(1, sizeof(int));
         *feature_index_ptr = feature_index;
 
