@@ -1,7 +1,8 @@
 
 #include "extract.h"
 
-CB_node *insert_CB_node(CB_node *root, char *CB, char *CR){
+CB_node *insert_CB_node(CB_node *root, char *CB, char *CR)
+{
     if (root == NULL)
     {
         root = malloc(sizeof(CB_node));
@@ -63,7 +64,7 @@ void print_CB_node(CB_node *root, gzFile fp)
 CB_node *read_bam(char *bam_file)
 {
     // open bam file
-    samFile *bam_reader = hts_open(bam_file, "r"); 
+    samFile *bam_reader = hts_open(bam_file, "r");
 
     if (bam_reader == NULL)
     {
@@ -119,10 +120,9 @@ CB_node *read_bam(char *bam_file)
 
             printf("Processed %lu reads \n", read_count);
         }
-        
     }
 
-    // 
+    //
     printf("Processed all %lu reads\n", read_count);
     // free bam record
     bam_destroy1(bam_record);
@@ -132,3 +132,85 @@ CB_node *read_bam(char *bam_file)
     return root;
 }
 
+void extract_bam(char *bam_file, const char *tag, int type)
+{
+    // open bam file
+    samFile *bam_reader = hts_open(bam_file, "r");
+
+    if (bam_reader == NULL)
+    {
+        fprintf(stderr, "ERROR: Cannot open bam file %s\n", bam_file);
+        exit(1);
+    }
+
+    // read bam header
+    bam_hdr_t *bam_header = sam_hdr_read(bam_reader);
+
+    // initialize bam record to stroe each read
+    bam1_t *bam_record = bam_init1();
+
+    // initialize cell barcode tree
+    node *root = NULL;
+
+    // counter for reads
+    long total_count = 0;
+    long valid_count = 0;
+
+    // read bam file
+    while (sam_read1(bam_reader, bam_header, bam_record) >= 0)
+    {
+        total_count++;
+        // print progress
+        total_count++;
+        if (total_count % 10000000 == 0)
+        {
+            // time stamp
+            time_t t = time(NULL);
+
+            // print time stamp
+            struct tm *tm = localtime(&t);
+            char s[64];
+            strftime(s, sizeof(s), "%c", tm);
+            printf("%s: ", s);
+
+            printf("Processed %lu reads \n", total_count);
+        }
+
+        // extract the tag
+
+        uint8_t *tag_ptr = bam_aux_get(bam_record, tag);
+        char *tag_str = NULL;
+        if (type){
+            tag_str = calloc(1, sizeof(int));
+        }
+
+        if (tag_ptr != NULL)
+        {
+            valid_count++;
+            switch (type)
+            {
+            case 0:
+                root = insert_tree(root, bam_aux2Z(tag_ptr));
+                break;
+            case 1:
+                sprintf(tag_str, "%d", bam_aux2i(tag_ptr));
+                root = insert_tree(root, tag_str);
+                free(tag_str);
+                break;
+            }
+        }
+    }
+
+    FILE *fp = fopen("tag_summary.csv", "w");
+    print_tree(root, fp);
+    fclose(fp);
+
+    free_tree_node(root);
+
+    printf("Processed all %lu reads\n", total_count);
+    printf("Valid reads: %lu\n", valid_count);
+    // free bam record
+    bam_destroy1(bam_record);
+    bam_hdr_destroy(bam_header);
+    sam_close(bam_reader);
+}

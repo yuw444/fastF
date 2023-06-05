@@ -12,6 +12,7 @@
 #include <sys/stat.h>
 #include "hashtable.h"
 #include "mt19937ar.h"
+#include "utils.h"
 
 #define MAX_LINE_LENGTH 1024
 #define BASE_BITS 2                      // the number of bits to encode a base

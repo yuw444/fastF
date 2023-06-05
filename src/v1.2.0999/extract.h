@@ -24,4 +24,6 @@ void print_CB_node(CB_node *root, gzFile fp);
 // read bam file and extract CB and CR tags and store them in CB_node
 CB_node *read_bam(char *bam_file);
 
+void extract_bam(char *bam_file, const char *tag, int type);
+
 #endif

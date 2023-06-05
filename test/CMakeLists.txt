@@ -30,12 +30,19 @@ set(CDTABLE
 
     ./test_sql_create_drop_table.c)
 
+set(SAMPLE 
+    
+    ./test_sample.c
+    ../src/v1.2.0999/utils.c
+    ../external/mt19937ar.sep/mt19937ar.c)
+
 add_executable(test_data ${TEST_SOURCES_UTILS})
 add_executable(convert ${CONVERT})
 add_executable(fastf ${FASTF})
 add_executable(coding ${CODING})
 add_executable(table2gz ${TABLE2GZ})
 add_executable(cdtable ${CDTABLE})
+add_executable(sample ${SAMPLE})
 target_link_libraries(test_data criterion m)
 target_link_libraries(convert hts z criterion)
 target_link_libraries(fastf hts z sqlite3 criterion)
@@ -67,5 +74,11 @@ add_custom_target(Coding
     # COMMAND valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full -v --track-origins=yes --dsymutil=yes  --log-file=vg_logfile_%p.out ./coding
     COMMAND ./coding
     DEPENDS coding
+    WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
+)
+
+add_custom_target(Sample 
+    COMMAND valgrind --show-leak-kinds=all --trace-children=yes --leak-check=full -v --track-origins=yes --dsymutil=yes  --log-file=vg_logfile_%p.out ./sample
+    DEPENDS sample
     WORKING_DIRECTORY ${CMAKE_PROJECT_DIR}
 )

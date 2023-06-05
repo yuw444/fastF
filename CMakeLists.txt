@@ -26,6 +26,7 @@ set(SOURCES
     ./src/v1.2.0999/extract.c
     external/hashtable/hashtable.c
     ./src/v1.2.0999/bam2db_ds.c
+    ./src/v1.2.0999/utils.c
 )
 
 add_executable(fastF ${SOURCES})
