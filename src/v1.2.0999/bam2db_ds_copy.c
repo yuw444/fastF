@@ -1,4 +1,4 @@
-#include "bam2db_ds.h"
+#include "bam2db_ds_copy.h"
 
 uint8_t encode_base(char base)
 {
@@ -99,9 +99,10 @@ uint64_t hash(const char *str, size_t len)
     return hash;
 }
 
-void bam2db(
+int bam2db(
     char *bam_file,
     char *db_file,
+    char *path_out,
     char *barcodes_file,
     char *features_file,
     float rate_cell,
@@ -123,7 +124,9 @@ void bam2db(
     if (rc)
     {
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        exit(1);
+        sqlite3_free(zErrMsg);
+        sqlite3_close(db);
+        return 1;
     }
     else
     {
@@ -135,7 +138,7 @@ void bam2db(
     if (bam == NULL)
     {
         fprintf(stderr, "Fail to open BAM file %s\n", bam_file);
-        exit(1);
+        return 1;
     }
     else
     {
@@ -147,7 +150,7 @@ void bam2db(
     if (cell_barcode == NULL)
     {
         fprintf(stderr, "Fail to open cell barcode file %s\n", barcodes_file);
-        exit(1);
+        return 1;
     }
     else
     {
@@ -159,7 +162,7 @@ void bam2db(
     if (feature == NULL)
     {
         fprintf(stderr, "Fail to open feature name file %s\n", features_file);
-        exit(1);
+        return 1;
     }
     else
     {
@@ -173,7 +176,9 @@ void bam2db(
     if (rc != SQLITE_OK)
     {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        exit(1);
+        sqlite3_free(zErrMsg);
+        sqlite3_close(db);
+        return 1;
     }
 
     // create feature table
@@ -183,7 +188,9 @@ void bam2db(
     if (rc != SQLITE_OK)
     {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        exit(1);
+        sqlite3_free(zErrMsg);
+        sqlite3_close(db);
+        return 1;
     }
 
     // create umi table
@@ -193,7 +200,9 @@ void bam2db(
     if (rc != SQLITE_OK)
     {
         fprintf(stderr, "SQL error: %s\n", zErrMsg);
-        exit(1);
+        sqlite3_free(zErrMsg);
+        sqlite3_close(db);
+        return 1;
     }
 
     // create hash table for cell barcode
@@ -201,7 +210,7 @@ void bam2db(
     if (ht_cell == NULL)
     {
         fprintf(stderr, "ERROR: Cannot create hash table for cell barcode\n");
-        exit(1);
+        return 1;
     }
 
     // create hash table for gene
@@ -209,7 +218,7 @@ void bam2db(
     if (ht_feature == NULL)
     {
         fprintf(stderr, "ERROR: Cannot create hash table for feature\n");
-        exit(1);
+        return 1;
     }
 
     // read cell barcode file and insert into hash table and database
@@ -217,7 +226,7 @@ void bam2db(
 
     // total number of cells
     size_t n_cells = 0;
-    while(gzgets(cell_barcode, cell_barcode_buffer, 1024) != NULL)
+    while (gzgets(cell_barcode, cell_barcode_buffer, 1024) != NULL)
     {
         n_cells++;
     }
@@ -258,7 +267,9 @@ void bam2db(
             if (sqlite3_step(stmt) != SQLITE_DONE)
             {
                 fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-                exit(1);
+                sqlite3_free(zErrMsg);
+                sqlite3_close(db);
+                return 1;
             }
             sqlite3_reset(stmt);
             cell_index++;
@@ -301,7 +312,9 @@ void bam2db(
             if (sqlite3_step(stmt) != SQLITE_DONE)
             {
                 fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-                exit(1);
+                sqlite3_free(zErrMsg);
+                sqlite3_close(db);
+                return 1;
             }
             sqlite3_reset(stmt);
             feature_index++;
@@ -310,7 +323,6 @@ void bam2db(
         {
             printf("Warning: Duplicate feature names were found in %s!\n", features_file);
         }
-
     }
 
     sqlite3_exec(db, "END TRANSACTION", NULL, NULL, &zErrMsg);
@@ -336,13 +348,6 @@ void bam2db(
     {
 
         total_reads_counts++;
-
-        // if (total_reads_counts % 1000000 == 0)
-        // {
-        //     tm = localtime(&t);
-        //     strftime(s, sizeof(s), "%c", tm);
-        //     printf("%s: Processed %zu reads...\n", s, total_reads_counts);
-        // }
 
         // check if CB tag exists
         uint8_t *cell_barcode_ptr = bam_aux_get(bam_record, "CB");
@@ -375,20 +380,12 @@ void bam2db(
         uint8_t *xf_ptr = bam_aux_get(bam_record, "xf");
         int UMI_quality = bam_aux2i(xf_ptr);
 
-        // if (UMI_quality != 25)
-        // {
-        //     continue;
-        // }
-        // if (!(UMI_quality & (1<<4)))
-        // {
-        //     continue;
-        // }
         if (!(UMI_quality == 25 || UMI_quality == 17))
         {
             continue;
         }
 
-        // if quality is 25, GX tag must exist, check the feature index 
+        // if quality is 25, GX tag must exist, check the feature index
         uint8_t *gx_ptr = bam_aux_get(bam_record, "GX");
         char *feature_ID = bam_aux2Z(gx_ptr);
         void *temp2 = hash_table_lookup(ht_feature, feature_ID);
@@ -416,7 +413,9 @@ void bam2db(
         if (sqlite3_step(stmt) != SQLITE_DONE)
         {
             fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
-            exit(1);
+            sqlite3_free(zErrMsg);
+            sqlite3_close(db);
+            return 1;
         }
 
         sqlite3_reset(stmt);
@@ -435,23 +434,90 @@ void bam2db(
     bam_hdr_destroy(bam_header);
     hts_close(bam);
 
-    // // create index for umi table for speeding up the query
-    // printf("Create index for umi table...\n");
-    // sql = "CREATE INDEX umi_index ON umi (cell_index, feature_index);";
-    // sqlite3_exec(db, sql, NULL, NULL, &zErrMsg);
+    /*********convert sqlite3 database to 10x output***********/
+    // file path of output
+    char *path_barcode = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_barcode, "%s/barcodes.tsv.gz", path_out);
+    gzFile file_barcode = gzopen(path_barcode, "wb");
+    if (file_barcode == NULL)
+    {
+        fprintf(stderr, "\x1b[31mError:\x1b[0m can not open file %s\n", path_barcode);
+        return 1;
+    }
+    char *path_feature = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_feature, "%s/features.tsv.gz", path_out);
+    gzFile file_feature = gzopen(path_feature, "wb");
+    if (file_feature == NULL)
+    {
+        fprintf(stderr, "\x1b[31mError:\x1b[0m can not open file %s\n", path_feature);
+        return 1;
+    }
+    char *path_matrix = (char *)malloc(1024 * sizeof(char));
+    sprintf(path_matrix, "%s/matrix.mtx.gz", path_out);
+    gzFile file_matrix = gzopen(path_matrix, "wb");
+    if (file_matrix == NULL)
+    {
+        fprintf(stderr, "\x1b[31mError:\x1b[0m can not open file %s\n", path_matrix);
+        return 1;
+    }
+
+    // create summary table of umi
+    sql = "CREATE TABLE mtx AS "
+                "SELECT feature_index, cell_index, COUNT(DISTINCT encoded_umi) AS expression_level "
+                " FROM umi "
+                " GROUP BY cell_index, feature_index;";
+    if (sqlite3_exec(db, sql, NULL, 0, &zErrMsg) != SQLITE_OK)
+    {
+        fprintf(stderr, "\x1b[31mError:\x1b[0m SQL error: %s\n", zErrMsg);
+        sqlite3_free(zErrMsg);
+        return 1;
+    }
+
+    // get the number of rows of every table
+    size_t nrow_mtx = nrow_sql_table(db, "mtx");
+    size_t nrow_barcode = nrow_sql_table(db, "cell");
+    size_t nrow_feature = nrow_sql_table(db, "feature");
+
+    // write the nrows to the header of matrix.mtx.gz
+    char *header = (char *)malloc(1024 * sizeof(char));
+    gzprintf(file_matrix, "%%%MatrixMarket matrix coordinate integer general\n");
+    gzprintf(file_matrix, "%%metadata_json: {\"software_version\": \"bamDesign-1.0.0\", \"format_version\": 1}\n");
+    gzprintf(file_matrix, "%zu %zu %zu\n", nrow_feature, nrow_barcode, nrow_mtx);
+
+    // write table mtx to matrix.mtx.gz
+    table2gz(db, "mtx", file_matrix, 0, " ");
+    printf("matrix.mtx.gz is generated.\n");
+
+    // write table cell to barcodes.tsv.gz
+    table2gz(db, "cell", file_barcode, 0, " ");
+    printf("barcodes.tsv.gz is generated.\n");
+
+    // write table feature to features.tsv.gz
+    table2gz(db, "feature", file_feature, 0, "\t");
+    printf("features.tsv.gz is generated.\n");
+
+    free(path_barcode);
+    free(path_feature);
+    free(path_matrix);
+    free(header);
+
+    gzclose(file_barcode);
+    gzclose(file_feature);
+    gzclose(file_matrix);
 
     sqlite3_close(db);
 
     hash_table_destroy(ht_cell);
     hash_table_destroy(ht_feature);
-}
 
+    return 0;
+}
 
 int table2gz(
     sqlite3 *db_handle,
-    const char *table_name, 
+    const char *table_name,
     gzFile gz_file_ptr,
-    unsigned int header, 
+    unsigned int header,
     const char *delim)
 {
     char *sql = malloc(1024 * sizeof(char));
@@ -463,13 +529,13 @@ int table2gz(
     {
         fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db_handle));
         gzclose(gz_file_ptr);
-        return EXIT_FAILURE;
+        return 1;
     }
 
     // get the number of columns
     int column_count = sqlite3_column_count(stmt);
 
-    if (header == 1) 
+    if (header == 1)
     {
         for (int i = 0; i < column_count; i++)
         {
@@ -490,18 +556,18 @@ int table2gz(
         {
             switch (sqlite3_column_type(stmt, i))
             {
-                case SQLITE_INTEGER:
-                    gzprintf(gz_file_ptr, "%d", sqlite3_column_int(stmt, i));
-                    break;
-                case SQLITE_FLOAT:
-                    gzprintf(gz_file_ptr, "%.3f", sqlite3_column_double(stmt, i));
-                    break;
-                case SQLITE_TEXT:
-                    gzprintf(gz_file_ptr, "%s", sqlite3_column_text(stmt, i));
-                    break;
-                default:
-                    gzprintf(gz_file_ptr, "%s", "NULL");
-                    break;
+            case SQLITE_INTEGER:
+                gzprintf(gz_file_ptr, "%d", sqlite3_column_int(stmt, i));
+                break;
+            case SQLITE_FLOAT:
+                gzprintf(gz_file_ptr, "%.3f", sqlite3_column_double(stmt, i));
+                break;
+            case SQLITE_TEXT:
+                gzprintf(gz_file_ptr, "%s", sqlite3_column_text(stmt, i));
+                break;
+            default:
+                gzprintf(gz_file_ptr, "%s", "NULL");
+                break;
             }
             if (i < column_count - 1)
             {
@@ -514,11 +580,11 @@ int table2gz(
     sqlite3_finalize(stmt);
     // gzclose(gz_file_ptr);
     free(sql);
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 // get the number of rows in a table of sqlite3 database
-size_t nrow_sql_table (
+size_t nrow_sql_table(
     sqlite3 *db_handle,
     const char *table_name)
 {
@@ -554,6 +620,4 @@ size_t nrow_sql_table (
     free(sql);
 
     return nrow;
-
 }
-

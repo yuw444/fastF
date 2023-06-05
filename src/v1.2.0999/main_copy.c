@@ -4,7 +4,7 @@
 #include "filter.h"
 #include "count.h"
 #include "extract.h"
-#include "bam2db_ds.h"
+#include "bam2db_ds_copy.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
@@ -22,8 +22,8 @@ struct cmd_struct
 int cmd_freq(int argc, const char **argv)
 {
 
-    char * path_R1_arg = NULL;
-    char * path_out_arg = NULL;
+    char *path_R1_arg = NULL;
+    char *path_out_arg = NULL;
     size_t len_cellbarcode = 16;
     size_t len_umi = 10;
 
@@ -44,7 +44,7 @@ int cmd_freq(int argc, const char **argv)
                       "");
 
     argc = argparse_parse(&argparse, argc, argv);
-    
+
     if (path_R1_arg == NULL)
     {
         fprintf(stderr, "Please specify the path to R1 fastq files.\n");
@@ -81,7 +81,6 @@ int cmd_freq(int argc, const char **argv)
     free_tree_node(head);
 
     return 0;
-
 }
 
 int cmd_filter(int argc, const char **argv)
@@ -123,13 +122,13 @@ int cmd_filter(int argc, const char **argv)
 
     if (path_R1_arg == NULL)
     {
-        printf("\x1b[31mError:\x1b[0m path to R1 fastq files can not been NULL while filtering .\n");
+        fprintf(stderr, "\x1b[31mError:\x1b[0m path to R1 fastq files can not been NULL while filtering .\n");
         exit(1);
     }
 
     if (whitelist_arg == NULL && !all_cell)
     {
-        printf("\x1b[31mError:\x1b[0m whitelist and --all cell option can not been both NULL at the same time.\n");
+        fprintf(stderr, "\x1b[31mError:\x1b[0m whitelist and --all cell option can not been both NULL at the same time.\n");
         exit(1);
     }
 
@@ -148,7 +147,6 @@ int cmd_filter(int argc, const char **argv)
     node *tree_whitelist;
     //------------------------------------------------
 
-
     if (path_I1_arg == NULL)
     {
         file_in[0] = Z_NULL;
@@ -156,11 +154,11 @@ int cmd_filter(int argc, const char **argv)
     }
     else
     {
-       file_in[0] = gzopen(path_I1_arg, "r");
-       char *path_I1_out = (char *)malloc(1024 * sizeof(char));
-       sprintf(path_I1_out, "%s/I1.fastq.gz", path_o_arg);
-       file_out[0] = gzopen(path_I1_out, "w"); 
-       free(path_I1_out);
+        file_in[0] = gzopen(path_I1_arg, "r");
+        char *path_I1_out = (char *)malloc(1024 * sizeof(char));
+        sprintf(path_I1_out, "%s/I1.fastq.gz", path_o_arg);
+        file_out[0] = gzopen(path_I1_out, "w");
+        free(path_I1_out);
     }
 
     file_in[1] = gzopen(path_R1_arg, "r");
@@ -197,28 +195,26 @@ int cmd_filter(int argc, const char **argv)
         fastF(file_in, file_out, tree_whitelist, len_cellbarcode, seed_arg, rate_arg, all_cell);
 
         free_tree_node(tree_whitelist);
-        for(int i = 0; i < nrow; i++)
+        for (int i = 0; i < nrow; i++)
         {
             free(whitelist[i]);
         }
         free(whitelist);
-    } 
+    }
     else
-    {   
+    {
         printf("Subsample fastq files directly without cell barcode whitelist...\n");
         printf("Processing fastq files...\n");
         fastF(file_in, file_out, NULL, len_cellbarcode, seed_arg, rate_arg, all_cell);
     }
 
-
     for (int i = 0; i < 3; i++)
     {
-        if(file_in[i] != Z_NULL)
+        if (file_in[i] != Z_NULL)
         {
             gzclose(file_in[i]);
             gzclose(file_out[i]);
         }
-
     }
 
     return 0;
@@ -241,14 +237,13 @@ int cmd_crb(int argc, const char **argv)
     argparse_describe(
         &argparse,
         "\nExtract CR and CB tags from bam file and summarize them to a tsv file.",
-        ""
-    );
+        "");
 
     argc = argparse_parse(&argparse, argc, argv);
 
     if (path_bam_arg == NULL)
     {
-        printf("\x1b[31mError:\x1b[0m path to bam file can not been NULL while extracting .\n");
+        fprintf(stderr, "\x1b[31mError:\x1b[0m path to bam file can not been NULL while extracting .\n");
         exit(1);
     }
 
@@ -259,7 +254,7 @@ int cmd_crb(int argc, const char **argv)
     gzFile file_out = gzopen(path_out, "w");
     if (file_out == NULL)
     {
-        printf("\x1b[31mError:\x1b[0m can not open file %s\n", path_out);
+        fprintf(stderr, "\x1b[31mError:\x1b[0m can not open file %s\n", path_out);
         exit(1);
     }
 
@@ -280,7 +275,6 @@ int cmd_crb(int argc, const char **argv)
 
     printf("Done.\n");
     return 0;
-    
 }
 
 int cmd_bam2db(int argc, const char **argv)
@@ -312,129 +306,50 @@ int cmd_bam2db(int argc, const char **argv)
     argparse_describe(
         &argparse,
         "\nConvert bam files to SQL database for further downsample query.",
-        ""
-    );
+        "");
 
     argc = argparse_parse(&argparse, argc, argv);
 
     // check the existence of input files
     if (access(path_bam_arg, F_OK) == -1)
     {
-        printf("\x1b[31mError:\x1b[0m bam file: %s does not exist.\n", path_bam_arg);
+        fprintf(stderr, "\x1b[31mError:\x1b[0m bam file: %s does not exist.\n", path_bam_arg);
         exit(1);
     }
 
     if (access(path_feature_arg, F_OK) == -1)
     {
-        printf("\x1b[31mError:\x1b[0m feature file: %s does not exist.\n", path_feature_arg);
+        fprintf(stderr, "\x1b[31mError:\x1b[0m feature file: %s does not exist.\n", path_feature_arg);
         exit(1);
     }
 
     if (access(path_barcode_arg, F_OK) == -1)
     {
-        printf("\x1b[31mError:\x1b[0m barcode file: %s does not exist.\n", path_barcode_arg);
+        fprintf(stderr, "\x1b[31mError:\x1b[0m barcode file: %s does not exist.\n", path_barcode_arg);
         exit(1);
     }
 
     if (access(name_database_arg, F_OK) != -1)
     {
-        printf("\x1b[31mError:\x1b[0m database: %s already exists, change the name of database in -d argument!\n", name_database_arg);
+        fprintf(stderr, "\x1b[31mError:\x1b[0m database: %s already exists, change the name of database in -d argument!\n", name_database_arg);
         exit(1);
     }
 
-    bam2db(
-        path_bam_arg, 
-        name_database_arg, 
-        path_barcode_arg, 
-        path_feature_arg, 
-        rate_cell,
-        rate_depth,
-        seed_arg);
-    
-    // open the database
-    sqlite3 *db;
-    int rc = sqlite3_open(name_database_arg, &db);
-
-    if (rc)
+    if (bam2db(
+            path_bam_arg,
+            name_database_arg,
+            path_out_arg,
+            path_barcode_arg,
+            path_feature_arg,
+            rate_cell,
+            rate_depth,
+            seed_arg))
     {
-        printf("\x1b[31mError:\x1b[0m can not open database: %s\n", name_database_arg);
+        fprintf(stderr, "\x1b[31mError:\x1b[0m bam2db failed.\n");
         return 1;
     }
-
-    // file path of output
-    char *path_barcode = (char *)malloc(1024 * sizeof(char));
-    sprintf(path_barcode, "%s/barcodes.tsv.gz", path_out_arg);
-    gzFile file_barcode = gzopen(path_barcode, "wb");
-    if (file_barcode == NULL)
-    {
-        printf("\x1b[31mError:\x1b[0m can not open file %s\n", path_barcode);
-        exit(1);
-    }
-    char *path_feature = (char *)malloc(1024 * sizeof(char));
-    sprintf(path_feature, "%s/features.tsv.gz", path_out_arg);
-    gzFile file_feature = gzopen(path_feature, "wb");
-    if (file_feature == NULL)
-    {
-        printf("\x1b[31mError:\x1b[0m can not open file %s\n", path_feature);
-        exit(1);
-    }
-    char *path_matrix = (char *)malloc(1024 * sizeof(char));
-    sprintf(path_matrix, "%s/matrix.mtx.gz", path_out_arg);
-    gzFile file_matrix = gzopen(path_matrix, "wb");
-    if (file_matrix == NULL)
-    {
-        printf("\x1b[31mError:\x1b[0m can not open file %s\n", path_matrix);
-        exit(1);
-    }
-
-    // create summary table of umi
-    char *error_msg = NULL;
-    char *sql =   "CREATE TABLE mtx AS "
-                  "SELECT feature_index, cell_index, COUNT(DISTINCT encoded_umi) AS expression_level "
-                  " FROM umi "
-                  " GROUP BY cell_index, feature_index;"; 
-    if (sqlite3_exec(db, sql, NULL, 0, &error_msg) != SQLITE_OK)
-    {
-        printf("\x1b[31mError:\x1b[0m SQL error: %s\n", error_msg);
-        sqlite3_free(error_msg);
-        return 1;
-    }
-
-    // get the number of rows of every table
-    size_t nrow_mtx = nrow_sql_table(db, "mtx");
-    size_t nrow_barcode = nrow_sql_table(db, "cell");
-    size_t nrow_feature = nrow_sql_table(db, "feature");
-    
-    // write the nrows to the header of matrix.mtx.gz
-    char *header = (char *)malloc(1024 * sizeof(char));
-    gzprintf(file_matrix, "%%%MatrixMarket matrix coordinate integer general\n");
-    gzprintf(file_matrix, "%%metadata_json: {\"software_version\": \"bamDesign-1.0.0\", \"format_version\": 1}\n");
-    gzprintf(file_matrix, "%zu %zu %zu\n", nrow_feature, nrow_barcode, nrow_mtx);
-
-    // write table mtx to matrix.mtx.gz
-    table2gz(db, "mtx", file_matrix, 0, " ");
-    printf("matrix.mtx.gz is generated.\n");
-
-    // write table cell to barcodes.tsv.gz
-    table2gz(db, "cell", file_barcode, 0, " ");
-    printf("barcodes.tsv.gz is generated.\n");
-
-    // write table feature to features.tsv.gz
-    table2gz(db, "feature", file_feature, 0, "\t");
-    printf("features.tsv.gz is generated.\n");
-
-    free(path_barcode);
-    free(path_feature);
-    free(path_matrix);
-    free(header);
-    sqlite3_close(db);
-
-    gzclose(file_barcode);
-    gzclose(file_feature);
-    gzclose(file_matrix);
 
     return 0;
-
 }
 
 int cmd_extract(int argc, const char **argv)
@@ -455,38 +370,35 @@ int cmd_extract(int argc, const char **argv)
     struct argparse argparse;
     argparse_init(&argparse, options, usages, 0);
     argparse_describe(
-        &argparse, 
-        "\nExtract the tag of bam file.", 
+        &argparse,
+        "\nExtract the tag of bam file.",
         "\n");
 
     argc = argparse_parse(&argparse, argc, argv);
 
     if (access(path_bam_arg, F_OK) == -1)
     {
-        printf("\x1b[31mError:\x1b[0m bam file: %s does not exist.\n", path_bam_arg);
+        fprintf(stderr, "\x1b[31mError:\x1b[0m bam file: %s does not exist.\n", path_bam_arg);
         exit(1);
     }
 
     if (tag_arg == NULL)
     {
-        printf("\x1b[31mError:\x1b[0m tag is required.\n");
+        fprintf(stderr, "\x1b[31mError:\x1b[0m tag is required.\n");
         exit(1);
     }
 
     extract_bam(path_bam_arg, tag_arg, type_arg);
 
     return 0;
-
 }
-
 
 static struct cmd_struct commands[] = {
     {"filter", cmd_filter},
     {"freq", cmd_freq},
     {"crb", cmd_crb},
     {"bam2db", cmd_bam2db},
-    {"extract", cmd_extract}
-};
+    {"extract", cmd_extract}};
 
 int main(int argc, const char **argv)
 {
@@ -521,3 +433,5 @@ int main(int argc, const char **argv)
 
     return 0;
 }
+
+
