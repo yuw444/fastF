@@ -29,7 +29,7 @@
 uint8_t encode_base(char base);
 
 /**
- * @brief encode a DNA sequence to uint8_t pointer
+ * @brief encode a DNA sequence to uint8_t pointer, the DNA sequence must be '\0' terminated
  * 
  * @param DNA_seq DNA sequence
  * @return uint8_t* 

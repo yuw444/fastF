@@ -25,7 +25,8 @@ set(SOURCES
     ./src/v1.2.0999/count.c
     ./src/v1.2.0999/extract.c
     external/hashtable/hashtable.c
-    ./src/v1.2.0999/bam2db_ds_copy.c
+    # ./src/v1.2.0999/bam2db_ds_copy.c
+    ./src/v1.2.0999/bam2db_ds_umi.c
     ./src/v1.2.0999/utils.c
 )
 
