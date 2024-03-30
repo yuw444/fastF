@@ -22,6 +22,8 @@ It is designed to be run with multiple threads.
 #define BUFFER_LENGTH 1024
 #define LEN_WHITELIST 2 ^ 15
 
+extern int flag;
+
 // struct node of binary searching tree
 typedef struct node
 {
