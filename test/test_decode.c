@@ -1,5 +1,5 @@
 #include <criterion/criterion.h>
-#include "../src/v1.2.0999/bam2db.h"
+#include "../src/bam2db_ds.h"
 
 Test (code, code_DNA)
 {
@@ -31,16 +31,6 @@ Test (code, code_DNA)
     free(decoded_DNA1);
     free(decoded_DNA2);
 }
-
-// Test (code, db)
-// {
-//     char *bam_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/possorted_genome_bam_filtered.bam";
-//     char *db_file = "/scratch/u/yu89975/fastF/data/test_pure.db";
-//     char *barcode_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/filtered_feature_bc_matrix/barcodes.tsv.gz";
-//     char *feature_file = "/scratch/u/yu89975/fastF_test/rawfastq/sub/AI/outs/filtered_feature_bc_matrix/features.tsv.gz";
-
-//     bam2db(bam_file, db_file, barcode_file, feature_file);
-// }
 
 Test(code, end)
 {

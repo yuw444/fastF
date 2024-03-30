@@ -17,15 +17,15 @@ include_directories(${CMAKE_SOURCE_DIR}/external/mt19937ar.sep)
 include_directories(${CMAKE_SOURCE_DIR}/external/hashtable)
 
 set(SOURCES
-    ./src/v1.2.0999/main_copy.c
-    ./src/v1.2.0999/filter.c
+    ./src/main.c
     external/argparse/argparse.c
-    external/mt19937ar.sep/mt19937ar.c 
-    ./src/v1.2.0999/count.c
-    ./src/v1.2.0999/extract.c
+    external/mt19937ar.sep/mt19937ar.c
     external/hashtable/hashtable.c
-    ./src/v1.2.0999/bam2db_ds_umi.c
-    ./src/v1.2.0999/utils.c
+    ./src/filter.c
+    ./src/count.c
+    ./src/extract.c
+    ./src/bam2db_ds.c
+    ./src/utils.c
 )
 
 add_executable(fastF ${SOURCES})
