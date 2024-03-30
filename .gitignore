@@ -4,3 +4,5 @@ build
 ./htslib-1.17/
 ./htslib/
 .db
+
+data
