@@ -14,16 +14,16 @@ int flag = 0;
 fastq *get_fastq(gzFile file)
 {
     fastq *out = (fastq *)malloc(sizeof(fastq));
-    out->id = (char *)malloc(MAX_LINE_LENGTH);
-    out->seq = (char *)malloc(MAX_LINE_LENGTH);
-    out->qual = (char *)malloc(MAX_LINE_LENGTH);
+    out->id = (char *)malloc(BUFFER_LENGTH);
+    out->seq = (char *)malloc(BUFFER_LENGTH);
+    out->qual = (char *)malloc(BUFFER_LENGTH);
 
-    char temp[MAX_LINE_LENGTH];
-    if (gzgets(file, out->id, MAX_LINE_LENGTH) != NULL)
+    char temp[BUFFER_LENGTH];
+    if (gzgets(file, out->id, BUFFER_LENGTH) != NULL)
     {
-        gzgets(file, out->seq, MAX_LINE_LENGTH);
-        gzgets(file, temp, MAX_LINE_LENGTH);
-        gzgets(file, out->qual, MAX_LINE_LENGTH);
+        gzgets(file, out->seq, BUFFER_LENGTH);
+        gzgets(file, temp, BUFFER_LENGTH);
+        gzgets(file, out->qual, BUFFER_LENGTH);
     }
     else
     {
@@ -189,7 +189,7 @@ void free_tree_node(node *root)
 int get_row(char *file_name)
 {
     int i = 0;
-    char buffer[MAX_LINE_LENGTH];
+    char buffer[BUFFER_LENGTH];
     FILE *stream = fopen(file_name, "r");
     if (stream == NULL)
     {
@@ -197,7 +197,7 @@ int get_row(char *file_name)
         exit(1);
     }
 
-    while (fgets(buffer, MAX_LINE_LENGTH, stream) != NULL)
+    while (fgets(buffer, BUFFER_LENGTH, stream) != NULL)
     {
         i++;
         // printf("%s", buffer);
@@ -277,8 +277,8 @@ char *substring(char *string, int position, int length)
 
 char *combine_string(fastq *block)
 {
-    char *buf = (char *)malloc(MAX_LINE_LENGTH * 3 * sizeof(char));
-    snprintf(buf, MAX_LINE_LENGTH * 3, "%s%s+\n%s", block->id, block->seq, block->qual);
+    char *buf = (char *)malloc(BUFFER_LENGTH * 3 * sizeof(char));
+    snprintf(buf, BUFFER_LENGTH * 3, "%s%s+\n%s", block->id, block->seq, block->qual);
     return buf;
 }
 

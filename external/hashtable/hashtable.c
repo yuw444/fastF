@@ -1,6 +1,5 @@
 #include "hashtable.h"
 
-
 static size_t hash_table_index(hash_table *ht, const char *key)
 {
     size_t result = ht->hash(key, strlen(key)) % ht->size;
