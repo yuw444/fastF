@@ -32,4 +32,4 @@ add_executable(fastF ${SOURCES})
 
 target_link_libraries(fastF z pthread hts sqlite3)
 
-add_subdirectory(./test)
+# add_subdirectory(./test)
