@@ -1,5 +1,3 @@
-## fastF
-
 `fastF` aims to **sample**, **filter**, and **summarise** single-cell RNA sequencing result, [FastQ](https://en.wikipedia.org/wiki/FASTQ_format) file. It consists 5 subcommands for the specific tasks.
 
  ```
