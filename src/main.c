@@ -106,9 +106,9 @@ int cmd_filter(int argc, const char **argv)
     struct argparse_option options[] = {
         OPT_HELP(),
         OPT_GROUP("Basic options"),
-        OPT_STRING('I', "I1", &path_I1_arg, "path to sample I1 fastq files", NULL, 0, 0),
-        OPT_STRING('R', "R1", &path_R1_arg, "path to sample R1 fastq files", NULL, 0, 0),
-        OPT_STRING('r', "R2", &path_R2_arg, "path to sample R2 fastq files", NULL, 0, 0),
+        OPT_STRING('I', "I1", &path_I1_arg, "optional, path to sample I1 fastq files", NULL, 0, 0),
+        OPT_STRING('R', "R1", &path_R1_arg, "required, path to sample R1 fastq files", NULL, 0, 0),
+        OPT_STRING('r', "R2", &path_R2_arg, "optional, path to sample R2 fastq files", NULL, 0, 0),
         OPT_STRING('o', "out", &path_o_arg, "dir to output fastq files", NULL, 0, 0),
         OPT_STRING('w', "whitelist", &whitelist_arg, "whitelist of cell barcodes", NULL, 0, 0),
         OPT_INTEGER('l', "len", &len_cellbarcode, "length of cell barcode", NULL, 0, 0),

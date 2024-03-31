@@ -336,7 +336,8 @@ int bam2db(
     bam_hdr_t *bam_header = sam_hdr_read(bam);
     bam1_t *bam_record = bam_init1();
     size_t total_reads_counts = 0;
-    size_t valid_reads_counts = 0;
+    size_t sampled_reads_counts = 0;
+    size_t sampled_valid_reads_counts = 0;
     // time_t t = time(NULL);
     // struct tm *tm;
     // char s[64];
@@ -378,6 +379,7 @@ int bam2db(
             continue;
         }
 
+        sampled_reads_counts++;
         // check if UMI quality is 25
         uint8_t *xf_ptr = bam_aux_get(bam_record, "xf");
         int UMI_quality = bam_aux2i(xf_ptr);
@@ -396,7 +398,6 @@ int bam2db(
         {
             continue;
         }
-
         int feature_index = *(int *)temp2;
         uint8_t *ub_ptr = bam_aux_get(bam_record, "UB");
         if (ub_ptr == NULL)
@@ -421,7 +422,7 @@ int bam2db(
         }
 
         sqlite3_reset(stmt);
-        valid_reads_counts++;
+        sampled_valid_reads_counts++;
 
         free(encoded_UMI);
     }
@@ -429,8 +430,9 @@ int bam2db(
     sqlite3_exec(db, "END TRANSACTION", NULL, NULL, &zErrMsg);
     sqlite3_finalize(stmt);
 
-    printf("In %s, total reads: %zu\n", bam_file, total_reads_counts);
-    printf("In %s, valid reads: %zu\n", bam_file, valid_reads_counts);
+    printf("In %s, total fastQ reads: %zu\n", bam_file, total_reads_counts);
+    printf("In %s, sampled fastQ reads: %zu\n", bam_file, sampled_reads_counts);
+    printf("In %s, sampled and valid fastQ reads: %zu\n", bam_file, sampled_valid_reads_counts);
 
     bam_destroy1(bam_record);
     bam_hdr_destroy(bam_header);
@@ -465,7 +467,7 @@ int bam2db(
 
     char *path_umi = (char *)malloc(1024 * sizeof(char));
     sprintf(path_umi, "%s/umi.tsv.gz", path_out);
-    gzFile file_umi = gzopen(path_umi, "wb");   
+    gzFile file_umi = gzopen(path_umi, "wb");
     if (file_umi == NULL)
     {
         fprintf(stderr, "\x1b[31mError:\x1b[0m can not open file %s\n", path_umi);
@@ -474,9 +476,9 @@ int bam2db(
 
     // create summary table of umi
     sql = "CREATE TABLE mtx AS "
-                "SELECT feature_index, cell_index, COUNT(DISTINCT encoded_umi) AS expression_level "
-                " FROM umi "
-                " GROUP BY cell_index, feature_index;";
+          "SELECT feature_index, cell_index, COUNT(DISTINCT encoded_umi) AS expression_level "
+          " FROM umi "
+          " GROUP BY cell_index, feature_index;";
     if (sqlite3_exec(db, sql, NULL, 0, &zErrMsg) != SQLITE_OK)
     {
         fprintf(stderr, "\x1b[31mError:\x1b[0m SQL error: %s\n", zErrMsg);
@@ -486,9 +488,9 @@ int bam2db(
 
     // creat umi summary table of for cell, feature, umi
     sql = "CREATE TABLE numi AS "
-                "SELECT feature_index, cell_index, encoded_umi, COUNT(*) AS n_copy "
-                " FROM umi "
-                " GROUP BY cell_index, feature_index, encoded_umi;";
+          "SELECT feature_index, cell_index, encoded_umi, COUNT(*) AS n_copy "
+          " FROM umi "
+          " GROUP BY cell_index, feature_index, encoded_umi;";
 
     if (sqlite3_exec(db, sql, NULL, 0, &zErrMsg) != SQLITE_OK)
     {
@@ -504,8 +506,21 @@ int bam2db(
 
     // write the nrows to the header of matrix.mtx.gz
     char *header = (char *)malloc(1024 * sizeof(char));
-    gzprintf(file_matrix, "%%%MatrixMarket matrix coordinate integer general\n");
-    gzprintf(file_matrix, "%%metadata_json: {\"software_version\": \"bamDesign-1.0.0\", \"format_version\": 1}\n");
+    gzprintf(
+        file_matrix,
+        "%%%MatrixMarket matrix coordinate integer general\n"
+        "%%metadata_json: \n"
+        "%%{\n"
+        "%%\t\"software_version\": \"fastF-1.0.0\",\n"
+        "%%\t\"format_version\": 1\n"
+        "%%\t\"parent_bam\": %s,\n"
+        "%%\t\"rate_cell\": %.3f,\n"
+        "%%\t\"rate_depth\": %.3f,\n"
+        "%%\t\"total_n_FastQ\": %zu,\n"
+        "%%\t\"sampled_n_FastQ\": %zu,\n"
+        "%%\t\"sampled_valid_n_FastQ\": %zu\n"
+        "%%}\n",
+        bam_file, rate_cell, rate_depth, total_reads_counts, sampled_reads_counts, sampled_valid_reads_counts);
     gzprintf(file_matrix, "%zu %zu %zu\n", nrow_feature, nrow_barcode, nrow_mtx);
 
     // write table mtx to matrix.mtx.gz
