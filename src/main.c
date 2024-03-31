@@ -313,7 +313,7 @@ int cmd_bam2db(int argc, const char **argv)
     argparse_init(&argparse, options, usages, 0);
     argparse_describe(
         &argparse,
-        "\nFilter bam file with desired cell proportion and read depth with sqlite3, then summarise it UMI matrix.",
+        "\nFilter bam file with desired cell proportion and read depth with sqlite3, then summarise it into UMI matrix.",
         "");
 
     argc = argparse_parse(&argparse, argc, argv);

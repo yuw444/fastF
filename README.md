@@ -80,7 +80,7 @@ Extract CR and CB tags from bam file and summarize them with frequencies to a ts
     -o, --out=<str>   path to output directory
 ```
 
-### `bam2db`:  Filter bam file with desired cell proportion and read depth, then summarise it UMI matrix.
+### `bam2db`:  Filter bam file with desired cell proportion and read depth, then summarise it into UMI matrix.
 
 * `bam2db` is an upgraded version of `filter`, it can automatically find `whitelist` and subsample cell with desired read depth. 
 
