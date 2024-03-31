@@ -82,7 +82,7 @@ Extract CR and CB tags from bam file and summarize them with frequencies to a ts
 
 ### `bam2db`:  Filter bam file with desired cell proportion and read depth, then summarise it UMI matrix.
 
-* `bam2db` is an upgraded version of `filter`, it can automatically find `whitelist` and subsample cell and read depth. 
+* `bam2db` is an upgraded version of `filter`, it can automatically find `whitelist` and subsample cell with desired read depth. 
 
 * Compared to `filter`, it won't produce the filtered raw FastQ read, instead, it summarises the filtered result as UMI matrix. 
 
