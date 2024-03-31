@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.rmd": "markdown",
-        "mt19937ar.h": "c",
-        "cstring": "c"
-    }
-}
