@@ -9,7 +9,15 @@
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 
 static const char *const usages[] = {
-    "fastF subcommands <options>",
+    "fastF <subcommands> [args]\n\n"
+    "subcommands:\n\n"\
+    "\tfreq:    Find all the cell barcode whitelist and their frequencies.\n"\
+    "\tfilter:  Filter fastq file using cell barcode whitelist and read depth.\n"\
+    "\tcrb:     Extract CR and CB tags from bam file and summarize them with \n"\
+    "\t             frequencies to a tsv file.\n"
+    "\tbam2db:  Filter bam file with desired cell proportion and read depth, \n"
+    "\t             then summarise it UMI matrix.\n"
+    "\textract: Extract the tag of bam file and write it to tag_summary.csv.\n",
     NULL,
 };
 
@@ -305,7 +313,7 @@ int cmd_bam2db(int argc, const char **argv)
     argparse_init(&argparse, options, usages, 0);
     argparse_describe(
         &argparse,
-        "\nConvert bam files to SQL database for further downsample query.",
+        "\nFilter bam file with desired cell proportion and read depth with sqlite3, then summarise it UMI matrix.",
         "");
 
     argc = argparse_parse(&argparse, argc, argv);
@@ -360,7 +368,6 @@ int cmd_extract(int argc, const char **argv)
 
     struct argparse_option options[] = {
         OPT_HELP(),
-        OPT_GROUP("Required"),
         OPT_STRING('b', "bam", &path_bam_arg, "path to bam file"),
         OPT_STRING('t', "tag", &tag_arg, "tag of bam file"),
         OPT_INTEGER('T', "type", &type_arg, "type of tag, 0: string, 1: integer"),
@@ -384,7 +391,7 @@ int cmd_extract(int argc, const char **argv)
 
     if (tag_arg == NULL)
     {
-        fprintf(stderr, "\x1b[31mError:\x1b[0m tag is required.\n");
+        fprintf(stderr, "\x1b[31mError:\x1b[0m --tag is required.\n");
         exit(1);
     }
 
