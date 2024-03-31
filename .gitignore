@@ -4,7 +4,9 @@ build
 ./htslib-1.17/
 ./htslib/
 .db
-
+.vscode
+Archive
+test
 data
 
 .DS_Store
