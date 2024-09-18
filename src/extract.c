@@ -53,7 +53,7 @@ void print_CB_node(CB_node *root, gzFile fp)
     }
 
     // print one node of CB tree into one row of csv file
-    // fprintf(fp, "%s;", root->CB);
+    fprintf(fp, "%s;", root->CB);
     print_tree_same_row(root->CR, fp);
     gzprintf(fp, "\n");
 
