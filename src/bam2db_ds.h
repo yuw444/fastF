@@ -20,6 +20,8 @@
 #define BYTE_MASK 0xFF                   // the mask of a byte
 #define BASE_MASK ((1 << BASE_BITS) - 1) // the mask of a base
 
+extern int _umi_copies_flag;
+
 /**
  * @brief encode a base to uint8_t
  * 

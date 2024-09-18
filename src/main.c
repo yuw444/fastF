@@ -306,6 +306,7 @@ int cmd_bam2db(int argc, const char **argv)
         OPT_FLOAT('r', "depth", &rate_depth, "rate of depth", NULL, 0, 0),
         OPT_STRING('o', "out", &path_out_arg, "path to output directory", NULL, 0, 0),
         OPT_INTEGER('s', "seed", &seed_arg, "seed for random number generator", NULL, 0, 0),
+        OPT_BOOLEAN('u', "umicopies", &_umi_copies_flag, "whether to store umi.tsv.gz", NULL, 0, 0),
         OPT_END(),
     };
 

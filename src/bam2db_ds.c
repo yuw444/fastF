@@ -1,5 +1,7 @@
 #include "bam2db_ds.h"
 
+int _umi_copies_flag = 0;
+
 uint8_t encode_base(char base)
 {
     switch (base)
@@ -465,33 +467,12 @@ int bam2db(
         return 1;
     }
 
-    char *path_umi = (char *)malloc(1024 * sizeof(char));
-    sprintf(path_umi, "%s/umi.tsv.gz", path_out);
-    gzFile file_umi = gzopen(path_umi, "wb");
-    if (file_umi == NULL)
-    {
-        fprintf(stderr, "\x1b[31mError:\x1b[0m can not open file %s\n", path_umi);
-        return 1;
-    }
 
     // create summary table of umi
     sql = "CREATE TABLE mtx AS "
           "SELECT feature_index, cell_index, COUNT(DISTINCT encoded_umi) AS expression_level "
           " FROM umi "
           " GROUP BY cell_index, feature_index;";
-    if (sqlite3_exec(db, sql, NULL, 0, &zErrMsg) != SQLITE_OK)
-    {
-        fprintf(stderr, "\x1b[31mError:\x1b[0m SQL error: %s\n", zErrMsg);
-        sqlite3_free(zErrMsg);
-        return 1;
-    }
-
-    // creat umi summary table of for cell, feature, umi
-    sql = "CREATE TABLE numi AS "
-          "SELECT feature_index, cell_index, encoded_umi, COUNT(*) AS n_copy "
-          " FROM umi "
-          " GROUP BY cell_index, feature_index, encoded_umi;";
-
     if (sqlite3_exec(db, sql, NULL, 0, &zErrMsg) != SQLITE_OK)
     {
         fprintf(stderr, "\x1b[31mError:\x1b[0m SQL error: %s\n", zErrMsg);
@@ -535,20 +516,45 @@ int bam2db(
     table2gz(db, "feature", file_feature, 0, "\t");
     printf("features.tsv.gz is generated.\n");
 
-    // write table numi to umi.tsv.gz
-    table2gz(db, "numi", file_umi, 0, "\t");
-    printf("umi.tsv.gz is generated.\n");
+    if (_umi_copies_flag)
+    {
+        char *path_umi = (char *)malloc(1024 * sizeof(char));
+        sprintf(path_umi, "%s/umi.tsv.gz", path_out);
+        gzFile file_umi = gzopen(path_umi, "wb");
+        if (file_umi == NULL)
+        {
+            fprintf(stderr, "\x1b[31mError:\x1b[0m can not open file %s\n", path_umi);
+            return 1;
+        }
+
+        // creat umi summary table of for cell, feature, umi
+        sql = "CREATE TABLE numi AS "
+              "SELECT feature_index, cell_index, encoded_umi, COUNT(*) AS n_copy "
+              " FROM umi "
+              " GROUP BY cell_index, feature_index, encoded_umi;";
+
+        if (sqlite3_exec(db, sql, NULL, 0, &zErrMsg) != SQLITE_OK)
+        {
+            fprintf(stderr, "\x1b[31mError:\x1b[0m SQL error: %s\n", zErrMsg);
+            sqlite3_free(zErrMsg);
+            return 1;
+        }
+
+        // write table numi to umi.tsv.gz
+        table2gz(db, "numi", file_umi, 0, "\t");
+        printf("umi.tsv.gz is generated.\n");
+        free(path_umi);
+        gzclose(file_umi);
+    }
 
     free(path_barcode);
     free(path_feature);
     free(path_matrix);
-    free(path_umi);
     free(header);
 
     gzclose(file_barcode);
     gzclose(file_feature);
     gzclose(file_matrix);
-    gzclose(file_umi);
 
     sqlite3_close(db);
 
