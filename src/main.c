@@ -236,7 +236,7 @@ int cmd_crb(int argc, const char **argv)
     struct argparse_option options[] = {
         OPT_HELP(),
         OPT_STRING('b', "bam", &path_bam_arg, "path to bam file", NULL, 0, 0),
-        OPT_STRING('o', "out", &path_out_arg, "path to output directory", NULL, 0, 0),
+        OPT_STRING('o', "out", &path_out_arg, "path to output file", NULL, 0, 0),
         OPT_END(),
     };
 
@@ -256,7 +256,7 @@ int cmd_crb(int argc, const char **argv)
     }
 
     char *path_out = (char *)malloc(1024 * sizeof(char));
-    sprintf(path_out, "%s/CR_CB.tsv.gz", path_out_arg);
+    sprintf(path_out, "%s", path_out_arg);
 
     // open file stream
     gzFile file_out = gzopen(path_out, "w");
