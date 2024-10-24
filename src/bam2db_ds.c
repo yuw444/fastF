@@ -150,8 +150,8 @@ int bam2db(
     }
 
     // open cell barcode file
-    gzFile cell_barcode = gzopen(barcodes_file, "r");
-    if (cell_barcode == NULL)
+    gzFile cell_barcode_fp = gzopen(barcodes_file, "r");
+    if (cell_barcode_fp == NULL)
     {
         fprintf(stderr, "Fail to open cell barcode file %s\n", barcodes_file);
         return 1;
@@ -230,7 +230,7 @@ int bam2db(
 
     // total number of cells
     size_t n_cells = 0;
-    while (gzgets(cell_barcode, cell_barcode_buffer, 1024) != NULL)
+    while (gzgets(cell_barcode_fp, cell_barcode_buffer, 1024) != NULL)
     {
         n_cells++;
     }
@@ -245,14 +245,14 @@ int bam2db(
     // PrintArrayInt(cell_sample_indexes, n_cells_sampled);
     printf("Actual number of sampled cell barcodes: %zu\n", n_cells_sampled);
     // reset file pointer
-    gzrewind(cell_barcode);
+    gzrewind(cell_barcode_fp);
     size_t cell_index = 1;
     size_t nth_cellbarcode = 0;
 
     sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, &zErrMsg);
     sql = "INSERT INTO cell VALUES (?1);";
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
-    while (gzgets(cell_barcode, cell_barcode_buffer, 1024) != NULL && cell_index <= n_cells_sampled)
+    while (gzgets(cell_barcode_fp, cell_barcode_buffer, 1024) != NULL && cell_index <= n_cells_sampled)
     {
 
         nth_cellbarcode++;
@@ -286,7 +286,7 @@ int bam2db(
     }
     sqlite3_exec(db, "END TRANSACTION", NULL, NULL, &zErrMsg);
     sqlite3_finalize(stmt);
-    gzclose(cell_barcode);
+    gzclose(cell_barcode_fp);
     // printf("Total number of sampled cell barcodes: %zu\n", cell_index -1);
     free(cell_barcode_buffer);
     free(cell_sample_indexes);
@@ -294,25 +294,27 @@ int bam2db(
     // read feature name file and insert into hash table and database
 
     char *feature_buffer = (char *)calloc(1024, sizeof(char));
+    char *feature_id, *feature_name, *feature_type;
     int feature_index = 1;
+    int *feature_index_ptr = NULL;
 
     sqlite3_exec(db, "BEGIN TRANSACTION", NULL, NULL, &zErrMsg);
     sql = "INSERT INTO feature VALUES (?1, ?2, ?3);";
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     while (gzgets(feature, feature_buffer, 1024) != NULL)
     {
-        char *feature_id = strtok(feature_buffer, "\t");
-        char *feature_name = strtok(NULL, "\t");
-        char *feature_type = strtok(NULL, "\t");
+        feature_id = strtok(feature_buffer, "\t");
+        feature_name = strtok(NULL, "\t");
+        feature_type = strtok(NULL, "\t");
         feature_type[strcspn(feature_type, "\n\r\t")] = '\0';
-        int *feature_index_ptr = (int *)calloc(1, sizeof(int));
+        feature_index_ptr = (int *)calloc(1, sizeof(int));
         *feature_index_ptr = feature_index;
 
         if (hash_table_insert(ht_feature, feature_buffer, feature_index_ptr))
         {
-            sqlite3_bind_text(stmt, 1, feature_id, strlen(feature_buffer), SQLITE_STATIC);
-            sqlite3_bind_text(stmt, 2, feature_name, strlen(feature_buffer), SQLITE_STATIC);
-            sqlite3_bind_text(stmt, 3, feature_type, strlen(feature_buffer), SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 1, feature_id, strlen(feature_id), SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 2, feature_name, strlen(feature_name), SQLITE_STATIC);
+            sqlite3_bind_text(stmt, 3, feature_type, strlen(feature_type), SQLITE_STATIC);
             if (sqlite3_step(stmt) != SQLITE_DONE)
             {
                 fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(db));
@@ -349,13 +351,19 @@ int bam2db(
     sql = "INSERT INTO umi VALUES (?1, ?2, ?3);";
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
 
+    uint8_t *cell_barcode_ptr, *xf_ptr, *gx_ptr, *ub_ptr, *encoded_UMI;
+    char *cell_barcode, *feature_ID, *UMI;
+    void *temp1, *temp2;
+    int UMI_quality;
+    size_t encoded_size;
+
     while (sam_read1(bam, bam_header, bam_record) >= 0)
     {
 
         total_reads_counts++;
 
         // check if CB tag exists
-        uint8_t *cell_barcode_ptr = bam_aux_get(bam_record, "CB");
+        cell_barcode_ptr = bam_aux_get(bam_record, "CB");
 
         if (cell_barcode_ptr == NULL)
         {
@@ -363,8 +371,8 @@ int bam2db(
         }
 
         // check if CB tag is in the cell barcode hash table
-        char *cell_barcode = bam_aux2Z(cell_barcode_ptr);
-        void *temp1 = hash_table_lookup(ht_cell, cell_barcode);
+        cell_barcode = bam_aux2Z(cell_barcode_ptr);
+        temp1 = hash_table_lookup(ht_cell, cell_barcode);
 
         if (temp1 == NULL)
         {
@@ -383,8 +391,8 @@ int bam2db(
 
         sampled_reads_counts++;
         // check if UMI quality is 25
-        uint8_t *xf_ptr = bam_aux_get(bam_record, "xf");
-        int UMI_quality = bam_aux2i(xf_ptr);
+        xf_ptr = bam_aux_get(bam_record, "xf");
+        UMI_quality = bam_aux2i(xf_ptr);
 
         if (!(UMI_quality == 25 || UMI_quality == 17))
         {
@@ -392,23 +400,23 @@ int bam2db(
         }
 
         // if quality is 25, GX tag must exist, check the feature index
-        uint8_t *gx_ptr = bam_aux_get(bam_record, "GX");
-        char *feature_ID = bam_aux2Z(gx_ptr);
-        void *temp2 = hash_table_lookup(ht_feature, feature_ID);
+        gx_ptr = bam_aux_get(bam_record, "GX");
+        feature_ID = bam_aux2Z(gx_ptr);
+        temp2 = hash_table_lookup(ht_feature, feature_ID);
 
         if (temp2 == NULL)
         {
             continue;
         }
-        int feature_index = *(int *)temp2;
-        uint8_t *ub_ptr = bam_aux_get(bam_record, "UB");
+        feature_index = *(int *)temp2;
+        ub_ptr = bam_aux_get(bam_record, "UB");
         if (ub_ptr == NULL)
         {
             continue;
         }
-        char *UMI = bam_aux2Z(ub_ptr);
-        uint8_t *encoded_UMI = encode_DNA(UMI);
-        size_t encoded_size = (strlen(UMI) + BYTE_SIZE / BASE_BITS - 1) / 4;
+        UMI = bam_aux2Z(ub_ptr);
+        encoded_UMI = encode_DNA(UMI);
+        encoded_size = (strlen(UMI) + BYTE_SIZE / BASE_BITS - 1) / 4;
 
         sqlite3_bind_int(stmt, 1, cell_index);
         sqlite3_bind_int(stmt, 2, feature_index);

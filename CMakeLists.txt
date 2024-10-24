@@ -4,6 +4,8 @@ project(fastF VERSION 1.0)
 
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_C_COMPILER /home/yu89975/local/bin/gcc)
+set(CMAKE_CXX_COMPILER /home/yu89975/local/bin/g++)
 # set(CMAKE_BUILD_TYPE Release)
 
 find_package(OpenMP REQUIRED)
