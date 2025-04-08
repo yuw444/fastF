@@ -1,4 +1,5 @@
-`fastF` aims to **sample**, **filter**, and **summarise** single-cell RNA sequencing result, [FastQ](https://en.wikipedia.org/wiki/FASTQ_format) file. It consists 5 subcommands for the specific tasks.
+`fastF` aims to **sample**, **filter**, and **summarise** single-cell RNA sequencing result, [FastQ](https://en.wikipedia.org/wiki/FASTQ_format) file. It consists of 5 subcommands for the specific tasks. The [paper](https://www.nature.com/articles/s42003-025-07938-8) is now open-access, PMID: [40175506](https://pubmed.ncbi.nlm.nih.gov/40175506/). 
+
 
  ```
 > ./fastF --help
